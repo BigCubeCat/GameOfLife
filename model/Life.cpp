@@ -49,12 +49,9 @@ void Life::setNewParams(int n, int s) {
     B.push_back(3);
 
     for (int i = 0; i < arraySize; i++) {
-        data[i] = false;//rand() % 2 != 0;
+        data[i] = rand() % 2 != 0;
         new_data[i] = false;
     }
-    data[1] = true;
-    data[4] = true;
-    data[7] = true;
 }
 
 void Life::clear_data() const {
@@ -133,14 +130,6 @@ void Life::nextGeneration() {
         new_data[i] = getNewCell(count, cell);
     }
     swap(data, new_data);
-    qDebug() << " ";
-    qDebug() << data[0] << data[1] << data[2];
-    qDebug() << data[3] << data[4] << data[5];
-    qDebug() << data[6] << data[7] << data[8];
-    qDebug() << " ";
-    for (int i = 1; i < 8; i += 3) {
-        qDebug() << getCountNeighbours(i - 1) << " " << getCountNeighbours(i) << " " << getCountNeighbours(i + 1);
-    }
 }
 
 int Life::getGlobalIndex(const vector<int> &coords) const {
@@ -148,7 +137,7 @@ int Life::getGlobalIndex(const vector<int> &coords) const {
     int array_length = coords.size();
     int answer = 0;
     for (int i = 0; i < array_length; i++) {
-        answer += data[i] * (array_length * (N - i));
+        answer += coords[i] * (array_length * (N - i));
     }
     return answer;
 }
@@ -177,10 +166,21 @@ vector<bool> Life::getRenderData(vector<int> coords) {
      */
     coords.push_back(0);
     coords.push_back(0);
+    //qDebug() << "Coords = " << QString::fromStdString(printVector(coords));
     int start_index = getGlobalIndex(coords);
     vector<bool> answer;
-    for (int i = start_index; i < render_size; i++) {
+    //qDebug() << "start_index = " << start_index;
+    for (int i = start_index; i < render_size + start_index; i++) {
         answer.push_back(data[i]);
     }
+    string p = "";
+    for (auto a : answer) {
+        if (a) {
+            p+= " 1 ";
+        } else {
+            p+= " 0 ";
+        }
+    }
+    //qDebug() << QString::fromStdString(p);
     return answer;
 }

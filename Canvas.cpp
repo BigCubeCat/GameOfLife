@@ -11,7 +11,7 @@
 Canvas::Canvas(QWidget *parent)
     : QOpenGLWidget(parent)
 {
-    life = new Life(2, 3);
+    life = new Life(2, 512);
     mCamera = new Camera();
     dimension = 2;
     mTimer = new QTimer();
@@ -38,16 +38,18 @@ void Canvas::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    glEnable(GL_DEPTH_TEST);
 
     glTranslatef(0.0f, 0.0f, -10.0f); // Move right and into the screen
 
-    glBegin(GL_QUADS);
     if (dimension == 2) {
+        glBegin(GL_QUADS);
         render2d();
     } else {
         render();
     }
     glEnd();
+
     glPopMatrix();
 }
 
@@ -55,10 +57,7 @@ void Canvas::render2d() {
     float _top, bottom, left, right;
     float size = 0.1f;
     glColor3f(0.0f, 1.0f, 0.0f);
-    glVertex3f(0.0f, 0.0f, -5.0f);
-    glVertex3f(size, 0.0f, -5.0f);
-    glVertex3f(size, size, -5.0f);
-    glVertex3f(0.0f, size, -5.0f);
+    qDebug() << "---";
     for (int i = 0; i < life->SIZE; i++) {
         for (int j = 0; j < life->SIZE; j++) {
             if (render_data[i * life->SIZE + j]) {
@@ -66,14 +65,19 @@ void Canvas::render2d() {
                 left = j * size;
                 _top = i * size;
                 bottom = (i + 1) * size;
+                qDebug() << "for cell " << i * life->SIZE + j << ":  right = " << right << " left = " << left << " top = " << _top << " bottom = " << bottom;
                 glColor3f(0.0f, 1.0f, 0.0f);
-                glVertex3f(left, bottom, -5.0f);
                 glVertex3f(left, _top, -5.0f);
                 glVertex3f(right, _top, -5.0f);
                 glVertex3f(right, bottom, -5.0f);
+                glVertex3f(left, bottom, -5.0f);
+                glColor3f(1.0f, 0.0f, 0.0f);
+                //   (left, _top, right, bottom);
+
             }
         }
     }
+    qDebug() << "--";
 }
 
 void Canvas::render() {
@@ -88,7 +92,17 @@ void Canvas::resizeGL(int w, int h) {
     gluPerspective(45, (float)w / h, 0.01, 100.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(0, 0, 5, 0, 0, 0, 0, 1, 0);
+
+    glTranslatef(0.0f, 0.0f, -10.0f); // Move right and into the screen
+
+    glBegin(GL_QUADS);
+    if (dimension == 2) {
+        render2d();
+    } else {
+        render();
+    }
+    glEnd();
+    glPopMatrix();
 }
 
 void Canvas::updateLife() {
@@ -96,6 +110,11 @@ void Canvas::updateLife() {
     vector<int> coords;
     render_data = life->getRenderData(coords);
     this->update();
+    /*qDebug() << "--";
+    for (auto b : render_data) {
+        qDebug() << b;
+    }
+    qDebug() << "--";*/
     controlPanel->updateGeneration();
 }
 
