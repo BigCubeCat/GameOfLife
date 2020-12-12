@@ -7,15 +7,20 @@
 #include <QTimer>
 #include <QKeyEvent>
 #include "view/Camera.h"
+#include "panel/Panel.h"
+#include "panel/CoordsPanel.h"
 
 
 class Canvas : public QOpenGLWidget {
 public:
     Life *life;
-    Camera mCamera;
-    bool mode3d = false;
-    int ***render_data;
+    Camera *mCamera;
+    vector<bool> render_data;
     int data_size;
+    int dimension;
+    int cellSize;
+    Panel *controlPanel;
+    CoordsPanel *coordsPanel;
 
     float fps_speed = 0.5f;
 
@@ -23,6 +28,16 @@ public:
 
     ~Canvas();
 
+    void render2d();
+    void render();
+
+    void setSpeed(int speed);
+    void setSettings(int d, int s);
+    void setB(vector<int> b);
+    void setS(vector<int> s);
+public slots:
+    void updateSettings();
+    void getIndex();
 private:
     QTimer *mTimer;
 protected:
@@ -33,7 +48,6 @@ protected:
     void paintGL();
 
     void keyPressEvent(QKeyEvent *event) override;
-
 
 private slots:
     void updateLife();

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.1
+** Created by: Qt User Interface Compiler version 5.15.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -37,6 +37,8 @@ public:
     QStatusBar *statusbar;
     QDockWidget *dockWidget;
     QWidget *dockWidgetContents;
+    QDockWidget *coordsDock;
+    QWidget *dockWidgetContents_2;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -67,7 +69,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 22));
+        menubar->setGeometry(QRect(0, 0, 800, 24));
         menuFile = new QMenu(menubar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         menuView = new QMenu(menubar);
@@ -78,10 +80,18 @@ public:
         MainWindow->setStatusBar(statusbar);
         dockWidget = new QDockWidget(MainWindow);
         dockWidget->setObjectName(QString::fromUtf8("dockWidget"));
+        dockWidget->setAllowedAreas(Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
         dockWidgetContents = new QWidget();
         dockWidgetContents->setObjectName(QString::fromUtf8("dockWidgetContents"));
         dockWidget->setWidget(dockWidgetContents);
         MainWindow->addDockWidget(Qt::LeftDockWidgetArea, dockWidget);
+        coordsDock = new QDockWidget(MainWindow);
+        coordsDock->setObjectName(QString::fromUtf8("coordsDock"));
+        coordsDock->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::TopDockWidgetArea);
+        dockWidgetContents_2 = new QWidget();
+        dockWidgetContents_2->setObjectName(QString::fromUtf8("dockWidgetContents_2"));
+        coordsDock->setWidget(dockWidgetContents_2);
+        MainWindow->addDockWidget(Qt::BottomDockWidgetArea, coordsDock);
 
         menubar->addAction(menuFile->menuAction());
         menubar->addAction(menuView->menuAction());
@@ -102,6 +112,7 @@ public:
         actionSave_As->setText(QCoreApplication::translate("MainWindow", "Save As", nullptr));
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
         menuView->setTitle(QCoreApplication::translate("MainWindow", "View", nullptr));
+        coordsDock->setWindowTitle(QString());
     } // retranslateUi
 
 };

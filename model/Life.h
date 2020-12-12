@@ -13,21 +13,22 @@ public:
     bool* new_data{};
     vector<int> B;
     vector<int> S;
+    int render_size;
     long long int generation{};
     explicit Life(int n, int s);
     void setNewParams(int n, int s);
-    void setRules(vector<int> b, vector<int> s);
     void nextGeneration();
     int getGlobalIndex(const vector<int>& coords) const;
     bool getCell(int index) const;
     bool getNewCell(int countN, bool cell);
     int getCountNeighbours(int index);
     void clear_data() const;
+    bool inWorld(int index);
+    vector<bool> getRenderData(vector<int> coords);
 
 private:
     int countNeighboursOnCell(const vector<int>& coords, int index);
     vector<int> getCoords(int index) const;
-    int getSize() const;
 };
 
 
