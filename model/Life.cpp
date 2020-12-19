@@ -19,17 +19,6 @@ int int_pow(int a, int b) {
     return answer;
 }
 
-
-string printVector(vector<int> vec) {
-    string answer = "";
-    for (auto a : vec) {
-        answer += to_string(a);
-        answer += " ";
-    }
-    return answer;
-}
-
-
 Life::Life(int n, int s) {
     /*Initialization. Set dimension { n } and size { s }*/
     setNewParams(n, s);
@@ -81,15 +70,12 @@ bool Life::getNewCell(int countN, bool cell) {
     return false;
 }
 
-bool Life::inWorld(int index) {
+bool Life::inWorld(int index) const {
     return (index >= 0 && index < arraySize);
 }
 
 int Life::getCountNeighbours(int index) {
     /*return count living neighbours*/
-    /*vector<int> pos = getCoords(index);
-    qDebug() << "current coords = " << QString::fromStdString(printVector(pos));
-    answer = countNeighboursOnCell(pos, 0) - (getCell(index) ? 1 : 0);*/
     vector<int> coords;
     if ((index + 1) % SIZE != 0) // проверяем что не скраю
         coords.push_back(index + 1);
@@ -124,22 +110,13 @@ int Life::getCountNeighbours(int index) {
 
 void Life::nextGeneration() {
     /*Apply current rules to life data*/
+    qDebug() << "nextGeneration";
     for (int i = 0; i < arraySize; i++) {
         bool cell = getCell(i);
         int count = getCountNeighbours(i);
         new_data[i] = getNewCell(count, cell);
     }
     swap(data, new_data);
-}
-
-int Life::getGlobalIndex(const vector<int> &coords) const {
-    // return global index by array's coords
-    int array_length = coords.size();
-    int answer = 0;
-    for (int i = 0; i < array_length; i++) {
-        answer += coords[i] * (array_length * (N - i));
-    }
-    return answer;
 }
 
 vector<int> Life::getCoords(int index) const {
@@ -160,27 +137,10 @@ vector<int> Life::getCoords(int index) const {
 }
 
 
-vector<bool> Life::getRenderData(vector<int> coords) {
-    /*
-     * Return 3D array by coords in 4+D
-     */
-    coords.push_back(0);
-    coords.push_back(0);
-    //qDebug() << "Coords = " << QString::fromStdString(printVector(coords));
-    int start_index = getGlobalIndex(coords);
+vector<bool> Life::getRenderData(int coords) const {
+    // Return 3D array by coords in 4+D
     vector<bool> answer;
-    //qDebug() << "start_index = " << start_index;
-    for (int i = start_index; i < render_size + start_index; i++) {
+    for (int i = coords; i < render_size + coords; i++)
         answer.push_back(data[i]);
-    }
-    string p = "";
-    for (auto a : answer) {
-        if (a) {
-            p+= " 1 ";
-        } else {
-            p+= " 0 ";
-        }
-    }
-    //qDebug() << QString::fromStdString(p);
     return answer;
 }

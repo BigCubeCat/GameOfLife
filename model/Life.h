@@ -14,20 +14,16 @@ public:
     vector<int> B;
     vector<int> S;
     int render_size;
-    long long int generation{};
     explicit Life(int n, int s);
     void setNewParams(int n, int s);
-    void nextGeneration();
-    int getGlobalIndex(const vector<int>& coords) const;
     bool getCell(int index) const;
     bool getNewCell(int countN, bool cell);
     int getCountNeighbours(int index);
     void clear_data() const;
-    bool inWorld(int index);
-    vector<bool> getRenderData(vector<int> coords);
-
+    bool inWorld(int index) const;
+    vector<bool> getRenderData(int coords) const;
+    void nextGeneration();
 private:
-    int countNeighboursOnCell(const vector<int>& coords, int index);
     vector<int> getCoords(int index) const;
 };
 

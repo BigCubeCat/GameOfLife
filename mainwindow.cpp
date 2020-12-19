@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     Canvas *canvas;
-    canvas = new Canvas();
+    canvas = new Canvas(2, 32);
     ui->main_layout->addWidget(canvas);
 
     Panel *panel = new Panel(canvas);

@@ -1,28 +1,22 @@
 #include "Canvas.h"
-#include "view/Camera.h"
 #include <QColor>
 #include <QDebug>
 #include <QPainter>
-#include <QPen>
 #include <QRgb>
-#include <QTimer>
 #include <QDebug>
 
-Canvas::Canvas(QWidget *parent)
+Canvas::Canvas(int n, int s, QWidget *parent)
     : QOpenGLWidget(parent)
 {
-    life = new Life(2, 512);
-    mCamera = new Camera();
-    dimension = 2;
-    mTimer = new QTimer();
-    connect(mTimer, &QTimer::timeout, this, QOverload<>::of(&Canvas::updateLife));
-    mTimer->start(100);
-    vector<int> coords;
-    render_data = life->getRenderData(coords);
+    // make and start thread with life
+    worker = new Thread(n, s);
+    connect(worker, &Thread::generationFinished, this, &Canvas::nextGen);  // connect finish genration to update canvas
+    render_data = worker->life->getRenderData(0);
+    worker->start();
 }
 
 Canvas::~Canvas() {
-    life->clear_data();
+    worker->life->clear_data();
 }
 
 void Canvas::initializeGL() {
@@ -35,14 +29,22 @@ void Canvas::initializeGL() {
 }
 
 void Canvas::paintGL() {
+    qDebug() << "cell size = " << cellSize;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glEnable(GL_DEPTH_TEST);
 
-    glTranslatef(0.0f, 0.0f, -10.0f); // Move right and into the screen
+    float g_RotateX = 0.0f;
+    float g_RotationSpeed = 0.1f;
 
-    if (dimension == 2) {
+    /* centerXYZ - наклон*
+     * eyeXYZ - позиция
+     */
+    gluLookAt(camera.eyeX, camera.eyeY, camera.eyeZ, camera.centerX, camera.centerY,
+              camera.centerZ, camera.upX, camera.upY, camera.upZ);
+
+    if (worker->life->N == 2) {
         glBegin(GL_QUADS);
         render2d();
     } else {
@@ -53,36 +55,30 @@ void Canvas::paintGL() {
     glPopMatrix();
 }
 
-void Canvas::render2d() {
+void Canvas::render2d() {/*
     float _top, bottom, left, right;
-    float size = 0.1f;
     glColor3f(0.0f, 1.0f, 0.0f);
-    qDebug() << "---";
     for (int i = 0; i < life->SIZE; i++) {
         for (int j = 0; j < life->SIZE; j++) {
             if (render_data[i * life->SIZE + j]) {
-                right = (j + 1) * size;
-                left = j * size;
-                _top = i * size;
-                bottom = (i + 1) * size;
-                qDebug() << "for cell " << i * life->SIZE + j << ":  right = " << right << " left = " << left << " top = " << _top << " bottom = " << bottom;
-                glColor3f(0.0f, 1.0f, 0.0f);
+                right = (j + 1) * cellSize;
+                left = j * cellSize;
+                _top = i * cellSize;
+                bottom = (i + 1) * cellSize;
+                glColor3f((float)(rand() % 10) / 10, (float)(rand() % 10) / 10, (float)(rand() % 10) / 10);
                 glVertex3f(left, _top, -5.0f);
                 glVertex3f(right, _top, -5.0f);
                 glVertex3f(right, bottom, -5.0f);
                 glVertex3f(left, bottom, -5.0f);
-                glColor3f(1.0f, 0.0f, 0.0f);
-                //   (left, _top, right, bottom);
-
             }
         }
     }
-    qDebug() << "--";
+    qDebug() << "--";*/
 }
 
 void Canvas::render() {
     glColor3f(0.0f, 1.0f, 0.0f);
-
+    // TODO
 }
 
 void Canvas::resizeGL(int w, int h) {
@@ -90,48 +86,9 @@ void Canvas::resizeGL(int w, int h) {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(45, (float)w / h, 0.01, 100.0);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    glTranslatef(0.0f, 0.0f, -10.0f); // Move right and into the screen
-
-    glBegin(GL_QUADS);
-    if (dimension == 2) {
-        render2d();
-    } else {
-        render();
-    }
-    glEnd();
-    glPopMatrix();
-}
-
-void Canvas::updateLife() {
-    life->nextGeneration();
-    vector<int> coords;
-    render_data = life->getRenderData(coords);
-    this->update();
-    /*qDebug() << "--";
-    for (auto b : render_data) {
-        qDebug() << b;
-    }
-    qDebug() << "--";*/
-    controlPanel->updateGeneration();
-}
-
-void Canvas::setB(vector<int> b) {
-    life->B = b;
-}
-
-void Canvas::setS(vector<int> s) {
-    life->S = s;
-}
-
-void Canvas::setSettings(int d, int s) {
-    life->setNewParams(d, s);
-}
-
-void Canvas::setSpeed(int speed) {
-    mTimer->setInterval(speed);
+    int minimum = min(w, h);
+    cellSize = (float)worker->life->SIZE / (float)minimum * 5;
+    buffer = minimum / 2.0f;
 }
 
 void Canvas::updateSettings() {
@@ -143,18 +100,39 @@ void Canvas::getIndex() {
 }
 
 void Canvas::keyPressEvent(QKeyEvent* event) {
-    if (event->key() == Qt::Key_W) {
-        /*if (action == GLFW_PRESS)
-            keys[key] = true;
-        else if (action == GLFW_RELEASE)
-            keys[key] = false/*/
+    switch (event->key()) {
+        case Qt::Key_W:
+            camera.centerZ += fps_speed;
+        case Qt::Key_S:
+            camera.centerZ -= fps_speed;
+        case Qt::Key_D:
+            camera.centerX += fps_speed;
+        case Qt::Key_A:
+            camera.centerX -= fps_speed;
     }
+    this->update();
+    qDebug() << camera.centerX << camera.centerY << camera.centerZ;
+}
+
+void Canvas::nextGen() {
+    /*
+     * Call after born new generation
+    */
+    qDebug() << "Next Gen";
+    render_data = worker->life->getRenderData(coordsPanel->INDEX);
+    this->update();
+    controlPanel->updateGeneration();
+}
+
+void Canvas::updateLife() {
+    qDebug() << "Какого хуя?";
 }
 /*
 glColor3f(1.0f, 1.0f, 0.0f);
 glVertex3f(-1.0, -1.0, -5.0f);
 glVertex3f(-1.0, 1.0, -5.0f);
-glVertex3f(1.0, 1.0, -5.0f);
+glVertex3f(1.0, 1.0, -5.0
+void Canvas::nextGen() {f);
 glVertex3f(1.0, -1.0, -5.0f);
 // Top face (y = 1.0f)
 // Define vertices in counter-clockwise (CCW) order with normal pointing out

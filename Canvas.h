@@ -6,38 +6,35 @@
 #include "model/Life.h"
 #include <QTimer>
 #include <QKeyEvent>
+#include "model/Thread.h"
 #include "view/Camera.h"
 #include "panel/Panel.h"
 #include "panel/CoordsPanel.h"
 
-
 class Canvas : public QOpenGLWidget {
+    Q_OBJECT
 public:
-    Life *life;
-    Camera *mCamera;
+    Thread *worker;
+    Camera camera{};
     vector<bool> render_data;
-    int data_size;
-    int dimension;
-    int cellSize;
+    float cellSize;
+    float buffer;
     Panel *controlPanel;
     CoordsPanel *coordsPanel;
 
     float fps_speed = 0.5f;
 
-    explicit Canvas(QWidget *parent = nullptr);
+    explicit Canvas(int n, int s, QWidget *parent = nullptr);
 
     ~Canvas();
 
     void render2d();
     void render();
 
-    void setSpeed(int speed);
-    void setSettings(int d, int s);
-    void setB(vector<int> b);
-    void setS(vector<int> s);
 public slots:
     void updateSettings();
     void getIndex();
+    void nextGen();
 private:
     QTimer *mTimer;
 protected:

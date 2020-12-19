@@ -30,12 +30,10 @@ add_executable(
         model/Life.h
         panel/Panel.cpp
         panel/Panel.h
-        view/Camera.cpp
         view/Camera.h
-        #view/Shader.cpp
-        #view/Shader.h
         panel/CoordsPanel.cpp
         panel/CoordsPanel.h
-)
+        model/Thread.cpp
+        model/Thread.h)
 
 target_link_libraries(GameOfLife PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${OPENGL_LIBRARIES} ${GLUT_LIBRARY})
