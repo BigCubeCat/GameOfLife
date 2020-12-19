@@ -10,9 +10,12 @@ Canvas::Canvas(int n, int s, QWidget *parent)
 {
     // make and start thread with life
     worker = new Thread(n, s);
-    connect(worker, &Thread::generationFinished, this, &Canvas::nextGen);  // connect finish genration to update canvas
     render_data = worker->life->getRenderData(0);
-    worker->start();
+    mTimer = new QTimer(this);
+    mTimer->setSingleShot(false);
+    mTimer->setInterval(1);
+    connect(mTimer, &QTimer::timeout, this, &Canvas::nextGen);
+    mTimer->start();
 }
 
 Canvas::~Canvas() {
@@ -55,12 +58,12 @@ void Canvas::paintGL() {
     glPopMatrix();
 }
 
-void Canvas::render2d() {/*
+void Canvas::render2d() {
     float _top, bottom, left, right;
     glColor3f(0.0f, 1.0f, 0.0f);
-    for (int i = 0; i < life->SIZE; i++) {
-        for (int j = 0; j < life->SIZE; j++) {
-            if (render_data[i * life->SIZE + j]) {
+    for (int i = 0; i < worker->life->SIZE; i++) {
+        for (int j = 0; j < worker->life->SIZE; j++) {
+            if (render_data[i * worker->life->SIZE + j]) {
                 right = (j + 1) * cellSize;
                 left = j * cellSize;
                 _top = i * cellSize;
@@ -73,7 +76,7 @@ void Canvas::render2d() {/*
             }
         }
     }
-    qDebug() << "--";*/
+    qDebug() << "--";
 }
 
 void Canvas::render() {
@@ -100,6 +103,7 @@ void Canvas::getIndex() {
 }
 
 void Canvas::keyPressEvent(QKeyEvent* event) {
+    qDebug() << "H";
     switch (event->key()) {
         case Qt::Key_W:
             camera.centerZ += fps_speed;
@@ -110,8 +114,8 @@ void Canvas::keyPressEvent(QKeyEvent* event) {
         case Qt::Key_A:
             camera.centerX -= fps_speed;
     }
-    this->update();
     qDebug() << camera.centerX << camera.centerY << camera.centerZ;
+    this->update();
 }
 
 void Canvas::nextGen() {
@@ -121,58 +125,10 @@ void Canvas::nextGen() {
     qDebug() << "Next Gen";
     render_data = worker->life->getRenderData(coordsPanel->INDEX);
     this->update();
-    controlPanel->updateGeneration();
+    controlPanel->updateGeneration(); // Вынеси в отдельный сигнал!!!
+    worker->start();
 }
 
 void Canvas::updateLife() {
     qDebug() << "Какого хуя?";
 }
-/*
-glColor3f(1.0f, 1.0f, 0.0f);
-glVertex3f(-1.0, -1.0, -5.0f);
-glVertex3f(-1.0, 1.0, -5.0f);
-glVertex3f(1.0, 1.0, -5.0
-void Canvas::nextGen() {f);
-glVertex3f(1.0, -1.0, -5.0f);
-// Top face (y = 1.0f)
-// Define vertices in counter-clockwise (CCW) order with normal pointing out
-glColor3f(0.0f, 1.0f, 0.0f); // Green
-glVertex3f(1.0f, 1.0f, -1.0f);
-glVertex3f(-1.0f, 1.0f, -1.0f);
-glVertex3f(-1.0f, 1.0f, 1.0f);
-glVertex3f(1.0f, 1.0f, 1.0f);
-
-// Bottom face (y = -1.0f)
-glColor3f(1.0f, 0.5f, 0.0f); // Orange
-glVertex3f(1.0f, -1.0f, 1.0f);
-glVertex3f(-1.0f, -1.0f, 1.0f);
-glVertex3f(-1.0f, -1.0f, -1.0f);
-glVertex3f(1.0f, -1.0f, -1.0f);
-
-// Front face  (z = 1.0f)
-glColor3f(1.0f, 0.0f, 0.0f); // Red
-glVertex3f(1.0f, 1.0f, 1.0f);
-glVertex3f(-1.0f, 1.0f, 1.0f);
-glVertex3f(-1.0f, -1.0f, 1.0f);
-glVertex3f(1.0f, -2.0f, 1.0f);
-
-// Back face (z = -1.0f)
-glColor3f(1.0f, 1.0f, 0.0f); // Yellow
-glVertex3f(1.0f, -1.0f, -1.0f);
-glVertex3f(-1.0f, -1.0f, -1.0f);
-glVertex3f(-1.0f, 1.0f, -1.0f);
-glVertex3f(1.0f, 1.0f, -1.0f);
-
-// Left face (x = -1.0f)
-glColor3f(0.0f, 0.0f, 1.0f); // Blue
-glVertex3f(-1.0f, 1.0f, 1.0f);
-glVertex3f(-1.0f, 1.0f, -1.0f);
-glVertex3f(-1.0f, -1.0f, -1.0f);
-glVertex3f(-1.0f, -1.0f, 1.0f);
-
-// Right face (x = 1.0f)
-glColor3f(1.0f, 0.0f, 1.0f); // Magenta
-glVertex3f(1.0f, 1.0f, -1.0f);
-glVertex3f(1.0f, 1.0f, 1.0f);
-glVertex3f(1.0f, -1.0f, 1.0f);
-glVertex3f(1.0f, -1.0f, -1.0f);*/

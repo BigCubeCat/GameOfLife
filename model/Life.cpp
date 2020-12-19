@@ -136,7 +136,6 @@ vector<int> Life::getCoords(int index) const {
     return answer;
 }
 
-
 vector<bool> Life::getRenderData(int coords) const {
     // Return 3D array by coords in 4+D
     vector<bool> answer;

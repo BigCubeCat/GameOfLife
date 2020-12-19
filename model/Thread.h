@@ -19,9 +19,11 @@ public:
 signals:
     void generationFinished();
 public slots:
-    [[noreturn]] void main_process();
+    void main_process();
 private:
     int delay = 0;
+
+    void run();
 };
 
 

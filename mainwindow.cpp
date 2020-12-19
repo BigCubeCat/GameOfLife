@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     Canvas *canvas;
     canvas = new Canvas(2, 32);
+    qDebug() << "FFIIRRSSTT";
     ui->main_layout->addWidget(canvas);
 
     Panel *panel = new Panel(canvas);
