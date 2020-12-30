@@ -10,17 +10,25 @@
 #include "view/Camera.h"
 #include "panel/Panel.h"
 #include "panel/CoordsPanel.h"
+#ifdef __linux__
+    #include <GL/glut.h>
+#else
+    #include <GLUT/glut.h>
+#endif
+
+Camera *camera;
 
 class Canvas : public QOpenGLWidget {
     Q_OBJECT
 public:
     Thread *worker;
-    Camera camera{};
     vector<bool> render_data;
     float cellSize;
     float buffer;
+    int WIDTH = 800; int HEIGHT = 600;
     Panel *controlPanel;
     CoordsPanel *coordsPanel;
+    bool movement[4];
 
     float fps_speed = 0.5f;
 
@@ -30,6 +38,7 @@ public:
 
     void render2d();
     void render();
+    static void mouseLook(int, int);
 
 public slots:
     void updateSettings();

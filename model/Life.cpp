@@ -4,7 +4,6 @@
 #include "Life.h"
 #include <malloc.h>
 #include <random>
-#include <QDebug>
 #include <string>
 #include <QString>
 
@@ -110,7 +109,6 @@ int Life::getCountNeighbours(int index) {
 
 void Life::nextGeneration() {
     /*Apply current rules to life data*/
-    qDebug() << "nextGeneration";
     for (int i = 0; i < arraySize; i++) {
         bool cell = getCell(i);
         int count = getCountNeighbours(i);

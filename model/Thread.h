@@ -11,18 +11,19 @@
 class Thread : public QThread {
     Q_OBJECT
 public:
-    explicit Thread(int n, int s);
+    Thread(int n, int s);
     Life *life;
     bool running = false;
-
     void setDelay(int _delay);
+
 signals:
     void generationFinished();
+
 public slots:
     void main_process();
-private:
-    int delay = 0;
 
+private:
+    int  delay = 0;
     void run();
 };
 
