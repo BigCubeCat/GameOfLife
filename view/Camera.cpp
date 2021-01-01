@@ -75,3 +75,9 @@ void Camera::translation(bool left, bool backward, bool forward, bool right) {
         Z -= cos(theta + M_PI/2)*sin(psi) * translation_speed * t;
     }
 }
+/*
+Set center
+*/
+void Camera::setCenter(int x, int y) {
+    mouse_x = x; mouse_y = y;
+}

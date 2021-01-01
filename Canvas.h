@@ -16,7 +16,6 @@
     #include <GLUT/glut.h>
 #endif
 
-Camera *camera;
 
 class Canvas : public QOpenGLWidget {
     Q_OBJECT
@@ -25,6 +24,7 @@ public:
     vector<bool> render_data;
     float cellSize;
     float buffer;
+    int i = 0;
     int WIDTH = 800; int HEIGHT = 600;
     Panel *controlPanel;
     CoordsPanel *coordsPanel;
@@ -46,6 +46,8 @@ public slots:
     void nextGen();
 private:
     QTimer *mTimer;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void leaveEvent(QEvent *event) override;
 protected:
     void initializeGL();
 
@@ -57,6 +59,7 @@ protected:
 
 private slots:
     void updateLife();
+
 };
 
 

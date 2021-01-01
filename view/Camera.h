@@ -27,6 +27,7 @@ public :
 
     void rotation(int, int);
     void translation(bool, bool, bool, bool);
+    void setCenter(int x, int y);
 
 private :
     float    X;                                     /* sphere center x axis */

@@ -5,11 +5,13 @@
 #include <QRgb>
 #include <cmath>
 
+Camera *camera = new Camera(-10, 10, -10, 4 * M_PI / 7, M_PI / 4, 0.005, 0.1, 800, 600);
+
 Canvas::Canvas(int n, int s, QWidget *parent)
     : QOpenGLWidget(parent)
 {
+    this->setMouseTracking(true);
     // make and start thread with life
-    camera = new Camera(-10, 10, -10, 4 * M_PI / 7, M_PI / 4, 0.01, 0.2, 800, 600);
     worker = new Thread(n, s);
     render_data = worker->life->getRenderData(0);
     mTimer = new QTimer(this);
@@ -30,8 +32,9 @@ void Canvas::initializeGL() {
     glEnable(GL_LIGHTING);
 
     glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+    //glutInit(0, nullptr);
     glEnable(GL_COLOR_MATERIAL);
-    glutPassiveMotionFunc(mouseLook);
+    //glutPassiveMotionFunc(mouseLook);
 }
 
 void Canvas::paintGL() {
@@ -65,6 +68,9 @@ void Canvas::resizeGL(int w, int h) {
     int minimum = min(w, h);
     cellSize = (float)worker->life->SIZE / (float)minimum * 5;
     buffer = minimum / 2.0f;
+    int centerX = this->width() / 2;
+    int centerY = this->height() / 2;
+    camera->setCenter(centerX, centerY);
 }
 /*render*/
 void Canvas::render2d() {
@@ -88,46 +94,48 @@ void Canvas::render2d() {
 }
 
 void Canvas::render() {
+    //i++;
+    float a = (float)i / 10;
     glColor3f(0.0f, 1.0f, 0.0f);     // Green
-    glVertex3f(1.0f, 1.0f, -1.0f);
-    glVertex3f(-1.0f, 1.0f, -1.0f);
-    glVertex3f(-1.0f, 1.0f, 1.0f);
-    glVertex3f(1.0f, 1.0f, 1.0f);
+    glVertex3f(1.0f, 1.0f, -1.0f + a);
+    glVertex3f(-1.0f, 1.0f, -1.0f+a);
+    glVertex3f(-1.0f, 1.0f, 1.0f+a);
+    glVertex3f(1.0f, 1.0f, 1.0f+a);
 
 // Bottom face (y = -1.0f)
     glColor3f(1.0f, 0.5f, 0.0f);     // Orange
-    glVertex3f(1.0f, -1.0f, 1.0f);
-    glVertex3f(-1.0f, -1.0f, 1.0f);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f(1.0f, -1.0f, -1.0f);
+    glVertex3f(1.0f, -1.0f, 1.0f+a);
+    glVertex3f(-1.0f, -1.0f, 1.0f+a);
+    glVertex3f(-1.0f, -1.0f, -1.0f+a);
+    glVertex3f(1.0f, -1.0f, -1.0f+a);
 
 // Front face  (z = 1.0f)
     glColor3f(1.0f, 0.0f, 0.0f);     // Red
-    glVertex3f(1.0f, 1.0f, 1.0f);
-    glVertex3f(-1.0f, 1.0f, 1.0f);
-    glVertex3f(-1.0f, -1.0f, 1.0f);
-    glVertex3f(1.0f, -1.0f, 1.0f);
+    glVertex3f(1.0f, 1.0f, 1.0f+a);
+    glVertex3f(-1.0f, 1.0f, 1.0f+a);
+    glVertex3f(-1.0f, -1.0f, 1.0f+a);
+    glVertex3f(1.0f, -1.0f, 1.0f+a);
 
 // Back face (z = -1.0f)
     glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
-    glVertex3f(1.0f, -1.0f, -1.0f);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f(-1.0f, 1.0f, -1.0f);
-    glVertex3f(1.0f, 1.0f, -1.0f);
+    glVertex3f(1.0f, -1.0f, -1.0f+a);
+    glVertex3f(-1.0f, -1.0f, -1.0f+a);
+    glVertex3f(-1.0f, 1.0f, -1.0f+a);
+    glVertex3f(1.0f, 1.0f, -1.0f+a);
 
 // Left face (x = -1.0f)
     glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-    glVertex3f(-1.0f, 1.0f, 1.0f);
-    glVertex3f(-1.0f, 1.0f, -1.0f);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f(-1.0f, -1.0f, 1.0f);
+    glVertex3f(-1.0f, 1.0f, 1.0f+a);
+    glVertex3f(-1.0f, 1.0f, -1.0f+a);
+    glVertex3f(-1.0f, -1.0f, -1.0f+a);
+    glVertex3f(-1.0f, -1.0f, 1.0f+a);
 
 // Right face (x = 1.0f)
     glColor3f(1.0f, 0.0f, 1.0f);     // Magenta
-    glVertex3f(1.0f, 1.0f, -1.0f);
-    glVertex3f(1.0f, 1.0f, 1.0f);
-    glVertex3f(1.0f, -1.0f, 1.0f);
-    glVertex3f(1.0f, -1.0f, -1.0f);
+    glVertex3f(1.0f, 1.0f, -1.0f+a);
+    glVertex3f(1.0f, 1.0f, 1.0f+a);
+    glVertex3f(1.0f, -1.0f, 1.0f+a);
+    glVertex3f(1.0f, -1.0f, -1.0f+a);
     glEnd();  // End of drawing color-cube
 }
 
@@ -139,16 +147,14 @@ void Canvas::getIndex() {
 }
 
 void Canvas::keyPressEvent(QKeyEvent* event) {
-    switch (event->key()) {
-        case Qt::Key_W:
+    if (event->key() == Qt::Key_Up)
             movement[2] = true;
-        case Qt::Key_A:
+    if (event->key() == Qt::Key_Left)
             movement[0] = true;
-        case Qt::Key_S:
+    if (event->key() == Qt::Key_Down)
             movement[1] = true;
-        case Qt::Key_D:
+    if (event->key() == Qt::Key_Right)
             movement[3] = true;
-    }
     camera->translation(movement[0], movement[1], movement[2], movement[3]);
     for (bool &i : movement) {
         qDebug() << i;
@@ -163,9 +169,18 @@ void Canvas::nextGen() {
     render_data = worker->life->getRenderData(coordsPanel->INDEX);
     this->update();
     controlPanel->updateGeneration(); // Вынеси в отдельный сигнал!!!
-    worker->start();
+    // worker->start();
 }
 
+void Canvas::mouseMoveEvent(QMouseEvent *event) {
+    int X = event->pos().x();
+    int Y = event->pos().y();
+
+    camera->rotation(X, Y);
+}
+void Canvas::leaveEvent(QEvent *event) {
+    camera->setCenter(width() / 2, height() / 2);
+}
 void Canvas::updateLife() {
 }
 
