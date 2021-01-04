@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     Canvas *canvas;
-    canvas = new Canvas(3, 32);
+    canvas = new Canvas(2, 32);
     ui->main_layout->addWidget(canvas);
 
     Panel *panel = new Panel(canvas);
@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(panel, &Panel::updateData, canvas, &Canvas::updateSettings);
     connect(coordsPanel, &CoordsPanel::signalIndex, canvas, &Canvas::getIndex);
+    connect(panel, &Panel::playSignal, canvas, &Canvas::pause);
 
     auto visionAction = ui->dockWidget->toggleViewAction();
     visionAction->setText("View settings");
@@ -33,7 +34,6 @@ MainWindow::MainWindow(QWidget *parent)
     visionAction->setText("Navigation");
     ui->menuView->addAction(visionCoords);
     canvas->setFocus();
-
 }
 
 MainWindow::~MainWindow()

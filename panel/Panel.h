@@ -33,6 +33,7 @@ public:
     void updateGeneration();
 signals:
     void updateData();
+    void playSignal();
 private slots:
     void clearSettings();
     void applySettings();

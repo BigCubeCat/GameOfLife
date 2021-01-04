@@ -6,6 +6,7 @@
 #include <random>
 #include <string>
 #include <QString>
+#include <QDebug>
 
 using namespace std;
 
@@ -32,14 +33,11 @@ void Life::setNewParams(int n, int s) {
     render_size = int_pow(SIZE, N);
     data = new bool[arraySize];
     new_data = new bool[arraySize];
-    S.push_back(2);
-    S.push_back(3);
-    B.push_back(3);
-
     for (int i = 0; i < arraySize; i++) {
         data[i] = rand() % 2 != 0;
         new_data[i] = false;
     }
+    qDebug() << "Params changed";
 }
 
 void Life::clear_data() const {
@@ -118,7 +116,7 @@ void Life::nextGeneration() {
 }
 
 vector<int> Life::getCoords(int index) const {
-    // get array's coords by global index
+    // get array's coords by global indelifex
     vector<int> answer;
     int indx = index;
     int n = N;

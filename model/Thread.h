@@ -7,6 +7,7 @@
 
 #include <QThread>
 #include "Life.h"
+#include <vector>
 
 class Thread : public QThread {
     Q_OBJECT
@@ -14,18 +15,11 @@ public:
     Thread(int n, int s);
     Life *life;
     bool running = false;
-    void setDelay(int _delay);
-
+    int coord = 0;
 signals:
-    void generationFinished();
-
+    void generationFinished(QVector<bool>);
 public slots:
-    void main_process();
-
-private:
-    int  delay = 0;
     void run();
 };
-
 
 #endif //GAMEOFLIFE_THREAD_H

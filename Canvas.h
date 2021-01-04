@@ -10,6 +10,7 @@
 #include "view/Camera.h"
 #include "panel/Panel.h"
 #include "panel/CoordsPanel.h"
+#include <vector>
 #ifdef __linux__
     #include <GL/glut.h>
 #else
@@ -21,16 +22,15 @@ class Canvas : public QOpenGLWidget {
     Q_OBJECT
 public:
     Thread *worker;
-    vector<bool> render_data;
+    QVector<bool> render_data;
     float cellSize;
-    float buffer;
-    int i = 0;
-    int WIDTH = 800; int HEIGHT = 600;
+    bool onFocus = false;
     Panel *controlPanel;
     CoordsPanel *coordsPanel;
     bool movement[4];
+    bool lifeIsRunning = false;
 
-    float fps_speed = 0.5f;
+    int fps = 10;
 
     explicit Canvas(int n, int s, QWidget *parent = nullptr);
 
@@ -44,9 +44,15 @@ public slots:
     void updateSettings();
     void getIndex();
     void nextGen();
+    void pause();
+    void updateCount();
+    void fpsUpdate();
+    void startThread(QVector<bool>);
 private:
     QTimer *mTimer;
+    QTimer *fpsTimer;
     void mouseMoveEvent(QMouseEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
     void leaveEvent(QEvent *event) override;
 protected:
     void initializeGL();

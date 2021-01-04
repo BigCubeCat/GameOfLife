@@ -4,8 +4,11 @@
 Panel::Panel(QWidget *parent) : QWidget(parent),
                                 ui(new Ui::Panel) {
     ui->setupUi(this);
-    connect(ui->applyButton, SIGNAL(clicked()), this, SLOT(applySettings()));
-    connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(clearSettings()));
+    connect(ui->applyButton, &QPushButton::clicked, this, &Panel::applySettings);
+    connect(ui->clearButton, &QPushButton::clicked, this, &Panel::clearSettings);
+    connect(ui->playButton, &QPushButton::clicked, this, &Panel::playSignal);
+    ui->Moore->setChecked(true);
+
     default_settings.size = ui->SizeSpin->value();  // Default set in qt designer
     default_settings.dimension = 2;
     default_settings.speed = 100;
