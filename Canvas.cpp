@@ -11,8 +11,8 @@ Canvas::Canvas(int n, int s, QWidget *parent)
     : QOpenGLWidget(parent)
 {
     this->setMouseTracking(true);
-    worker = new Thread(n, s);
-    // life update timer
+    worker = new Worker(n, s);
+    // life update timeint signal qtr
     mTimer = new QTimer(this);
     mTimer->setSingleShot(false);
     mTimer->setInterval(1);
@@ -24,7 +24,7 @@ Canvas::Canvas(int n, int s, QWidget *parent)
     fpsTimer->setInterval(fps);
     connect(fpsTimer, &QTimer::timeout, this, &Canvas::fpsUpdate);
     fpsTimer->start();
-    connect(worker, &Thread::generationFinished, this, &Canvas::startThread); // rerun thread
+    connect(worker, &Worker::generationFinished, this, &Canvas::startThread); // rerun thread
     worker->start();
 }
 
@@ -151,8 +151,8 @@ void Canvas::render() {
 /* Slots */
 void Canvas::updateSettings() {
     worker->life->setNewParams(controlPanel->settings.dimension, controlPanel->settings.size);
-    worker->life->B = controlPanel->settings.B;
-    worker->life->S = controlPanel->settings.S;
+    //worker->life->B = controlPanel->settings.B;
+    //worker->life->S = controlPanel->settings.S;
     mTimer->setInterval(controlPanel->settings.speed);
     qDebug() << "Update Settings";
 }
@@ -162,12 +162,11 @@ void Canvas::pause() {
 void Canvas::fpsUpdate() {
     this->update();
 }
-void Canvas::getIndex() {
-    // TODO
+void Canvas::getIndex(int new_index) {
+    worker->coord = new_index;
 }
 void Canvas::startThread(QVector<bool> new_render_data) {
     render_data = new_render_data;
-    qDebug()<<"thread start";
     worker->start();
 }
 void Canvas::nextGen() {

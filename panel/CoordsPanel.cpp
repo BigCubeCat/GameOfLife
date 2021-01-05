@@ -36,5 +36,5 @@ void CoordsPanel::calculateIndex() {
         int n = coords[i]->value();
         INDEX += n * (N - i - 1);
     }
-    emit signalIndex();
+    emit signalIndex(INDEX);
 }

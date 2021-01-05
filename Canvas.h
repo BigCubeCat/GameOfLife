@@ -6,7 +6,7 @@
 #include "model/Life.h"
 #include <QTimer>
 #include <QKeyEvent>
-#include "model/Thread.h"
+#include "model/Worker.h"
 #include "view/Camera.h"
 #include "panel/Panel.h"
 #include "panel/CoordsPanel.h"
@@ -21,7 +21,7 @@
 class Canvas : public QOpenGLWidget {
     Q_OBJECT
 public:
-    Thread *worker;
+    Worker *worker;
     QVector<bool> render_data;
     float cellSize;
     bool onFocus = false;
@@ -42,7 +42,7 @@ public:
 
 public slots:
     void updateSettings();
-    void getIndex();
+    void getIndex(int);
     void nextGen();
     void pause();
     void updateCount();

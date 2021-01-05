@@ -30,7 +30,7 @@ public:
     int getIndex();
     void reshape(int s, int ls);
 signals:
-    void signalIndex();
+    void signalIndex(int);
 private slots:
     void calculateIndex();
 private:

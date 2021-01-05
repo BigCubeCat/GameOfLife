@@ -48,6 +48,7 @@ void Life::clear_data() const {
 
 bool Life::getCell(int index) const {
     // get cell data by global index
+    if ( index > sizeof(data) || index < 0) return false;
     return data[index];
 }
 
