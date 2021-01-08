@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowTitle("N-Dimension Game Of Life");
 
     Canvas *canvas;
-    canvas = new Canvas(2, 32);
+    canvas = new Canvas(3, 32);
     ui->main_layout->addWidget(canvas);
 
     Panel *panel = new Panel(canvas);

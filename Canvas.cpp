@@ -5,7 +5,7 @@
 #include <QRgb>
 #include <cmath>
 
-Camera *camera = new Camera(10, -10, 10, 4 * M_PI / 7, M_PI / 4, 0.005, 0.01, 800, 600);
+Camera *camera = new Camera(-5, 5, -5, 4 * M_PI / 7, M_PI / 4, 0.005, 0.1, 800, 600);
 
 Canvas::Canvas(int n, int s, QWidget *parent)
     : QOpenGLWidget(parent)
@@ -39,9 +39,7 @@ void Canvas::initializeGL() {
     glEnable(GL_LIGHTING);
 
     glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-    //glutInit(0, nullptr);
     glEnable(GL_COLOR_MATERIAL);
-    //glutPassiveMotionFunc(mouseLook);
 }
 
 void Canvas::paintGL() {
@@ -50,7 +48,6 @@ void Canvas::paintGL() {
     glLoadIdentity();
     glEnable(GL_DEPTH_TEST);
 
-    //camera->rotation(0, 0);
     camera->translation(movement[0], movement[1], movement[2], movement[3]);
     gluLookAt(
             camera->getX(), camera->getY(), camera->getZ(), camera->getSightX(),
@@ -72,8 +69,6 @@ void Canvas::resizeGL(int w, int h) {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(45, (float)w / h, 0.01, 100.0);
-    int minimum = min(w, h);
-    cellSize = (float)worker->life->SIZE / (float)minimum;
     int centerX = this->width() / 2;
     int centerY = this->height() / 2;
     camera->setCenter(centerX, centerY);
@@ -90,10 +85,10 @@ void Canvas::render2d() {
                 _top = i * cellSize;
                 bottom = (i + 1) * cellSize;
                 glColor3f(((float)i / (float)worker->life->SIZE), ((float)j / (float)worker->life->SIZE), 1.0f);
-                glVertex3f(left, _top, -5.0f);
-                glVertex3f(right, _top, -5.0f);
-                glVertex3f(right, bottom, -5.0f);
-                glVertex3f(left, bottom, -5.0f);
+                glVertex3f(left, _top, 0.0f);
+                glVertex3f(right, _top, 0.0f);
+                glVertex3f(right, bottom, 0.0f);
+                glVertex3f(left, bottom, 0.0f);
             }
         }
     }
@@ -101,7 +96,48 @@ void Canvas::render2d() {
 
 void Canvas::render() {
     float t, b, l, r, f, back;
-    if (render_data.empty()) return;
+    int a = 0;
+    glColor3f(0.0f, 1.0f, 0.0f);     // Green
+    glVertex3f(1.0f, 1.0f, -1.0f + a);
+    glVertex3f(-1.0f, 1.0f, -1.0f+a);
+    glVertex3f(-1.0f, 1.0f, 1.0f+a);
+    glVertex3f(1.0f, 1.0f, 1.0f+a);
+
+// Bottom face (y = -1.0f)
+    glColor3f(1.0f, 0.5f, 0.0f);     // Orange
+    glVertex3f(1.0f, -1.0f, 1.0f+a);
+    glVertex3f(-1.0f, -1.0f, 1.0f+a);
+    glVertex3f(-1.0f, -1.0f, -1.0f+a);
+    glVertex3f(1.0f, -1.0f, -1.0f+a);
+
+// Front face  (z = 1.0f)
+    glColor3f(1.0f, 0.0f, 0.0f);     // Red
+    glVertex3f(1.0f, 1.0f, 1.0f+a);
+    glVertex3f(-1.0f, 1.0f, 1.0f+a);
+    glVertex3f(-1.0f, -1.0f, 1.0f+a);
+    glVertex3f(1.0f, -1.0f, 1.0f+a);
+
+// Back face (z = -1.0f)
+    glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
+    glVertex3f(1.0f, -1.0f, -1.0f+a);
+    glVertex3f(-1.0f, -1.0f, -1.0f+a);
+    glVertex3f(-1.0f, 1.0f, -1.0f+a);
+    glVertex3f(1.0f, 1.0f, -1.0f+a);
+
+// Left face (x = -1.0f)
+    glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+    glVertex3f(-1.0f, 1.0f, 1.0f+a);
+    glVertex3f(-1.0f, 1.0f, -1.0f+a);
+    glVertex3f(-1.0f, -1.0f, -1.0f+a);
+    glVertex3f(-1.0f, -1.0f, 1.0f+a);
+
+// Right face (x = 1.0f)
+    glColor3f(1.0f, 0.0f, 1.0f);     // Magenta
+    glVertex3f(1.0f, 1.0f, -1.0f+a);
+    glVertex3f(1.0f, 1.0f, 1.0f+a);
+    glVertex3f(1.0f, -1.0f, 1.0f+a);
+    glVertex3f(1.0f, -1.0f, -1.0f+a);
+    /*if (render_data.empty()) return;
     for (int i = 0; i < worker->life->SIZE; i++) {
         for (int j = 0; j < worker->life->SIZE; j++) {
             for (int k = 0; k < worker->life->SIZE; k++) {
@@ -113,7 +149,7 @@ void Canvas::render() {
                     f = k * cellSize;
                     back = (k + 1) * cellSize;
                     glColor3f(((float)i / (float)worker->life->SIZE), ((float)j / (float)worker->life->SIZE), ((float)k / (float)worker->life->SIZE));
-
+                    a++;
                     glVertex3f(l, t, f);
                     glVertex3f(r, t, f);
                     glVertex3f(r, b, f);
@@ -147,7 +183,11 @@ void Canvas::render() {
             }
         }
     }
-}
+    if (a > 0) {
+        qDebug() << a;
+        qDebug() << r << " " << l << " " << b << " " << t << " " << f << " " << back;
+    }
+*/}
 /* Slots */
 void Canvas::updateSettings() {
     worker->life->setNewParams(controlPanel->settings.dimension, controlPanel->settings.size);
@@ -167,7 +207,8 @@ void Canvas::getIndex(int new_index) {
 }
 void Canvas::startThread(QVector<bool> new_render_data) {
     render_data = new_render_data;
-    worker->start();
+    if (lifeIsRunning)
+        worker->start();
 }
 void Canvas::nextGen() {
 }
@@ -208,5 +249,7 @@ void Canvas::keyPressEvent(QKeyEvent* event) {
     camera->translation(movement[0], movement[1], movement[2], movement[3]);
     for (bool &i : movement) {
         i = false;
+        qDebug() << camera->getX() << " " << camera->getY() << " " << camera->getZ();
+        qDebug() << camera->getSightX() << " " << camera->getSightY() << " " << camera->getSightZ();
     }
 }

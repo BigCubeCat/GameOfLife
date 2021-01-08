@@ -23,7 +23,7 @@ class Canvas : public QOpenGLWidget {
 public:
     Worker *worker;
     QVector<bool> render_data;
-    float cellSize;
+    float cellSize = 2.0f;
     bool onFocus = false;
     Panel *controlPanel;
     CoordsPanel *coordsPanel;

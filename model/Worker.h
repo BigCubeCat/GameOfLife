@@ -15,7 +15,7 @@ public:
     Worker(int n, int s);
     Life *life;
     bool running = false;
-    int coord = 0;
+    int  coord = 0;
 signals:
     void generationFinished(QVector<bool>);
 public slots:

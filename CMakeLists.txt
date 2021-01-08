@@ -35,6 +35,7 @@ add_executable(
         panel/CoordsPanel.h
         view/Camera.h
         model/Worker.cpp
-        model/Worker.h view/Camera.cpp)
-
+        model/Worker.h
+        view/Camera.cpp
+)
 target_link_libraries(GameOfLife PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} GLEW libGLEW.so)
