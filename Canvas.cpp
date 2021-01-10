@@ -8,8 +8,7 @@
 Camera *camera = new Camera(-5, 5, -5, 4 * M_PI / 7, M_PI / 4, 0.005, 0.1, 800, 600);
 
 Canvas::Canvas(int n, int s, QWidget *parent)
-    : QOpenGLWidget(parent)
-{
+        : QOpenGLWidget(parent) {
     this->setMouseTracking(true);
     worker = new Worker();
     // life update timeint signal qtr
@@ -64,22 +63,26 @@ void Canvas::resizeGL(int w, int h) {
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(45, (float)w / h, 0.01, 100.0);
+    gluPerspective(45, (float) w / h, 0.01, 100.0);
     int centerX = this->width() / 2;
     int centerY = this->height() / 2;
     camera->setCenter(centerX, centerY);
 }
+
 /*render*/
 void Canvas::render2d() {
     float _top, bottom, left, right;
+    qDebug() << worker->SIZE;
+    qDebug() << sizeof(render_data);
     for (int i = 0; i < worker->SIZE; i++) {
         for (int j = 0; j < worker->SIZE; j++) {
             if (render_data[i * worker->SIZE + j]) {
+                qDebug() << "2d";
                 right = (j + 1) * cellSize;
                 left = j * cellSize;
                 _top = i * cellSize;
                 bottom = (i + 1) * cellSize;
-                glColor3f(((float)i / (float)worker->SIZE), ((float)j / (float)worker->SIZE), 1.0f);
+                glColor3f(((float) i / (float) worker->SIZE), ((float) j / (float) worker->SIZE), 1.0f);
                 glVertex3f(left, _top, 0.0f);
                 glVertex3f(right, _top, 0.0f);
                 glVertex3f(right, bottom, 0.0f);
@@ -102,7 +105,8 @@ void Canvas::render() {
                     b = (i + 1) * cellSize;
                     f = k * cellSize;
                     back = (k + 1) * cellSize;
-                    glColor3f(((float)i / (float)worker->SIZE), ((float)j / (float)worker->SIZE), ((float)k / (float)worker->SIZE));
+                    glColor3f(((float) i / (float) worker->SIZE), ((float) j / (float) worker->SIZE),
+                              ((float) k / (float) worker->SIZE));
                     glVertex3f(l, t, f);
                     glVertex3f(r, t, f);
                     glVertex3f(r, b, f);
@@ -137,35 +141,55 @@ void Canvas::render() {
         }
     }
 }
+
 /* Slots */
+void Canvas::step() {
+    worker->start();
+    qDebug() << worker->SIZE;
+    qDebug() << worker->D;
+    qDebug() << worker->generation;
+    lifeIsRunning = false;
+}
+
+void Canvas::stop() {
+    lifeIsRunning = false;
+}
+
+void Canvas::play() {
+    lifeIsRunning = true;
+    worker->start();
+}
+
 void Canvas::updateSettings() {
-    //worker->life->B = controlPanel->settings.B;
-    //worker->life->S = controlPanel->settings.S;
     mTimer->setInterval(controlPanel->settings.speed);
-    qDebug() << "Update Settings";
+    worker->updateParameters(controlPanel->settings.dimension, controlPanel->settings.size, controlPanel->settings.B,
+                             controlPanel->settings.S, true);
 }
-void Canvas::pause() {
-    lifeIsRunning = !lifeIsRunning;
-}
+
 void Canvas::fpsUpdate() {
     this->update();
 }
+
 void Canvas::getIndex(int new_index) {
     worker->coord = new_index;
 }
+
 void Canvas::startThread(bool *new_render_data) {
-    qDebug() << "*";
     render_data = new_render_data;
     if (lifeIsRunning)
         worker->start();
 }
+
 void Canvas::nextGen() {
 }
+
 void Canvas::updateCount() {
     controlPanel->updateGeneration();
 }
+
 void Canvas::updateLife() {
 }
+
 /* Custom functions */
 void Canvas::mouseMoveEvent(QMouseEvent *event) {
     int X = event->pos().x();
@@ -174,9 +198,11 @@ void Canvas::mouseMoveEvent(QMouseEvent *event) {
     if (onFocus)
         camera->rotation(X, Y);
 }
+
 void Canvas::leaveEvent(QEvent *event) {
     camera->setCenter(width() / 2, height() / 2);
 }
+
 void Canvas::mousePressEvent(QMouseEvent *event) {
     if (!onFocus) {
         setFocus();
@@ -186,7 +212,8 @@ void Canvas::mousePressEvent(QMouseEvent *event) {
     }
     qDebug() << "on Focus = " << onFocus;
 }
-void Canvas::keyPressEvent(QKeyEvent* event) {
+
+void Canvas::keyPressEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_Up)
         movement[2] = true;
     if (event->key() == Qt::Key_Left)

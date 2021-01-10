@@ -6,15 +6,14 @@ Panel::Panel(QWidget *parent) : QWidget(parent),
     ui->setupUi(this);
     connect(ui->applyButton, &QPushButton::clicked, this, &Panel::applySettings);
     connect(ui->clearButton, &QPushButton::clicked, this, &Panel::clearSettings);
-    connect(ui->playButton, &QPushButton::clicked, this, &Panel::playSignal);
-    ui->Moore->setChecked(true);
+
+    connect(ui->stop, &QPushButton::clicked, this, &Panel::stopSignal);
+    connect(ui->run, &QPushButton::clicked, this, &Panel::playSignal);
+    connect(ui->step, &QPushButton::clicked, this, &Panel::stepSignal);
 
     default_settings.size = ui->SizeSpin->value();  // Default set in qt designer
     default_settings.dimension = 2;
     default_settings.speed = 100;
-    default_settings.B.push_back(3);
-    default_settings.S.push_back(2);
-    default_settings.S.push_back(3);
 }
 
 Panel::~Panel() {
@@ -27,23 +26,25 @@ void Panel::applySettings() {
     settings.size = ui->SizeSpin->value();
     settings.speed = ui->SpeedSpin->value();
     // reading new rules
-    vector<int> news;
-    vector<int> newb;
     QStringList newBList = ui->BInput->text().split(";");
     QStringList newSList = ui->SInput->text().split(";");
-    for (QString b : newBList) {
+    int sSize = newSList.size();
+    int bSize = newBList.size();
+    int *new_s = new int[sSize];
+    int *new_b = new int[bSize];
+    for (int i = 0; i < bSize; i++) {
         bool flag = true;
-        int _ = b.toInt(&flag);
-        if (!flag) return;  // TODO
-        newb.push_back(_);
-    }
-    for (QString s : newSList) {
-        bool flag = true;
-        int _ = s.toInt(&flag);
+        int _ = newBList[i].toInt(&flag);
         if (!flag) return;
-        news.push_back(_);
+        new_b[i] = _;
     }
-    settings.B = newb; settings.S = news;
+    for (int i = 0; i < sSize; i++) {
+        bool flag = true;
+        int _ = newSList[i].toInt(&flag);
+        if (!flag) return;
+        new_s[i] = _;
+    }
+    settings.B = new_b; settings.S = new_s;
     // emit signal to canvas
     emit updateData();
 }

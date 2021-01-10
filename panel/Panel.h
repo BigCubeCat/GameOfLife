@@ -13,8 +13,8 @@ QT_END_NAMESPACE
 using namespace std;
 
 struct Settings {
-    vector<int> B;
-    vector<int> S;
+    int *B;
+    int *S;
     int size;
     int dimension;
     int speed;
@@ -34,6 +34,8 @@ public:
 signals:
     void updateData();
     void playSignal();
+    void stopSignal();
+    void stepSignal();
 private slots:
     void clearSettings();
     void applySettings();

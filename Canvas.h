@@ -41,19 +41,23 @@ public:
 
 public slots:
 
+    void play();
+
+    void step();
+
+    void stop();
+
     void updateSettings();
 
     void getIndex(int);
 
     void nextGen();
 
-    void pause();
-
     void updateCount();
 
     void fpsUpdate();
 
-    void startThread(bool*);
+    void startThread(bool *);
 
 private:
     QTimer *mTimer;

@@ -4,10 +4,16 @@
 #include "Worker.h"
 #include <QDebug>
 
+int intPow(int a, int b) {
+    int answer = 1;
+    for (int i = 0; i < b; i++) {
+        answer *= a;
+    }
+    return answer;
+}
+
 Worker::Worker(int d, int size, int *b, int *s, bool random_data) : QThread() {
     updateParameters(d, size, b, s, random_data);
-    D = d;
-    SIZE = size;
     connect(this, &QThread::started, this, &Worker::run, Qt::QueuedConnection);
 }
 
@@ -27,6 +33,11 @@ void Worker::updateParameters(int d, int size, int *b, int *s, bool random_data)
     GoSlice b_rule{b};
     GoSlice s_rule{s};
     Setup((long long) size, (long long) d, b_rule, s_rule, random_data);
+    D = d;
+    SIZE = size;
+    bool *_clear_render_data = new bool[intPow(SIZE, D)] ;
+    emit generationFinished(_clear_render_data);
+
 }
 
 bool Worker::getCell(int index) {
