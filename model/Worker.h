@@ -6,19 +6,29 @@
 #define GAMEOFLIFE_WORKER_H
 
 #include <QThread>
-#include "Life.h"
 #include <vector>
+#include "life.h"
 
 class Worker : public QThread {
-    Q_OBJECT
+Q_OBJECT
 public:
-    Worker(int n, int s);
-    Life *life;
-    bool running = false;
-    int  coord = 0;
+    Worker(int, int, int *, int *, bool);
+    Worker();
+
+    int coord = 0;
+    int D;
+    int SIZE;
+    int generation = 0;
+
+    void updateParameters(int, int, int *, int *, bool);
+    bool getCell(int index);
+
 signals:
-    void generationFinished(QVector<bool>);
+
+    void generationFinished(bool*);
+
 public slots:
+
     void run();
 };
 
