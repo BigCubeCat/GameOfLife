@@ -28,21 +28,19 @@ void Panel::applySettings() {
     // reading new rules
     QStringList newBList = ui->BInput->text().split(";");
     QStringList newSList = ui->SInput->text().split(";");
-    int sSize = newSList.size();
-    int bSize = newBList.size();
-    int *new_s = new int[sSize];
-    int *new_b = new int[bSize];
-    for (int i = 0; i < bSize; i++) {
+    vector<int> new_s;
+    vector<int> new_b;
+    for (const auto& _b : newBList) {
         bool flag = true;
-        int _ = newBList[i].toInt(&flag);
+        int _ = _b.toInt(&flag);
         if (!flag) return;
-        new_b[i] = _;
+        new_b.push_back(_);
     }
-    for (int i = 0; i < sSize; i++) {
+    for (const auto& _s : newSList) {
         bool flag = true;
-        int _ = newSList[i].toInt(&flag);
+        int _ = _s.toInt(&flag);
         if (!flag) return;
-        new_s[i] = _;
+        new_s.push_back(_);
     }
     settings.B = new_b; settings.S = new_s;
     // emit signal to canvas

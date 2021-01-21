@@ -7,25 +7,25 @@
 
 #include <QThread>
 #include <vector>
-#include "life.h"
+#include "Life.h"
 
 class Worker : public QThread {
 Q_OBJECT
 public:
-    Worker(int, int, int *, int *, bool);
     Worker();
 
-    int coord = 0;
-    int D;
-    int SIZE;
-    int generation = 0;
+    Life    *life;
+    int     coord = 0;
+    int     D;
+    int     SIZE;
+    int     generation = 0;
 
-    void updateParameters(int, int, int *, int *, bool);
-    bool getCell(int index);
+    bool    getCell(int index);
+    void    updateParameters(int, int, vector<int>, vector<int>);
 
 signals:
 
-    void generationFinished(bool*);
+    void updateRender(bool*);
 
 public slots:
 

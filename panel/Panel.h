@@ -13,8 +13,8 @@ QT_END_NAMESPACE
 using namespace std;
 
 struct Settings {
-    int *B;
-    int *S;
+    vector<int> B;
+    vector<int> S;
     int size;
     int dimension;
     int speed;

@@ -16,8 +16,8 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 find_package(OpenGL)
 find_package(GLUT REQUIRED)
 find_package(GLEW REQUIRED)
-add_library(life SHARED IMPORTED)
-set_property(TARGET life PROPERTY IMPORTED_LOCATION "model/life.so")
+#add_library(life SHARED IMPORTED)
+#set_property(TARGET life PROPERTY IMPORTED_LOCATION "model/life.so")
 
 add_executable(
         GameOfLife
@@ -36,7 +36,9 @@ add_executable(
         model/Worker.cpp
         model/Worker.h
         view/Camera.cpp
-        model/life.h
-        model/life.so
+        #model/life.h
+        #model/life.so
+        model/Life.cpp
+        model/Life.h
 )
-target_link_libraries(GameOfLife PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} GLEW libGLEW.so life)
+target_link_libraries(GameOfLife PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} GLEW libGLEW.so)

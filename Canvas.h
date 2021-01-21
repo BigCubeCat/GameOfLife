@@ -30,6 +30,7 @@ public:
     CoordsPanel *coordsPanel;                               /* panel for move and navigate on 4+D space */
     bool movement[4];
     bool lifeIsRunning = false;
+    bool drawing = false;
 
     int fps = 10;
 

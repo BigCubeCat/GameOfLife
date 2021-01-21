@@ -22,8 +22,7 @@ Canvas::Canvas(int n, int s, QWidget *parent)
     fpsTimer->setInterval(fps);
     connect(fpsTimer, &QTimer::timeout, this, &Canvas::fpsUpdate);
     fpsTimer->start();
-    connect(worker, &Worker::generationFinished, this, &Canvas::startThread); // rerun thread
-    worker->start();
+    connect(worker, &Worker::updateRender, this, &Canvas::startThread); // rerun thread
 }
 
 /*GL functions*/
@@ -72,12 +71,10 @@ void Canvas::resizeGL(int w, int h) {
 /*render*/
 void Canvas::render2d() {
     float _top, bottom, left, right;
-    qDebug() << worker->SIZE;
-    qDebug() << sizeof(render_data);
+    if (!drawing) return;
     for (int i = 0; i < worker->SIZE; i++) {
         for (int j = 0; j < worker->SIZE; j++) {
             if (render_data[i * worker->SIZE + j]) {
-                qDebug() << "2d";
                 right = (j + 1) * cellSize;
                 left = j * cellSize;
                 _top = i * cellSize;
@@ -94,11 +91,11 @@ void Canvas::render2d() {
 
 void Canvas::render() {
     float t, b, l, r, f, back;
+    if (!drawing) return;
     for (int i = 0; i < worker->SIZE; i++) {
         for (int j = 0; j < worker->SIZE; j++) {
             for (int k = 0; k < worker->SIZE; k++) {
-                if (worker->getCell(i * worker->SIZE * worker->SIZE + j * worker->SIZE + k)) {
-                    qDebug() << "L";
+                //if (worker->getCell(i * worker->SIZE * worker->SIZE + j * worker->SIZE + k)) {
                     r = (j + 1) * cellSize;
                     l = j * cellSize;
                     t = i * cellSize;
@@ -136,7 +133,7 @@ void Canvas::render() {
                     glVertex3f(r, b, back);
                     glVertex3f(l, b, f);
                     glVertex3f(l, b, back);
-                }
+                //}
             }
         }
     }
@@ -145,9 +142,6 @@ void Canvas::render() {
 /* Slots */
 void Canvas::step() {
     worker->start();
-    qDebug() << worker->SIZE;
-    qDebug() << worker->D;
-    qDebug() << worker->generation;
     lifeIsRunning = false;
 }
 
@@ -163,7 +157,7 @@ void Canvas::play() {
 void Canvas::updateSettings() {
     mTimer->setInterval(controlPanel->settings.speed);
     worker->updateParameters(controlPanel->settings.dimension, controlPanel->settings.size, controlPanel->settings.B,
-                             controlPanel->settings.S, true);
+                             controlPanel->settings.S);
 }
 
 void Canvas::fpsUpdate() {
@@ -175,6 +169,7 @@ void Canvas::getIndex(int new_index) {
 }
 
 void Canvas::startThread(bool *new_render_data) {
+    drawing = true;
     render_data = new_render_data;
     if (lifeIsRunning)
         worker->start();
@@ -225,7 +220,5 @@ void Canvas::keyPressEvent(QKeyEvent *event) {
     camera->translation(movement[0], movement[1], movement[2], movement[3]);
     for (bool &i : movement) {
         i = false;
-        qDebug() << camera->getX() << " " << camera->getY() << " " << camera->getZ();
-        qDebug() << camera->getSightX() << " " << camera->getSightY() << " " << camera->getSightZ();
     }
 }

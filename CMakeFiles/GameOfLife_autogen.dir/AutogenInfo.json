@@ -1,0 +1,116 @@
+{
+	"BUILD_DIR" : "/home/bigcubecat/__folder__/APP/GameOfLife/GameOfLife_autogen",
+	"CMAKE_BINARY_DIR" : "/home/bigcubecat/__folder__/APP/GameOfLife",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/bigcubecat/__folder__/APP/GameOfLife",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/bigcubecat/__folder__/APP/GameOfLife",
+	"CMAKE_EXECUTABLE" : "/opt/clion/bin/cmake/linux/bin/cmake",
+	"CMAKE_SOURCE_DIR" : "/home/bigcubecat/__folder__/APP/GameOfLife",
+	"DEP_FILE" : "",
+	"DEP_FILE_RULE_NAME" : "",
+	"HEADERS" : 
+	[
+		[
+			"/home/bigcubecat/__folder__/APP/GameOfLife/Canvas.h",
+			"MU",
+			"EWIEGA46WW/moc_Canvas.cpp"
+		],
+		[
+			"/home/bigcubecat/__folder__/APP/GameOfLife/mainwindow.h",
+			"MU",
+			"EWIEGA46WW/moc_mainwindow.cpp"
+		],
+		[
+			"/home/bigcubecat/__folder__/APP/GameOfLife/model/Life.h",
+			"MU",
+			"NLOY5YBGEN/moc_Life.cpp"
+		],
+		[
+			"/home/bigcubecat/__folder__/APP/GameOfLife/model/Worker.h",
+			"MU",
+			"NLOY5YBGEN/moc_Worker.cpp"
+		],
+		[
+			"/home/bigcubecat/__folder__/APP/GameOfLife/panel/CoordsPanel.h",
+			"MU",
+			"2M4IF6KQHC/moc_CoordsPanel.cpp"
+		],
+		[
+			"/home/bigcubecat/__folder__/APP/GameOfLife/panel/Panel.h",
+			"MU",
+			"2M4IF6KQHC/moc_Panel.cpp"
+		],
+		[
+			"/home/bigcubecat/__folder__/APP/GameOfLife/view/Camera.h",
+			"MU",
+			"OTUN7GXZT4/moc_Camera.cpp"
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/bigcubecat/__folder__/APP/GameOfLife/GameOfLife_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/bigcubecat/__folder__/APP/GameOfLife/GameOfLife_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_NO_DEBUG", "QT_WIDGETS_LIB" ],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/home/bigcubecat/__folder__/APP/GameOfLife",
+		"/usr/include/qt",
+		"/usr/include/qt/QtWidgets",
+		"/usr/include/qt/QtGui",
+		"/usr/include/qt/QtCore",
+		"/usr/lib/qt/mkspecs/linux-g++",
+		"/usr/include/c++/10.2.0",
+		"/usr/include/c++/10.2.0/x86_64-pc-linux-gnu",
+		"/usr/include/c++/10.2.0/backward",
+		"/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include",
+		"/usr/local/include",
+		"/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed",
+		"/usr/include"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : true,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/c++",
+		"-dM",
+		"-E",
+		"-c",
+		"/opt/clion/bin/cmake/linux/share/cmake-3.17/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/bigcubecat/__folder__/APP/GameOfLife/GameOfLife_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 4,
+	"PARSE_CACHE_FILE" : "/home/bigcubecat/__folder__/APP/GameOfLife/CMakeFiles/GameOfLife_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/usr/bin/moc",
+	"QT_UIC_EXECUTABLE" : "/usr/bin/uic",
+	"QT_VERSION_MAJOR" : 5,
+	"QT_VERSION_MINOR" : 15,
+	"SETTINGS_FILE" : "/home/bigcubecat/__folder__/APP/GameOfLife/CMakeFiles/GameOfLife_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[ "/home/bigcubecat/__folder__/APP/GameOfLife/Canvas.cpp", "MU" ],
+		[ "/home/bigcubecat/__folder__/APP/GameOfLife/main.cpp", "MU" ],
+		[ "/home/bigcubecat/__folder__/APP/GameOfLife/mainwindow.cpp", "MU" ],
+		[ "/home/bigcubecat/__folder__/APP/GameOfLife/model/Life.cpp", "MU" ],
+		[ "/home/bigcubecat/__folder__/APP/GameOfLife/model/Worker.cpp", "MU" ],
+		[
+			"/home/bigcubecat/__folder__/APP/GameOfLife/panel/CoordsPanel.cpp",
+			"MU"
+		],
+		[ "/home/bigcubecat/__folder__/APP/GameOfLife/panel/Panel.cpp", "MU" ],
+		[ "/home/bigcubecat/__folder__/APP/GameOfLife/view/Camera.cpp", "MU" ]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}
