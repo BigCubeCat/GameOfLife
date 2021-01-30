@@ -1,7 +1,6 @@
 //
 // Created by bigcubecat on 19.12.2020.
 //
-
 #ifndef GAMEOFLIFE_WORKER_H
 #define GAMEOFLIFE_WORKER_H
 
@@ -13,6 +12,7 @@ class Worker : public QThread {
 Q_OBJECT
 public:
     Worker();
+    std::string renderData;  // unencoding data like "AAADAA" where A: alive; D: dead
 
     Life    *life;
     int     coord = 0;
@@ -21,11 +21,11 @@ public:
     int     generation = 0;
 
     bool    getCell(int index);
-    void    updateParameters(int, int, vector<int>, vector<int>);
+    void    updateParameters(int, int, vector<int>, vector<int>, int);
 
 signals:
 
-    void updateRender(bool*);
+    void updateRender(std::string);
 
 public slots:
 

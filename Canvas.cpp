@@ -27,7 +27,7 @@ Canvas::Canvas(int n, int s, QWidget *parent)
 
 /*GL functions*/
 void Canvas::initializeGL() {
-    glClearColor(1, 1, 1, 1);
+    glClearColor(0.4, 0.4, 0.5, 1);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHTING);
@@ -95,7 +95,7 @@ void Canvas::render() {
     for (int i = 0; i < worker->SIZE; i++) {
         for (int j = 0; j < worker->SIZE; j++) {
             for (int k = 0; k < worker->SIZE; k++) {
-                //if (worker->getCell(i * worker->SIZE * worker->SIZE + j * worker->SIZE + k)) {
+                if (worker->getCell(i * worker->SIZE * worker->SIZE + j * worker->SIZE + k)) {
                     r = (j + 1) * cellSize;
                     l = j * cellSize;
                     t = i * cellSize;
@@ -133,7 +133,7 @@ void Canvas::render() {
                     glVertex3f(r, b, back);
                     glVertex3f(l, b, f);
                     glVertex3f(l, b, back);
-                //}
+               }
             }
         }
     }
@@ -157,7 +157,9 @@ void Canvas::play() {
 void Canvas::updateSettings() {
     mTimer->setInterval(controlPanel->settings.speed);
     worker->updateParameters(controlPanel->settings.dimension, controlPanel->settings.size, controlPanel->settings.B,
-                             controlPanel->settings.S);
+                             controlPanel->settings.S, 2);
+    startThread(worker->life->renderData(worker->coord));
+    this->update();
 }
 
 void Canvas::fpsUpdate() {
@@ -168,9 +170,23 @@ void Canvas::getIndex(int new_index) {
     worker->coord = new_index;
 }
 
-void Canvas::startThread(bool *new_render_data) {
+void Canvas::startThread(std::string new_render_data) {
     drawing = true;
-    render_data = new_render_data;
+    int len = new_render_data.length();
+    if (sizeof(render_data) != len) {
+        render_data = new bool[len];
+    }
+    qDebug() << sizeof(render_data);
+    qDebug() << QString::fromStdString(new_render_data);
+    qDebug() << new_render_data.length();
+    for (int i = 0; i < new_render_data.length(); i++) {
+        if (new_render_data[i] == 'A') {
+            render_data[i] = true;
+        } else {
+            render_data[i] = false;
+        }
+    }
+    qDebug() << "PORNO";
     if (lifeIsRunning)
         worker->start();
 }
@@ -205,7 +221,6 @@ void Canvas::mousePressEvent(QMouseEvent *event) {
     } else {
         onFocus = false;
     }
-    qDebug() << "on Focus = " << onFocus;
 }
 
 void Canvas::keyPressEvent(QKeyEvent *event) {

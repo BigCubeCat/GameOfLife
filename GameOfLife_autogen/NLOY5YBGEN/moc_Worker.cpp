@@ -7,7 +7,7 @@
 *****************************************************************************/
 
 #include <memory>
-#include "model/Worker.h"
+#include "../../model/Worker.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Worker_t {
     QByteArrayData data[5];
-    char stringdata0[31];
+    char stringdata0[37];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,11 +35,11 @@ static const qt_meta_stringdata_Worker_t qt_meta_stringdata_Worker = {
 QT_MOC_LITERAL(0, 0, 6), // "Worker"
 QT_MOC_LITERAL(1, 7, 12), // "updateRender"
 QT_MOC_LITERAL(2, 20, 0), // ""
-QT_MOC_LITERAL(3, 21, 5), // "bool*"
-QT_MOC_LITERAL(4, 27, 3) // "run"
+QT_MOC_LITERAL(3, 21, 11), // "std::string"
+QT_MOC_LITERAL(4, 33, 3) // "run"
 
     },
-    "Worker\0updateRender\0\0bool*\0run"
+    "Worker\0updateRender\0\0std::string\0run"
 };
 #undef QT_MOC_LITERAL
 
@@ -77,14 +77,14 @@ void Worker::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         auto *_t = static_cast<Worker *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->updateRender((*reinterpret_cast< bool*(*)>(_a[1]))); break;
+        case 0: _t->updateRender((*reinterpret_cast< std::string(*)>(_a[1]))); break;
         case 1: _t->run(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (Worker::*)(bool * );
+            using _t = void (Worker::*)(std::string );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Worker::updateRender)) {
                 *result = 0;
                 return;
@@ -134,7 +134,7 @@ int Worker::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void Worker::updateRender(bool * _t1)
+void Worker::updateRender(std::string _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

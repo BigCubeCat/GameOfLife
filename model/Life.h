@@ -3,25 +3,27 @@
 
 #include <map>
 #include <vector>
+#include <string>
 using namespace std;
 
 class Life {
 public:
     int                     N;
     int                     SIZE;
-    int                     arraySize;
+    int                     dataSize;
     bool*                   data;
     bool*                   new_data;
     map<int, bool>          B;
     map<int, bool>          S;
     int                     render_size;
+    int*                    steps;
 
-    Life(int, int, vector<int>, vector<int>);
+    Life(int, int, vector<int>, vector<int>, int);
     bool                    getCell(int index) const;
     bool                    inWorld(int index) const;
-    bool                    applyRules(int, bool);
-    bool                    getNewCell(int index);
-    bool*                   getRenderData(int coords) const;
+    bool                    applyRules(int);
+    int                     countNeighbours(int index);
+    string                  renderData(int coords);
     void                    nextGeneration();
 };
 

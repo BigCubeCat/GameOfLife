@@ -1,6 +1,5 @@
 #ifndef GAMEOFLIFE_CANVAS_H
 #define GAMEOFLIFE_CANVAS_H
-
 #include <QOpenGLWidget>
 #include <QTimer>
 #include <QKeyEvent>
@@ -58,7 +57,7 @@ public slots:
 
     void fpsUpdate();
 
-    void startThread(bool *);
+    void startThread(std::string);
 
 private:
     QTimer *mTimer;

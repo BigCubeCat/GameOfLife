@@ -47,6 +47,8 @@ map
 -
 vector
 -
+string
+-
 
 /home/bigcubecat/__folder__/APP/GameOfLife/model/Worker.h
 QThread

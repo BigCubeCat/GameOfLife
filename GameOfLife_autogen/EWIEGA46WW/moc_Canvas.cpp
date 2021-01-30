@@ -7,7 +7,7 @@
 *****************************************************************************/
 
 #include <memory>
-#include "Canvas.h"
+#include "../../Canvas.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Canvas_t {
     QByteArrayData data[13];
-    char stringdata0[106];
+    char stringdata0[112];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -43,13 +43,13 @@ QT_MOC_LITERAL(7, 47, 7), // "nextGen"
 QT_MOC_LITERAL(8, 55, 11), // "updateCount"
 QT_MOC_LITERAL(9, 67, 9), // "fpsUpdate"
 QT_MOC_LITERAL(10, 77, 11), // "startThread"
-QT_MOC_LITERAL(11, 89, 5), // "bool*"
-QT_MOC_LITERAL(12, 95, 10) // "updateLife"
+QT_MOC_LITERAL(11, 89, 11), // "std::string"
+QT_MOC_LITERAL(12, 101, 10) // "updateLife"
 
     },
     "Canvas\0play\0\0step\0stop\0updateSettings\0"
     "getIndex\0nextGen\0updateCount\0fpsUpdate\0"
-    "startThread\0bool*\0updateLife"
+    "startThread\0std::string\0updateLife"
 };
 #undef QT_MOC_LITERAL
 
@@ -107,7 +107,7 @@ void Canvas::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 5: _t->nextGen(); break;
         case 6: _t->updateCount(); break;
         case 7: _t->fpsUpdate(); break;
-        case 8: _t->startThread((*reinterpret_cast< bool*(*)>(_a[1]))); break;
+        case 8: _t->startThread((*reinterpret_cast< std::string(*)>(_a[1]))); break;
         case 9: _t->updateLife(); break;
         default: ;
         }
