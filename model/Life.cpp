@@ -2,12 +2,8 @@
 // Created by bigcubecat on 21.11.2020.
 //
 #include "Life.h"
-#include <malloc.h>
-#include <random>
 #include <string>
-#include <QString>
 #include <QDebug>
-
 using namespace std;
 
 int int_pow(int a, int b) {
@@ -19,30 +15,28 @@ int int_pow(int a, int b) {
     return answer;
 }
 
-Life::Life(int n, int s) {
-    /*Initialization. Set dimension { n } and size { s }*/
-    setNewParams(n, s);
-}
+Life::Life(int d, int size, vector<int> b, vector<int> s, int v) {
+    for (auto i : b) {
+        B[i] = true;
+    }
+    for (auto i : s) {
+        S[i] = true;
+    }
+    SIZE = size;
+    N = d;
+    dataSize = int_pow(SIZE, N);
+    (d > 2) ? render_size = int_pow(SIZE, 3) : render_size = int_pow(SIZE, 2);
 
-void Life::setNewParams(int n, int s) {
-    // Set game params
-    SIZE = s;
-    N = n;
-    arraySize = int_pow(SIZE, N);
-    clear_data();
-    render_size = int_pow(SIZE, N);
-    data = new bool[arraySize];
-    new_data = new bool[arraySize];
-    for (int i = 0; i < arraySize; i++) {
-        data[i] = rand() % 2 != 0;
+    data = new bool[dataSize];
+    new_data = new bool[dataSize];
+    for (int i = 0; i < dataSize; i++) {
+        data[i] = rand() % v == 0;
         new_data[i] = false;
     }
-}
-
-void Life::clear_data() const {
-    /*free data*/
-    free(data);
-    free(new_data);
+    steps = new int[N];
+    for (int i = 0; i < N; i++) {
+        steps[i] = int_pow(SIZE, i);
+    }
 }
 
 bool Life::getCell(int index) const {
@@ -52,84 +46,68 @@ bool Life::getCell(int index) const {
     return false;
 }
 
-bool Life::applyRules(int countN, bool cell) {
-    // Apply rules to cell with "countN" neighbours
-    if (cell) {
-        for (auto s : S) {
-            if (s == countN)
-                return true;
+int Life::countNeighbours(int index) {
+    int countN = 0;
+    vector<int> coords;
+    vector<int> new_coords;
+    int left, right;
+    coords.push_back(0);
+    for (int i = 0; i < N; i++) {
+        for (auto a : coords) {
+            left = a - steps[i];
+            right = a + steps[i];
+            
+            if (inWorld(index + left)) {
+                new_coords.push_back(left);
+                if (getCell(index + left)) {
+                    countN++;
+                }
+            }
+            if (inWorld(index + right)) {
+                new_coords.push_back(right);
+                if (getCell(index + right)) {
+                    countN++;
+                }
+            }
         }
-    } else {
-        for (auto b : B) {
-            if (b == countN)
-                return true;
+        for (auto a : new_coords) {
+            coords.push_back(a);
         }
     }
-    return false;
+    return countN;
+}
+
+bool Life::applyRules(int index) {
+    // Apply rules to cell with "countN" neighbours
+    bool cell = getCell(index);
+    if (cell) {
+        return S[countNeighbours(index)];
+    }
+    return B[countNeighbours(index)];
 }
 
 bool Life::inWorld(int index) const {
-    return (index >= 0 && index < arraySize);
-}
-
-bool Life::getNewCell(int index) {
-    /*return count living neighbours*/
-    vector<int> coords;
-    coords.push_back(index);
-    int step;
-    bool cell = getCell(index);
-    int countN = 0;
-    int left, right;
-    for (int i = 0; i < N; i++) {
-        step = int_pow(SIZE, i);
-        vector<int> added_coords;
-        for (auto a : coords) {
-            left = a - step;
-            right = a + step;
-            if (inWorld(left)) {
-                if (getCell(left))
-                    countN++;
-                added_coords.push_back(left);
-            }
-            if (inWorld(right)) {
-                if (getCell(right))
-                    countN++;
-                added_coords.push_back(right);
-            }
-        }
-        coords.insert(coords.end(), added_coords.begin(), added_coords.end());
-    }
-    return applyRules(countN, cell);
+    return (index >= 0 && index < dataSize);
 }
 
 void Life::nextGeneration() {
     /*Apply current rules to life data*/
-    for (int i = 0; i < arraySize; i++) {
-        new_data[i] = getNewCell(i);
+    for (int i = 0; i < dataSize; i++) {
+        qDebug() << applyRules(i);
+        new_data[i] = applyRules(i);
     }
     swap(data, new_data);
 }
 
-vector<int> Life::getCoords(int index) const {
-    // get array's coords by global index
-    vector<int> answer;
-    int indx = index;
-    int n = N;
-    for (int i = 0; i < N - 1; i++) {
-        n = int_pow(SIZE, (N - i - 1));
-        int coord = indx / n;
-        //qDebug() << n;
-        indx = indx % n;
-        answer.push_back(coord);
+std::string Life::renderData(int coords) {
+    // Return 3D slice by coords in 4+D
+    std::string answer;
+    for (int i = coords; i < render_size; i++) {
+        if (getCell(i)) {
+            answer += 'A';
+        } else {
+            answer += 'D';
+        }
     }
-    answer.push_back(indx);
-    return answer;
-}
-
-vector<bool> Life::getRenderData(int coords) const {
-    // Return 3D array by coords in 4+D
-    vector<bool> answer;
-    for (int i = coords; i < render_size + coords; i++)
-        answer.push_back(data[i]);
     return answer;
 }

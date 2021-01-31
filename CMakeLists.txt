@@ -17,7 +17,6 @@ find_package(OpenGL)
 find_package(GLUT REQUIRED)
 find_package(GLEW REQUIRED)
 
-
 add_executable(
         GameOfLife
         main.cpp
@@ -26,8 +25,6 @@ add_executable(
         mainwindow.ui
         Canvas.cpp
         Canvas.h
-        model/Life.cpp
-        model/Life.h
         panel/Panel.cpp
         panel/Panel.h
         view/Camera.h
@@ -37,5 +34,7 @@ add_executable(
         model/Worker.cpp
         model/Worker.h
         view/Camera.cpp
+        model/Life.cpp
+        model/Life.h
 )
 target_link_libraries(GameOfLife PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} GLEW libGLEW.so)

@@ -3,12 +3,29 @@
 //
 #include "Worker.h"
 #include <QDebug>
+#include <QThread>
+#include <utility>
 
-Worker::Worker(int n, int s) : QThread() {
-    life = new Life(n, s);
+void Worker::updateParameters(int d, int size, vector<int> b, vector<int> s, int v) {
+    life = new Life(d, size, std::move(b), std::move(s), v);
+    D = d;
+    SIZE = size;
+    emit updateRender(life->renderData(coord));
+}
+
+Worker::Worker() : QThread() {
+    D = 3;
+    SIZE = 32;
     connect(this, &QThread::started, this, &Worker::run, Qt::QueuedConnection);
 }
+
 void Worker::run() {
     life->nextGeneration();
-    emit generationFinished(QVector<bool>::fromStdVector(life->getRenderData(coord)));
+    renderData = life->renderData(coord);
+    emit updateRender(life->renderData(coord));
 }
+
+bool Worker::getCell(int index) {
+    return life->getCell(index);
+}
+

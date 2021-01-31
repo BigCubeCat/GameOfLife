@@ -1,32 +1,30 @@
 #ifndef GAMEOFLIFE_LIFE_H
 #define GAMEOFLIFE_LIFE_H
 
-#include <vector>
 #include <map>
+#include <vector>
+#include <string>
 using namespace std;
 
 class Life {
 public:
-    int                     N{};
-    int                     SIZE{};
-    int                     arraySize{};
-    bool*                   data{};
-    bool*                   new_data{};
-    vector<int>             B;
-    vector<int>             S;
+    int                     N;
+    int                     SIZE;
+    int                     dataSize;
+    bool*                   data;
+    bool*                   new_data;
+    map<int, bool>          B;
+    map<int, bool>          S;
     int                     render_size;
+    int*                    steps;
 
-    explicit                Life(int n, int s);
-    void                    setNewParams(int n, int s);
+    Life(int, int, vector<int>, vector<int>, int);
     bool                    getCell(int index) const;
-    bool                    getNewCell(int index);
-    void                    clear_data() const;
     bool                    inWorld(int index) const;
-    bool                    applyRules(int, bool);
-    vector<bool>            getRenderData(int coords) const;
+    bool                    applyRules(int);
+    int                     countNeighbours(int index);
+    string                  renderData(int coords);
     void                    nextGeneration();
-private:
-    vector<int>             getCoords(int index) const;
 };
 
 #endif //GAMEOFLIFE_LIFE_H

@@ -26,7 +26,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(panel, &Panel::updateData, canvas, &Canvas::updateSettings);
     connect(coordsPanel, &CoordsPanel::signalIndex, canvas, &Canvas::getIndex);
-    connect(panel, &Panel::playSignal, canvas, &Canvas::pause);
+    connect(panel, &Panel::playSignal, canvas, &Canvas::play);
+    connect(panel, &Panel::stopSignal, canvas, &Canvas::stop);
+    connect(panel, &Panel::stepSignal, canvas, &Canvas::step);
 
     auto visionAction = ui->dockWidget->toggleViewAction();
     visionAction->setText("View settings");

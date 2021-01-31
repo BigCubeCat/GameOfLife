@@ -34,6 +34,8 @@ public:
 signals:
     void updateData();
     void playSignal();
+    void stopSignal();
+    void stepSignal();
 private slots:
     void clearSettings();
     void applySettings();

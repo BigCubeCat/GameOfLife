@@ -1,24 +1,34 @@
 //
 // Created by bigcubecat on 19.12.2020.
 //
-
 #ifndef GAMEOFLIFE_WORKER_H
 #define GAMEOFLIFE_WORKER_H
 
 #include <QThread>
-#include "Life.h"
 #include <vector>
+#include "Life.h"
 
 class Worker : public QThread {
-    Q_OBJECT
+Q_OBJECT
 public:
-    Worker(int n, int s);
-    Life *life;
-    bool running = false;
-    int  coord = 0;
+    Worker();
+    std::string renderData;  // unencoding data like "AAADAA" where A: alive; D: dead
+
+    Life    *life;
+    int     coord = 0;
+    int     D;
+    int     SIZE;
+    int     generation = 0;
+
+    bool    getCell(int index);
+    void    updateParameters(int, int, vector<int>, vector<int>, int);
+
 signals:
-    void generationFinished(QVector<bool>);
+
+    void updateRender(std::string);
+
 public slots:
+
     void run();
 };
 
