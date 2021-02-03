@@ -16,13 +16,25 @@ void Worker::updateParameters(int d, int size, vector<int> b, vector<int> s, int
 Worker::Worker() : QThread() {
     D = 3;
     SIZE = 32;
+    crutch = 0;
     connect(this, &QThread::started, this, &Worker::run, Qt::QueuedConnection);
 }
 
 void Worker::run() {
+    crutch++;
+    // Ужасный костыль, мне стыдно за него (
+    if (crutch % 2 == 0) 
+        return;
+    // qDebug() << sender();  // должно помочь убрать костыль)Жц
     life->nextGeneration();
     renderData = life->renderData(coord);
-    emit updateRender(life->renderData(coord));
+    emit updateRender(renderData);
+}
+
+void Worker::step() {
+    life->nextGeneration();
+    renderData = life->renderData(coord);
+    emit updateRender(renderData);
 }
 
 bool Worker::getCell(int index) {

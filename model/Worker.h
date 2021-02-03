@@ -14,6 +14,8 @@ public:
     Worker();
     std::string renderData;  // unencoding data like "AAADAA" where A: alive; D: dead
 
+    int crutch = 0;
+
     Life    *life;
     int     coord = 0;
     int     D;
@@ -28,6 +30,7 @@ signals:
     void updateRender(std::string);
 
 public slots:
+    void step();
 
     void run();
 };

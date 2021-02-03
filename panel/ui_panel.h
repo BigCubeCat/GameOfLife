@@ -133,7 +133,7 @@ public:
 
         SizeSpin = new QSpinBox(groupBox);
         SizeSpin->setObjectName(QString::fromUtf8("SizeSpin"));
-        SizeSpin->setMinimum(9);
+        SizeSpin->setMinimum(1);
         SizeSpin->setMaximum(1280000000);
         SizeSpin->setValue(9);
 

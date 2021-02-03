@@ -20,20 +20,21 @@ using namespace std;
 class CoordsPanel : public QWidget {
     Q_OBJECT
 public:
-    int INDEX = 0;
     QHBoxLayout *m_layout;
     int size;
-    int life_size;
+    int dimension;
     vector< QSpinBox * > coords;
     explicit CoordsPanel(QWidget *parent = nullptr);
     ~CoordsPanel();
     int getIndex();
-    void reshape(int s, int ls);
+    void reshape(int d, int s);
 signals:
     void signalIndex(int);
 private slots:
     void calculateIndex();
 private:
+    void clearLayout();
+    int  pow(int a, int b);
     Ui::CoordsPanel *ui;
 };
 

@@ -3,7 +3,6 @@
 //
 #include "Life.h"
 #include <string>
-#include <QDebug>
 using namespace std;
 
 int int_pow(int a, int b) {
@@ -22,6 +21,7 @@ Life::Life(int d, int size, vector<int> b, vector<int> s, int v) {
     for (auto i : s) {
         S[i] = true;
     }
+    generation = 0;
     SIZE = size;
     N = d;
     dataSize = int_pow(SIZE, N);
@@ -93,10 +93,10 @@ bool Life::inWorld(int index) const {
 void Life::nextGeneration() {
     /*Apply current rules to life data*/
     for (int i = 0; i < dataSize; i++) {
-        qDebug() << applyRules(i);
         new_data[i] = applyRules(i);
     }
     swap(data, new_data);
+    generation++;
 }
 
 std::string Life::renderData(int coords) {

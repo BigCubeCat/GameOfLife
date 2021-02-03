@@ -3,38 +3,57 @@
 //
 
 #include "CoordsPanel.h"
+#include <QDebug>
+#include "../model/Life.h"
+
 
 CoordsPanel::CoordsPanel(QWidget *parent) : QWidget(parent), ui(new Ui::CoordsPanel) {
     size = 0;
     ui->setupUi(this);
-    m_layout = new QHBoxLayout();
-    ui->scrollArea->setLayout(m_layout);
     connect(ui->pushButton, &QPushButton::clicked, this, &CoordsPanel::calculateIndex);
+}
+
+void CoordsPanel::clearLayout() {
+    ui->scrollArea->widget()->deleteLater();
+    m_layout = new QHBoxLayout();
+    //add buttons to new layout
+    auto widget = new QWidget();
+    widget->setLayout(m_layout);
+    ui->scrollArea->setWidget(widget);
 }
 
 CoordsPanel::~CoordsPanel() {
     delete ui;
 }
 
-void CoordsPanel::reshape(int s, int ls) {
+void CoordsPanel::reshape(int d, int s) {
+    clearLayout();
     size = s;
-    life_size = ls;
+    dimension = d;
     coords.clear();
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < d - 3; i++) {
         auto *spin = new QSpinBox();
-        spin->setMinimum(1);
-        spin->setMaximum(life_size);
+        spin->setMinimum(0);
+        spin->setMaximum(size - 1);
         coords.push_back(spin);
         m_layout->addWidget(spin);
     }
+    this->update();
+}
+
+int CoordsPanel::pow(int a, int b) {
+    int answer = 1;
+    for (int i =0; i < b; i++) {
+        answer *= a;
+    }
+    return answer;
 }
 
 void CoordsPanel::calculateIndex() {
-    int N = coords.size();
-    INDEX = 0;
-    for (int i = 0; i < N; i++) {
-        int n = coords[i]->value();
-        INDEX += n * (N - i - 1);
+    int index = 0;
+    int j = 0;
+    for (int i = dimension - 1; i > 2; i++) {
+        index += this->pow(size, i) * coords[j]->value();
     }
-    emit signalIndex(INDEX);
+    emit signalIndex(index);
 }

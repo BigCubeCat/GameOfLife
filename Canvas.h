@@ -21,12 +21,12 @@
 class Canvas : public QOpenGLWidget {
 Q_OBJECT
 public:
-    Worker *worker;                                         /* Game Of Life model's controller */
-    bool *render_data;                                      /* data for render */
-    float cellSize = 2.0f;                                  /* cell size on drawing */
-    bool onFocus = false;                                   /* mouse movement enable when onFocus = true */
-    Panel *controlPanel;                                    /* panel for setup model */
-    CoordsPanel *coordsPanel;                               /* panel for move and navigate on 4+D space */
+    Worker *worker;                                 /* Game Of Life model's controller */
+    bool *render_data;                              /* data for render */
+    float cellSize = 1.0f;                          /* cell size on drawing */
+    bool onFocus = false;                           /* mouse movement enable when onFocus = true */
+    Panel *controlPanel;                            /* panel for setup model */
+    CoordsPanel *coordsPanel;                       /* panel for move and navigate on 4+D space */
     bool movement[4];
     bool lifeIsRunning = false;
     bool drawing = false;
@@ -57,7 +57,7 @@ public slots:
 
     void fpsUpdate();
 
-    void startThread(std::string);
+    void updateRender(std::string);
 
 private:
     QTimer *mTimer;

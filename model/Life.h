@@ -11,6 +11,7 @@ public:
     int                     N;
     int                     SIZE;
     int                     dataSize;
+    int                     generation;
     bool*                   data;
     bool*                   new_data;
     map<int, bool>          B;

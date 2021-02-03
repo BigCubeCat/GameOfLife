@@ -14,7 +14,7 @@ Canvas::Canvas(int n, int s, QWidget *parent)
     // life update timeint signal qtr
     mTimer = new QTimer(this);
     mTimer->setSingleShot(false);
-    mTimer->setInterval(1);
+    mTimer->setInterval(10000);
     connect(mTimer, &QTimer::timeout, this, &Canvas::nextGen);
     mTimer->start();
     fpsTimer = new QTimer(this);
@@ -22,7 +22,7 @@ Canvas::Canvas(int n, int s, QWidget *parent)
     fpsTimer->setInterval(fps);
     connect(fpsTimer, &QTimer::timeout, this, &Canvas::fpsUpdate);
     fpsTimer->start();
-    connect(worker, &Worker::updateRender, this, &Canvas::startThread); // rerun thread
+    connect(worker, &Worker::updateRender, this, &Canvas::updateRender); // rerun thread
 }
 
 /*GL functions*/
@@ -151,15 +151,15 @@ void Canvas::stop() {
 
 void Canvas::play() {
     lifeIsRunning = true;
-    worker->start();
 }
 
 void Canvas::updateSettings() {
     mTimer->setInterval(controlPanel->settings.speed);
     worker->updateParameters(controlPanel->settings.dimension, controlPanel->settings.size, controlPanel->settings.B,
                              controlPanel->settings.S, 2);
-    startThread(worker->life->renderData(worker->coord));
-    this->update();
+    updateRender(worker->life->renderData(worker->coord));
+    
+    coordsPanel->reshape(worker->life->N, worker->life->SIZE);
 }
 
 void Canvas::fpsUpdate() {
@@ -170,15 +170,15 @@ void Canvas::getIndex(int new_index) {
     worker->coord = new_index;
 }
 
-void Canvas::startThread(std::string new_render_data) {
+void Canvas::updateRender(std::string new_render_data) {
     drawing = true;
     int len = new_render_data.length();
     if (sizeof(render_data) != len) {
         render_data = new bool[len];
+        qDebug() << worker->life->generation;
+        qDebug() << "КОСТЫЛЬ!";
     }
-    qDebug() << sizeof(render_data);
     qDebug() << QString::fromStdString(new_render_data);
-    qDebug() << new_render_data.length();
     for (int i = 0; i < new_render_data.length(); i++) {
         if (new_render_data[i] == 'A') {
             render_data[i] = true;
@@ -186,12 +186,13 @@ void Canvas::startThread(std::string new_render_data) {
             render_data[i] = false;
         }
     }
-    qDebug() << "PORNO";
-    if (lifeIsRunning)
-        worker->start();
 }
 
 void Canvas::nextGen() {
+    if (lifeIsRunning) {
+        qDebug() << "Generation = " << worker->life->generation;
+        worker->start();
+    }
 }
 
 void Canvas::updateCount() {
