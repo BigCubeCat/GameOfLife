@@ -56,7 +56,7 @@ int Life::countNeighbours(int index) {
         for (auto a : coords) {
             left = a - steps[i];
             right = a + steps[i];
-            
+
             if (inWorld(index + left)) {
                 new_coords.push_back(left);
                 if (getCell(index + left)) {

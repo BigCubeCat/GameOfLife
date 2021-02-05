@@ -30,7 +30,7 @@ public:
 
     ~Panel();
 
-    void updateGeneration();
+    void updateGeneration(int);
 signals:
     void updateData();
     void playSignal();

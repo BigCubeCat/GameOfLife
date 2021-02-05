@@ -57,7 +57,6 @@ void Panel::clearSettings() {
     emit updateData();
 }
 
-void Panel::updateGeneration() {
-    int value = ui->lcdNumber->intValue() + 1;
+void Panel::updateGeneration(int value) {
     ui->lcdNumber->display(value);
 }

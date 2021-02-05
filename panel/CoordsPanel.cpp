@@ -11,6 +11,7 @@ CoordsPanel::CoordsPanel(QWidget *parent) : QWidget(parent), ui(new Ui::CoordsPa
     size = 0;
     ui->setupUi(this);
     connect(ui->pushButton, &QPushButton::clicked, this, &CoordsPanel::calculateIndex);
+    connect(ui->clearButton, &QPushButton::clicked, this, &CoordsPanel::clearValues);
 }
 
 void CoordsPanel::clearLayout() {
@@ -50,10 +51,19 @@ int CoordsPanel::pow(int a, int b) {
 }
 
 void CoordsPanel::calculateIndex() {
+    qDebug() << dimension;
     int index = 0;
     int j = 0;
-    for (int i = dimension - 1; i > 2; i++) {
+    for (int i = dimension - 1; i > 2; i--) {
         index += this->pow(size, i) * coords[j]->value();
     }
+    qDebug() << "END";
     emit signalIndex(index);
 }
+
+void CoordsPanel::clearValues() {
+    for (auto c : coords) {
+        c->setValue(0);
+    }
+}
+

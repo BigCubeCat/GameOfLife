@@ -102,6 +102,7 @@ void Canvas::render() {
                     b = (i + 1) * cellSize;
                     f = k * cellSize;
                     back = (k + 1) * cellSize;
+                    //qDebug() << "coords = " << r << " " << l << " " << t << " " << b << " " << f << " " << back;
                     glColor3f(((float) i / (float) worker->SIZE), ((float) j / (float) worker->SIZE),
                               ((float) k / (float) worker->SIZE));
                     glVertex3f(l, t, f);
@@ -141,6 +142,7 @@ void Canvas::render() {
 
 /* Slots */
 void Canvas::step() {
+    controlPanel->updateGeneration(worker->life->generation);
     worker->start();
     lifeIsRunning = false;
 }
@@ -168,11 +170,13 @@ void Canvas::fpsUpdate() {
 
 void Canvas::getIndex(int new_index) {
     worker->coord = new_index;
+    this->update();
 }
 
 void Canvas::updateRender(std::string new_render_data) {
     drawing = true;
     int len = new_render_data.length();
+    qDebug() << "updaterender";
     if (sizeof(render_data) != len) {
         render_data = new bool[len];
         qDebug() << worker->life->generation;
@@ -191,12 +195,9 @@ void Canvas::updateRender(std::string new_render_data) {
 void Canvas::nextGen() {
     if (lifeIsRunning) {
         qDebug() << "Generation = " << worker->life->generation;
+        controlPanel->updateGeneration(worker->life->generation);
         worker->start();
     }
-}
-
-void Canvas::updateCount() {
-    controlPanel->updateGeneration();
 }
 
 void Canvas::updateLife() {

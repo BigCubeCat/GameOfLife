@@ -32,6 +32,7 @@ signals:
     void signalIndex(int);
 private slots:
     void calculateIndex();
+    void clearValues();
 private:
     void clearLayout();
     int  pow(int a, int b);
