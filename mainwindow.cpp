@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(panel, &Panel::stepSignal, canvas, &Canvas::step);
 
     auto visionAction = ui->dockWidget->toggleViewAction();
-    visionAction->setText("View settings");
+    visionAction->setText("Control Panel");
     ui->menuView->addAction(visionAction);
     auto visionCoords = ui->coordsDock->toggleViewAction();
     visionCoords->setText("Navigation");

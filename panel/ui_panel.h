@@ -11,7 +11,6 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
@@ -52,12 +51,6 @@ public:
     QPushButton *step;
     QPushButton *run;
     QVBoxLayout *settingsLayout;
-    QGroupBox *formGroupBox;
-    QFormLayout *formLayout;
-    QLabel *label_11;
-    QPushButton *pushButton;
-    QLabel *label_12;
-    QPushButton *pushButton_2;
     QSpacerItem *verticalSpacer;
 
     void setupUi(QWidget *Panel)
@@ -185,35 +178,6 @@ public:
 
         settingsLayout = new QVBoxLayout();
         settingsLayout->setObjectName(QString::fromUtf8("settingsLayout"));
-        formGroupBox = new QGroupBox(Panel);
-        formGroupBox->setObjectName(QString::fromUtf8("formGroupBox"));
-        formGroupBox->setCheckable(true);
-        formGroupBox->setChecked(false);
-        formLayout = new QFormLayout(formGroupBox);
-        formLayout->setObjectName(QString::fromUtf8("formLayout"));
-        label_11 = new QLabel(formGroupBox);
-        label_11->setObjectName(QString::fromUtf8("label_11"));
-
-        formLayout->setWidget(0, QFormLayout::LabelRole, label_11);
-
-        pushButton = new QPushButton(formGroupBox);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-
-        formLayout->setWidget(1, QFormLayout::LabelRole, pushButton);
-
-        label_12 = new QLabel(formGroupBox);
-        label_12->setObjectName(QString::fromUtf8("label_12"));
-
-        formLayout->setWidget(0, QFormLayout::FieldRole, label_12);
-
-        pushButton_2 = new QPushButton(formGroupBox);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-
-        formLayout->setWidget(1, QFormLayout::FieldRole, pushButton_2);
-
-
-        settingsLayout->addWidget(formGroupBox);
-
 
         verticalLayout->addLayout(settingsLayout);
 
@@ -241,14 +205,9 @@ public:
         applyButton->setText(QCoreApplication::translate("Panel", "Apply", nullptr));
         label_9->setText(QCoreApplication::translate("Panel", "Dimension", nullptr));
         SInput->setText(QCoreApplication::translate("Panel", "2;3", nullptr));
-        stop->setText(QString());
-        step->setText(QString());
-        run->setText(QString());
-        formGroupBox->setTitle(QCoreApplication::translate("Panel", "Custom Color", nullptr));
-        label_11->setText(QCoreApplication::translate("Panel", "BackGround", nullptr));
-        pushButton->setText(QCoreApplication::translate("Panel", "choose", nullptr));
-        label_12->setText(QCoreApplication::translate("Panel", "Cell", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("Panel", "choose", nullptr));
+        stop->setText(QCoreApplication::translate("Panel", "stop", nullptr));
+        step->setText(QCoreApplication::translate("Panel", "step", nullptr));
+        run->setText(QCoreApplication::translate("Panel", "play", nullptr));
     } // retranslateUi
 
 };
