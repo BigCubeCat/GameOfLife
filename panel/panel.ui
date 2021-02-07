@@ -148,21 +148,21 @@
           <item>
            <widget class="QPushButton" name="stop">
             <property name="text">
-             <string/>
+             <string>stop</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="step">
             <property name="text">
-             <string/>
+             <string>step</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="run">
             <property name="text">
-             <string/>
+             <string>play</string>
             </property>
            </widget>
           </item>
@@ -174,51 +174,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="settingsLayout">
-     <item>
-      <widget class="QGroupBox" name="formGroupBox">
-       <property name="title">
-        <string>Custom Color</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-       <layout class="QFormLayout" name="formLayout">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_11">
-          <property name="text">
-           <string>BackGround</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="pushButton">
-          <property name="text">
-           <string>choose</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="label_12">
-          <property name="text">
-           <string>Cell</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="pushButton_2">
-          <property name="text">
-           <string>choose</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-    </layout>
+    <layout class="QVBoxLayout" name="settingsLayout"/>
    </item>
    <item>
     <spacer name="verticalSpacer">

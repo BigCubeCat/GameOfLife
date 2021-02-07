@@ -4,7 +4,6 @@
 
 #include "CoordsPanel.h"
 #include <QDebug>
-#include "../model/Life.h"
 
 
 CoordsPanel::CoordsPanel(QWidget *parent) : QWidget(parent), ui(new Ui::CoordsPanel) {
@@ -42,20 +41,12 @@ void CoordsPanel::reshape(int d, int s) {
     this->update();
 }
 
-int CoordsPanel::pow(int a, int b) {
-    int answer = 1;
-    for (int i =0; i < b; i++) {
-        answer *= a;
-    }
-    return answer;
-}
-
 void CoordsPanel::calculateIndex() {
     qDebug() << dimension;
     int index = 0;
     int j = 0;
     for (int i = dimension - 1; i > 2; i--) {
-        index += this->pow(size, i) * coords[j]->value();
+        index += intpow(size, i) * coords[j]->value();
     }
     qDebug() << "END";
     emit signalIndex(index);

@@ -41,3 +41,9 @@ bool Worker::getCell(int index) {
     return life->getCell(index);
 }
 
+void Worker::setLife(Life newModel) {
+    qDebug() << life->N;
+    life = &newModel;
+    qDebug() << "set Life";
+    qDebug() << life->N;
+}

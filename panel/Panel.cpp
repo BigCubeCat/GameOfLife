@@ -43,6 +43,8 @@ void Panel::applySettings() {
         new_s.push_back(_);
     }
     settings.B = new_b; settings.S = new_s;
+
+    qDebug() << "apply Settings";
     // emit signal to canvas
     emit updateData();
 }
@@ -54,9 +56,15 @@ void Panel::clearSettings() {
     ui->SizeSpin->setValue(default_settings.size);
     ui->SpeedSpin->setValue(default_settings.speed);
     ui->DSpin->setValue(default_settings.dimension);
-    emit updateData();
 }
 
 void Panel::updateGeneration(int value) {
     ui->lcdNumber->display(value);
+}
+
+void Panel::updateSettings(int d, int s, QString b_rule, QString s_rule) {
+    ui->BInput->setText(b_rule);
+    ui->SInput->setText(s_rule);
+    ui->SizeSpin->setValue(s);
+    ui->DSpin->setValue(d);
 }

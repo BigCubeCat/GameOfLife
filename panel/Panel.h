@@ -10,6 +10,7 @@ class Panel;
 QT_END_NAMESPACE
 
 #include "./ui_panel.h"
+#include "intpow.h"
 using namespace std;
 
 struct Settings {
@@ -31,6 +32,8 @@ public:
     ~Panel();
 
     void updateGeneration(int);
+
+    void updateSettings(int, int, QString, QString);
 signals:
     void updateData();
     void playSignal();

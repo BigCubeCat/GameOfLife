@@ -7,7 +7,7 @@
 
 Camera *camera = new Camera(-5, 5, -5, 4 * M_PI / 7, M_PI / 4, 0.005, 0.1, 800, 600);
 
-Canvas::Canvas(int n, int s, QWidget *parent)
+Canvas::Canvas(QWidget *parent)
         : QOpenGLWidget(parent) {
     this->setMouseTracking(true);
     worker = new Worker();
@@ -23,6 +23,11 @@ Canvas::Canvas(int n, int s, QWidget *parent)
     connect(fpsTimer, &QTimer::timeout, this, &Canvas::fpsUpdate);
     fpsTimer->start();
     connect(worker, &Worker::updateRender, this, &Canvas::updateRender); // rerun thread
+}
+
+void Canvas::setLife(fileData file_data) {
+    worker->setLife(file_data.model);
+    controlPanel->updateSettings(file_data.model.N, file_data.model.SIZE, file_data.B, file_data.S);
 }
 
 /*GL functions*/

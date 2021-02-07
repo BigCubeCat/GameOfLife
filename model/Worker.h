@@ -24,6 +24,7 @@ public:
 
     bool    getCell(int index);
     void    updateParameters(int, int, vector<int>, vector<int>, int);
+    void    setLife(Life newModel);
 
 signals:
 

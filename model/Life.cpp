@@ -2,19 +2,10 @@
 // Created by bigcubecat on 21.11.2020.
 //
 #include "Life.h"
-#include <string>
 using namespace std;
 
-int int_pow(int a, int b) {
-    // Возведение в степень в формате int
-    int answer = 1;
-    for (int i = 0; i < b; i++) {
-        answer *= a;
-    }
-    return answer;
-}
 
-Life::Life(int d, int size, vector<int> b, vector<int> s, int v) {
+void Life::setup(int d, int size, vector<int> b, vector<int> s) {
     for (auto i : b) {
         B[i] = true;
     }
@@ -24,18 +15,30 @@ Life::Life(int d, int size, vector<int> b, vector<int> s, int v) {
     generation = 0;
     SIZE = size;
     N = d;
-    dataSize = int_pow(SIZE, N);
-    (d > 2) ? render_size = int_pow(SIZE, 3) : render_size = int_pow(SIZE, 2);
+    dataSize = intpow(SIZE, N);
+    (d > 2) ? render_size = intpow(SIZE, 3) : render_size = intpow(SIZE, 2);
+    steps = new int[N];
+    for (int i = 0; i < N; i++) {
+        steps[i] = intpow(SIZE, i);
+    }
+}
 
+Life::Life(int d, int size, vector<int> b, vector<int> s, int v) {
+    setup(d, size, b, s);
     data = new bool[dataSize];
     new_data = new bool[dataSize];
     for (int i = 0; i < dataSize; i++) {
         data[i] = rand() % v == 0;
         new_data[i] = false;
     }
-    steps = new int[N];
-    for (int i = 0; i < N; i++) {
-        steps[i] = int_pow(SIZE, i);
+}
+
+Life::Life(int d, int size, vector<int> b, vector<int> s, bool *dat) {
+    setup(d, size, b, s);
+    data = dat;
+    new_data = new bool[dataSize];
+    for (int i = 0; i < dataSize; i++) {
+        new_data[i] = false;
     }
 }
 

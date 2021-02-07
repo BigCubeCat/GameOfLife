@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include "model/Worker.h"
 #include "view/Camera.h"
+#include "reader/reader.h"
 #include "panel/Panel.h"
 #include "panel/CoordsPanel.h"
 #include <vector>
@@ -33,11 +34,13 @@ public:
 
     int fps = 10;
 
-    explicit Canvas(int n, int s, QWidget *parent = nullptr);
+    explicit Canvas(QWidget *parent = nullptr);
 
     void render2d();
 
     void render();
+
+    void setLife(fileData);
 
 public slots:
 

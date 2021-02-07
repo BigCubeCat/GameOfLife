@@ -36,5 +36,9 @@ add_executable(
         view/Camera.cpp
         model/Life.cpp
         model/Life.h
+        reader/reader.h
+        reader/reader.cpp
+        intpow.h
+        intpow.cpp
 )
 target_link_libraries(GameOfLife PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} GLEW libGLEW.so)

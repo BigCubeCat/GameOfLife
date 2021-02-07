@@ -1,7 +1,6 @@
 //
 // Created by bigcubecat on 08.12.2020.
 //
-
 #ifndef GAMEOFLIFE_COORDSPANEL_H
 #define GAMEOFLIFE_COORDSPANEL_H
 
@@ -12,6 +11,7 @@ namespace Ui { class CoordsPanel; }
 QT_END_NAMESPACE
 
 #include "./ui_coords.h"
+#include "model/Life.h"
 #include <QPushButton>
 #include <QSpinBox>
 
@@ -35,7 +35,6 @@ private slots:
     void clearValues();
 private:
     void clearLayout();
-    int  pow(int a, int b);
     Ui::CoordsPanel *ui;
 };
 

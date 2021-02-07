@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <string>
+#include "../intpow.h"
 using namespace std;
 
 class Life {
@@ -19,13 +20,16 @@ public:
     int                     render_size;
     int*                    steps;
 
-    Life(int, int, vector<int>, vector<int>, int);
+    Life(int, int, vector<int>, vector<int>, int);          /*init with random arena*/
+    Life(int, int, vector<int>, vector<int>, bool*);        /*init with exists data*/
     bool                    getCell(int index) const;
     bool                    inWorld(int index) const;
     bool                    applyRules(int);
     int                     countNeighbours(int index);
     string                  renderData(int coords);
     void                    nextGeneration();
+private:
+    void                    setup(int, int, vector<int>, vector<int>);
 };
 
 #endif //GAMEOFLIFE_LIFE_H
