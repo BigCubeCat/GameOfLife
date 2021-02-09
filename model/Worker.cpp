@@ -47,3 +47,8 @@ void Worker::setLife(Life newModel) {
     qDebug() << "set Life";
     qDebug() << life->N;
 }
+
+QString Worker::getData() {
+    return QString::fromStdString(renderData);
+
+}

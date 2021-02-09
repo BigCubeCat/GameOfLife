@@ -1,6 +1,5 @@
-#include "reader.h"
+#include "io.h"
 
-#include <QJsonDocument>
 
 fileData readFile(QString fileName) {
     QString val;
@@ -59,11 +58,20 @@ vector<bool> rleDecode(std::string compressed) {
         while (repeat--) {
             if (char_to_unroll == 'A') {
                 original.push_back(true);
-            } else { 
+            } else {
                 original.push_back(false);
             }
         }
-            original.push_back(char_to_unroll);
+        original.push_back(char_to_unroll);
     }
     return original;
+}
+
+void saveToFile(QString fileName, QString data) {
+    QFile file(fileName);
+    if (file.open(QIODevice::WriteOnly)) {
+        QTextStream out(&file);
+        out << data;
+        file.close();
+    }
 }

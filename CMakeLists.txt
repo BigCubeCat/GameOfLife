@@ -34,8 +34,8 @@ add_executable(
         view/Camera.cpp
         model/Life.cpp
         model/Life.h
-        reader/reader.h
-        reader/reader.cpp
+        io/io.h
+        io/io.cpp
         intpow.h
         intpow.cpp
 )

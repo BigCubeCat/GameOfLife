@@ -1,5 +1,5 @@
-#ifndef GAMEOFLIFE_READER_H
-#define GAMEOFLIFE_READER_H
+#ifndef GAMEOFLIFE_IO_H
+#define GAMEOFLIFE_IO_H
 
 #include <QString>
 #include <QFile>
@@ -20,5 +20,7 @@ fileData readFile(QString fileName);
 vector<int> getRules(QString rule);
 
 vector<bool> rleDecode(std::string);
+
+void saveToFile(QString filename, QString data);
 
 #endif

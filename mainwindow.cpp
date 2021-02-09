@@ -3,7 +3,7 @@
 #include "Canvas.h"
 #include "panel/Panel.h"
 #include "panel/CoordsPanel.h"
-#include "reader/reader.h"
+#include "io/io.h"
 #include <QDebug>
 #include <QFileDialog>
 
@@ -40,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent)
     canvas->setFocus();
 
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openFile);
+    connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveFile);
+    connect(ui->actionSave_As, &QAction::triggered, this, &MainWindow::saveAs);
 }
 
 MainWindow::~MainWindow()
@@ -48,9 +50,24 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::openFile() {
-    auto fileName = QFileDialog::getOpenFileName(this, 
+    fileName = QFileDialog::getOpenFileName(this, 
             tr("Open Image"), "", tr("Game Of Life(*.life *.json)"));
 
     auto file_data = readFile(fileName);
     canvas->setLife(file_data);
+}
+
+void MainWindow::saveFile() {
+    if (fileName.length() > 0) {
+        saveToFile(fileName, canvas->worker->getData());
+    } else {
+        saveAs();
+    }
+}
+
+void MainWindow::saveAs() {
+     fileName = QFileDialog::getSaveFileName(
+            this, tr("Save File"), fileName, tr("")
+    );
+    saveFile();
 }

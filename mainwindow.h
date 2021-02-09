@@ -17,8 +17,11 @@ public:
     ~MainWindow();
 
     Canvas *canvas;
+    QString fileName;
 
     void openFile();
+    void saveFile();
+    void saveAs();
 
 private:
     Ui::MainWindow *ui;

@@ -5,7 +5,7 @@
 #include <QKeyEvent>
 #include "model/Worker.h"
 #include "view/Camera.h"
-#include "reader/reader.h"
+#include "io/io.h"
 #include "panel/Panel.h"
 #include "panel/CoordsPanel.h"
 #include <vector>

@@ -40,7 +40,7 @@
            <number>2</number>
           </property>
           <property name="maximum">
-           <number>1000000000</number>
+           <number>1984</number>
           </property>
          </widget>
         </item>
@@ -61,7 +61,7 @@
         <item row="10" column="0">
          <widget class="QLabel" name="label_4">
           <property name="text">
-           <string>speed:</string>
+           <string>Speed:</string>
           </property>
          </widget>
         </item>
@@ -126,7 +126,7 @@
         <item row="5" column="2">
          <widget class="QLineEdit" name="SInput">
           <property name="text">
-           <string>2;3</string>
+           <string>2,3</string>
           </property>
          </widget>
         </item>
@@ -139,7 +139,7 @@
            <number>1000000000</number>
           </property>
           <property name="value">
-           <number>1</number>
+           <number>100</number>
           </property>
          </widget>
         </item>

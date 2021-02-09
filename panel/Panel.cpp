@@ -26,8 +26,8 @@ void Panel::applySettings() {
     settings.size = ui->SizeSpin->value();
     settings.speed = ui->SpeedSpin->value();
     // reading new rules
-    QStringList newBList = ui->BInput->text().split(";");
-    QStringList newSList = ui->SInput->text().split(";");
+    QStringList newBList = ui->BInput->text().split(",");
+    QStringList newSList = ui->SInput->text().split(",");
     vector<int> new_s;
     vector<int> new_b;
     for (const auto& _b : newBList) {

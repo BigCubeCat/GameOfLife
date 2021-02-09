@@ -75,7 +75,7 @@ public:
         DSpin = new QSpinBox(groupBox);
         DSpin->setObjectName(QString::fromUtf8("DSpin"));
         DSpin->setMinimum(2);
-        DSpin->setMaximum(1000000000);
+        DSpin->setMaximum(1984);
 
         gridLayout->addWidget(DSpin, 2, 2, 1, 1);
 
@@ -146,7 +146,7 @@ public:
         SpeedSpin->setObjectName(QString::fromUtf8("SpeedSpin"));
         SpeedSpin->setMinimum(1);
         SpeedSpin->setMaximum(1000000000);
-        SpeedSpin->setValue(1);
+        SpeedSpin->setValue(100);
 
         gridLayout->addWidget(SpeedSpin, 10, 2, 1, 1);
 
@@ -197,14 +197,14 @@ public:
         groupBox->setTitle(QCoreApplication::translate("Panel", "Info", nullptr));
         label_8->setText(QCoreApplication::translate("Panel", "S", nullptr));
         label_7->setText(QCoreApplication::translate("Panel", "B", nullptr));
-        label_4->setText(QCoreApplication::translate("Panel", "speed:", nullptr));
+        label_4->setText(QCoreApplication::translate("Panel", "Speed:", nullptr));
         clearButton->setText(QCoreApplication::translate("Panel", "Default", nullptr));
         label_10->setText(QCoreApplication::translate("Panel", "Size", nullptr));
         BInput->setText(QCoreApplication::translate("Panel", "3", nullptr));
         label_6->setText(QCoreApplication::translate("Panel", "Generation", nullptr));
         applyButton->setText(QCoreApplication::translate("Panel", "Apply", nullptr));
         label_9->setText(QCoreApplication::translate("Panel", "Dimension", nullptr));
-        SInput->setText(QCoreApplication::translate("Panel", "2;3", nullptr));
+        SInput->setText(QCoreApplication::translate("Panel", "2,3", nullptr));
         stop->setText(QCoreApplication::translate("Panel", "stop", nullptr));
         step->setText(QCoreApplication::translate("Panel", "step", nullptr));
         run->setText(QCoreApplication::translate("Panel", "play", nullptr));
