@@ -25,7 +25,7 @@ public:
     bool    getCell(int index);
     void    updateParameters(int, int, vector<int>, vector<int>, int);
     void    setLife(Life newModel);
-    QString getData();
+    QString getData(QString, QString);
 
 signals:
 

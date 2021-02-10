@@ -2,19 +2,19 @@
 #include <QDebug>
 
 Panel::Panel(QWidget *parent) : QWidget(parent),
-                                ui(new Ui::Panel) {
-    ui->setupUi(this);
-    connect(ui->applyButton, &QPushButton::clicked, this, &Panel::applySettings);
-    connect(ui->clearButton, &QPushButton::clicked, this, &Panel::clearSettings);
+    ui(new Ui::Panel) {
+        ui->setupUi(this);
+        connect(ui->applyButton, &QPushButton::clicked, this, &Panel::applySettings);
+        connect(ui->clearButton, &QPushButton::clicked, this, &Panel::clearSettings);
 
-    connect(ui->stop, &QPushButton::clicked, this, &Panel::stopSignal);
-    connect(ui->run, &QPushButton::clicked, this, &Panel::playSignal);
-    connect(ui->step, &QPushButton::clicked, this, &Panel::stepSignal);
+        connect(ui->stop, &QPushButton::clicked, this, &Panel::stopSignal);
+        connect(ui->run, &QPushButton::clicked, this, &Panel::playSignal);
+        connect(ui->step, &QPushButton::clicked, this, &Panel::stepSignal);
 
-    default_settings.size = ui->SizeSpin->value();  // Default set in qt designer
-    default_settings.dimension = 2;
-    default_settings.speed = 100;
-}
+        default_settings.size = ui->SizeSpin->value();  // Default set in qt designer
+        default_settings.dimension = 2;
+        default_settings.speed = 100;
+    }
 
 Panel::~Panel() {
     delete ui;
@@ -67,4 +67,12 @@ void Panel::updateSettings(int d, int s, QString b_rule, QString s_rule) {
     ui->SInput->setText(s_rule);
     ui->SizeSpin->setValue(s);
     ui->DSpin->setValue(d);
+}
+
+QString Panel::getB() {
+    return ui->BInput->text();
+}
+
+QString Panel::getS() {
+    return ui->SInput->text();
 }

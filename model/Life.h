@@ -27,6 +27,7 @@ public:
     bool                    applyRules(int);
     int                     countNeighbours(int index);
     string                  renderData(int coords);
+    string                  fileData();
     void                    nextGeneration();
 private:
     void                    setup(int, int, vector<int>, vector<int>);

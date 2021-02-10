@@ -17,6 +17,9 @@ fileData readFile(QString fileName) {
     QString S = object.value(QString("S")).toString();
 
     vector<bool> vector_cells = rleDecode(data.toStdString());
+    if (vector_cells.size() == 0) {
+        throw;
+    }
     bool *cells = new bool[vector_cells.size()];
     for (int i = 0; i < sizeof(cells); i++) {
         cells[i] = vector_cells[i];

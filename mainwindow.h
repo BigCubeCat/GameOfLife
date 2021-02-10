@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "Canvas.h"
+#include <QStatusBar>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,11 +20,15 @@ public:
     Canvas *canvas;
     QString fileName;
 
+    void emitWarning(QString);
+    void emitMessage(QString);
+    void emitError(QString);
+
+private:
+    Ui::MainWindow *ui;
     void openFile();
     void saveFile();
     void saveAs();
 
-private:
-    Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

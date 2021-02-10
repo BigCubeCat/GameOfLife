@@ -5,7 +5,7 @@
 #include <vector>
 QT_BEGIN_NAMESPACE
 namespace Ui {
-class Panel;
+    class Panel;
 }
 QT_END_NAMESPACE
 
@@ -24,27 +24,30 @@ struct Settings {
 class Panel : public QWidget {
     Q_OBJECT
 
-public:
-    Settings settings;
-    Settings default_settings;
-    explicit Panel(QWidget* parent = nullptr);
+    public:
+        Settings settings;
+        Settings default_settings;
+        explicit Panel(QWidget* parent = nullptr);
 
-    ~Panel();
+        ~Panel();
 
-    void updateGeneration(int);
+        void updateGeneration(int);
 
-    void updateSettings(int, int, QString, QString);
+        void updateSettings(int, int, QString, QString);
+
+        QString getB();
+        QString getS();
 signals:
-    void updateData();
-    void playSignal();
-    void stopSignal();
-    void stepSignal();
-private slots:
-    void clearSettings();
-    void applySettings();
+        void updateData();
+        void playSignal();
+        void stopSignal();
+        void stepSignal();
+        private slots:
+            void clearSettings();
+        void applySettings();
 
-private:
-    Ui::Panel* ui;
+    private:
+        Ui::Panel* ui;
 };
 
 #endif //GAMEOFLIFE_PANEL_H

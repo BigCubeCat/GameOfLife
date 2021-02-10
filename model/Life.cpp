@@ -102,6 +102,18 @@ void Life::nextGeneration() {
     generation++;
 }
 
+std::string Life::fileData() {
+    std::string answer;
+    for (int i = 0; i < dataSize; i++) {
+        if (getCell(i)) {
+            answer += 'A';
+        } else {
+            answer += 'D';
+        }
+    }
+    return answer;
+}
+
 std::string Life::renderData(int coords) {
     // Return 3D slice by coords in 4+D
     std::string answer;

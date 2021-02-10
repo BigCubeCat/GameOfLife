@@ -9,7 +9,7 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+      , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     setWindowTitle("N-Dimension Game Of Life");
@@ -50,24 +50,53 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::openFile() {
-    fileName = QFileDialog::getOpenFileName(this, 
-            tr("Open Image"), "", tr("Game Of Life(*.life *.json)"));
+    try{
+        fileName = QFileDialog::getOpenFileName(this,
+                tr("Open Image"), "", tr("Game Of Life(*.life *.json)"));
 
-    auto file_data = readFile(fileName);
-    canvas->setLife(file_data);
+        try {
+            auto file_data = readFile(fileName);
+            canvas->setLife(file_data);
+            emitMessage(QString("Success"));
+        } catch (const std::exception&) {
+            emitError(QString("read error"));
+        }
+    } catch (const std::exception&) {
+        emitError(QString(""));
+    }
 }
 
 void MainWindow::saveFile() {
     if (fileName.length() > 0) {
-        saveToFile(fileName, canvas->worker->getData());
+        saveToFile(fileName, canvas->worker->getData(canvas->controlPanel->getB(), canvas->controlPanel->getS()));
     } else {
         saveAs();
     }
+    emitMessage(fileName + QString("written"));
 }
 
 void MainWindow::saveAs() {
-     fileName = QFileDialog::getSaveFileName(
+    fileName = QFileDialog::getSaveFileName(
             this, tr("Save File"), fileName, tr("")
-    );
+            );
     saveFile();
 }
+
+void MainWindow::emitWarning(QString text) {
+    QStatusBar *bar = this->statusBar();
+    bar->showMessage(text);
+    bar->setStyleSheet("background-color:yellow;");
+}
+
+void MainWindow::emitMessage(QString text) {
+    QStatusBar *bar = this->statusBar();
+    bar->showMessage(text);
+    bar->setStyleSheet("");
+}
+
+void MainWindow::emitError(QString text) {
+    QStatusBar *bar = this->statusBar();
+    bar->showMessage(text);
+    bar->setStyleSheet("background-color:red;");
+}
+

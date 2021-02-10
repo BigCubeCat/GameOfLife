@@ -42,13 +42,16 @@ bool Worker::getCell(int index) {
 }
 
 void Worker::setLife(Life newModel) {
-    qDebug() << life->N;
     life = &newModel;
     qDebug() << "set Life";
-    qDebug() << life->N;
 }
 
-QString Worker::getData() {
-    return QString::fromStdString(renderData);
-
+QString Worker::getData(QString b, QString s) {
+    QString answer;
+    answer = QString("{\n") + QString("\"D\": ") + QString::number(life->N) + QString(",\n");
+    answer += QString("\"SIZE\": ") + QString::number(life->SIZE) + QString(",\n");
+    answer += QString("\"DATA\": \"") + QString::fromStdString(life->fileData()) + QString("\",\n");
+    answer += QString("\"B\": \"") + b + QString("\",\n");
+    answer += QString("\"S\": \"") + s + QString("\"\n}");
+    return answer;
 }

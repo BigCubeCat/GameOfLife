@@ -26,7 +26,9 @@ Canvas::Canvas(QWidget *parent)
 }
 
 void Canvas::setLife(fileData file_data) {
+    qDebug() << "START";
     worker->setLife(file_data.model);
+    qDebug() << "GGGGG";
     controlPanel->updateSettings(file_data.model.N, file_data.model.SIZE, file_data.B, file_data.S);
 }
 
