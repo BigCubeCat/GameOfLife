@@ -3,23 +3,24 @@
 
 #include <QString>
 #include <QFile>
-#include "model/Life.h"
 #include <vector>
 #include <QJsonDocument>
 #include <QJsonObject>
 
 struct fileData {
-
-    Life    model;
-    QString B;
-    QString S;
+    int         D;
+    int         SIZE;
+    vector<int> B;
+    vector<int> S;
+    QString     stringB;
+    QString     stringS;
 };
 
 fileData readFile(QString fileName);
 
 vector<int> getRules(QString rule);
 
-vector<bool> rleDecode(std::string);
+vector<bool> rleDecode(QString);
 
 void saveToFile(QString filename, QString data);
 

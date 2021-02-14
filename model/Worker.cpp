@@ -7,7 +7,7 @@
 #include <utility>
 
 void Worker::updateParameters(int d, int size, vector<int> b, vector<int> s, int v) {
-    life = new Life(d, size, std::move(b), std::move(s), 3);
+    life = new Life(d, size, std::move(b), std::move(s), v);
     D = d;
     SIZE = size;
     emit updateRender(life->renderData(coord));
@@ -16,23 +16,34 @@ void Worker::updateParameters(int d, int size, vector<int> b, vector<int> s, int
 Worker::Worker() : QThread() {
     D = 3;
     SIZE = 32;
-    crutch = 0;
     connect(this, &QThread::started, this, &Worker::run, Qt::QueuedConnection);
 }
 
 void Worker::run() {
-    crutch++;
-    // Ужасный костыль, мне стыдно за него (
-    if (crutch % 2 == 0) 
+    // qDebug() << sender();
+    if (isBusy) {
         return;
-    // qDebug() << sender();  // должно помочь убрать костыль)Жц
+    }
+    isBusy = true;
+    qDebug() << "!";
     life->nextGeneration();
+    qDebug() << "!!";
     renderData = life->renderData(coord);
+    isBusy = false;
     emit updateRender(renderData);
 }
 
 void Worker::step() {
+    qDebug() << life->N;
+    if (isBusy) return;
+    isBusy = true;
     life->nextGeneration();
+    renderData = life->renderData(coord);
+    isBusy = false;
+    emit updateRender(renderData);
+}
+
+void Worker::changeCoord() {
     renderData = life->renderData(coord);
     emit updateRender(renderData);
 }
@@ -42,8 +53,13 @@ bool Worker::getCell(int index) {
 }
 
 void Worker::setLife(Life newModel) {
+    qDebug() << newModel.N;
+    isBusy = true;
     life = &newModel;
+    qDebug() << newModel.getCell(0);
     qDebug() << "set Life";
+    qDebug() << QString::fromStdString(life->renderData(0));
+    isBusy = false;
 }
 
 QString Worker::getData(QString b, QString s) {
@@ -54,4 +70,4 @@ QString Worker::getData(QString b, QString s) {
     answer += QString("\"B\": \"") + b + QString("\",\n");
     answer += QString("\"S\": \"") + s + QString("\"\n}");
     return answer;
-}
+} 

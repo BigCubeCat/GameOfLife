@@ -2,6 +2,7 @@
 // Created by bigcubecat on 21.11.2020.
 //
 #include "Life.h"
+#include <QDebug>
 using namespace std;
 
 
@@ -44,8 +45,9 @@ Life::Life(int d, int size, vector<int> b, vector<int> s, bool *dat) {
 
 bool Life::getCell(int index) const {
     // get cell data by global index
-    if (inWorld(index))
+    if (inWorld(index)) {
         return data[index];
+    } 
     return false;
 }
 
@@ -95,6 +97,8 @@ bool Life::inWorld(int index) const {
 
 void Life::nextGeneration() {
     /*Apply current rules to life data*/
+    qDebug() << "dataSize = " << dataSize;
+    qDebug() << sizeof(new_data);
     for (int i = 0; i < dataSize; i++) {
         new_data[i] = applyRules(i);
     }
@@ -117,7 +121,7 @@ std::string Life::fileData() {
 std::string Life::renderData(int coords) {
     // Return 3D slice by coords in 4+D
     std::string answer;
-    for (int i = coords; i < render_size; i++) {
+    for (int i = coords; i < coords + render_size; i++) {
         if (getCell(i)) {
             answer += 'A';
         } else {

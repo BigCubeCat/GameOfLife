@@ -24,7 +24,7 @@ Q_OBJECT
 public:
     Worker *worker;                                 /* Game Of Life model's controller */
     bool *render_data;                              /* data for render */
-    float cellSize = 0.1f;                          /* cell size on drawing */
+    float cellSize = 0.5f;                          /* cell size on drawing */
     bool onFocus = false;                           /* mouse movement enable when onFocus = true */
     Panel *controlPanel;                            /* panel for setup model */
     CoordsPanel *coordsPanel;                       /* panel for move and navigate on 4+D space */

@@ -12,15 +12,15 @@ class Worker : public QThread {
 Q_OBJECT
 public:
     Worker();
+    void changeCoord();
     std::string renderData;  // unencoding data like "AAADAA" where A: alive; D: dead
-
-    int crutch = 0;
 
     Life    *life;
     int     coord = 0;
     int     D;
     int     SIZE;
     int     generation = 0;
+    bool    isBusy;
 
     bool    getCell(int index);
     void    updateParameters(int, int, vector<int>, vector<int>, int);

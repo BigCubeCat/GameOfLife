@@ -2,6 +2,7 @@
 
 
 fileData readFile(QString fileName) {
+    qDebug() << fileName;
     QString val;
     QFile file;
     file.setFileName(fileName);
@@ -10,13 +11,18 @@ fileData readFile(QString fileName) {
     file.close();
     QJsonDocument d = QJsonDocument::fromJson(val.toUtf8());
     QJsonObject object = d.object();
+    qDebug() << object;
     int dim = object.value(QString("D")).toInt();
+    qDebug() << dim;
     int size = object.value(QString("SIZE")).toInt();
-    QString data = object.value(QString("DATA")).toString();
+    qDebug() << size;
+    auto data = object.value(QString("DATA")).toString();
     QString B = object.value(QString("B")).toString();
     QString S = object.value(QString("S")).toString();
 
-    vector<bool> vector_cells = rleDecode(data.toStdString());
+    qDebug() << data;
+    vector<bool> vector_cells = rleDecode(data);
+    qDebug() << "GGGG";
     if (vector_cells.size() == 0) {
         throw;
     }
@@ -25,9 +31,7 @@ fileData readFile(QString fileName) {
         cells[i] = vector_cells[i];
     }
 
-    Life model = Life(dim, size, getRules(B), getRules(S), cells);
-
-    return fileData{model, B, S};
+    return fileData{dim, size, getRules(B), getRules(S), B, S};
 }
 
 vector<int> getRules(QString rule) {
@@ -42,30 +46,15 @@ vector<int> getRules(QString rule) {
     return answer;
 }
 
-vector<bool> rleDecode(std::string compressed) {
+vector<bool> rleDecode(QString compressed) {
     vector<bool> original;
-    size_t i = 0;
-    size_t repeat;
-    while (i < compressed.length())
-    {
-        while (isalpha(compressed[i]))
-            original.push_back(compressed[i++]);
-
-        // repeat number
-        repeat = 0;
-        while (isdigit(compressed[i]))
-            repeat = 10 * repeat + (compressed[i++] - '0');
-
-        // unroll releat charachters
-        auto char_to_unroll = compressed[i++];
-        while (repeat--) {
-            if (char_to_unroll == 'A') {
-                original.push_back(true);
-            } else {
-                original.push_back(false);
-            }
+    for (int i = 0; i < compressed.size(); i++) {
+        qDebug() << compressed.at(i);
+        if (compressed.at(i) == 'A') {
+            original.push_back(true);
+        } else {
+            original.push_back(false);
         }
-        original.push_back(char_to_unroll);
     }
     return original;
 }

@@ -56,7 +56,8 @@ void MainWindow::openFile() {
 
         try {
             auto file_data = readFile(fileName);
-            canvas->setLife(file_data);
+            canvas->worker->updateParameters(file_data.D, file_data.SIZE, file_data.B, file_data.S, 2);
+            canvas->controlPanel->updateSettings(file_data.D, file_data.SIZE, file_data.stringB, file_data.stringS);
             emitMessage(QString("Success"));
         } catch (const std::exception&) {
             emitError(QString("read error"));
@@ -72,12 +73,12 @@ void MainWindow::saveFile() {
     } else {
         saveAs();
     }
-    emitMessage(fileName + QString("written"));
+    emitMessage(fileName + QString(" written"));
 }
 
 void MainWindow::saveAs() {
     fileName = QFileDialog::getSaveFileName(
-            this, tr("Save File"), fileName, tr("")
+            this, tr("Save File"), fileName, tr("Life Files (*.json *.life *.txt)")
             );
     saveFile();
 }

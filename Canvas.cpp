@@ -8,7 +8,7 @@
 Camera *camera = new Camera(-5, 5, -5, 4 * M_PI / 7, M_PI / 4, 0.005, 0.1, 800, 600);
 
 Canvas::Canvas(QWidget *parent)
-        : QOpenGLWidget(parent) {
+    : QOpenGLWidget(parent) {
     this->setMouseTracking(true);
     worker = new Worker();
     // life update timeint signal qtr
@@ -26,9 +26,7 @@ Canvas::Canvas(QWidget *parent)
 }
 
 void Canvas::setLife(fileData file_data) {
-    qDebug() << "START";
     worker->setLife(file_data.model);
-    qDebug() << "GGGGG";
     controlPanel->updateSettings(file_data.model.N, file_data.model.SIZE, file_data.B, file_data.S);
 }
 
@@ -47,6 +45,22 @@ void Canvas::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+
+    glBegin(GL_LINES);
+    // draw line for x axis
+    glColor3f(1000.0, 0.0, 0.0);
+    glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(1000.0, 0.0, 0.0);
+    // draw line for y axis
+    glColor3f(0.0, 1000.0, 0.0);
+    glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(0.0, 1000.0, 0.0);
+    // draw line for Z axis
+    glColor3f(0.0, 0.0, 1000.0);
+    glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(0.0, 0.0, 1000.0);
+    glEnd();
+
     glEnable(GL_DEPTH_TEST);
 
     camera->translation(movement[0], movement[1], movement[2], movement[3]);
@@ -111,7 +125,7 @@ void Canvas::render() {
                     back = (k + 1) * cellSize;
                     //qDebug() << "coords = " << r << " " << l << " " << t << " " << b << " " << f << " " << back;
                     glColor3f(((float) i / (float) worker->SIZE), ((float) j / (float) worker->SIZE),
-                              ((float) k / (float) worker->SIZE));
+                            ((float) k / (float) worker->SIZE));
                     glVertex3f(l, t, f);
                     glVertex3f(r, t, f);
                     glVertex3f(r, b, f);
@@ -141,7 +155,7 @@ void Canvas::render() {
                     glVertex3f(r, b, back);
                     glVertex3f(l, b, f);
                     glVertex3f(l, b, back);
-               }
+                }
             }
         }
     }
@@ -165,9 +179,9 @@ void Canvas::play() {
 void Canvas::updateSettings() {
     mTimer->setInterval(controlPanel->settings.speed);
     worker->updateParameters(controlPanel->settings.dimension, controlPanel->settings.size, controlPanel->settings.B,
-                             controlPanel->settings.S, 2);
+            controlPanel->settings.S, 2);
     updateRender(worker->life->renderData(worker->coord));
-    
+
     coordsPanel->reshape(worker->life->N, worker->life->SIZE);
 }
 
@@ -177,7 +191,8 @@ void Canvas::fpsUpdate() {
 
 void Canvas::getIndex(int new_index) {
     worker->coord = new_index;
-    this->update();
+    worker->changeCoord();
+    update();
 }
 
 void Canvas::updateRender(std::string new_render_data) {
@@ -186,7 +201,8 @@ void Canvas::updateRender(std::string new_render_data) {
     qDebug() << "updaterender";
     if (sizeof(render_data) != len) {
         render_data = new bool[len];
-        qDebug() << worker->life->generation;
+        qDebug() << len;
+        qDebug() << sizeof(render_data);
         qDebug() << "КОСТЫЛЬ!";
     }
     qDebug() << QString::fromStdString(new_render_data);
@@ -200,7 +216,7 @@ void Canvas::updateRender(std::string new_render_data) {
 }
 
 void Canvas::nextGen() {
-    if (lifeIsRunning) {
+    if (lifeIsRunning && !worker->isBusy) {
         qDebug() << "Generation = " << worker->life->generation;
         controlPanel->updateGeneration(worker->life->generation);
         worker->start();
@@ -227,8 +243,10 @@ void Canvas::mousePressEvent(QMouseEvent *event) {
     if (!onFocus) {
         setFocus();
         onFocus = true;
+        qDebug() << "Focused";
     } else {
         onFocus = false;
+        qDebug() << "UnFocudes";
     }
 }
 
