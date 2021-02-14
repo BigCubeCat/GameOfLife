@@ -68,6 +68,9 @@ int Life::countNeighbours(int index) {
                     countN++;
                 }
             }
+            if ((index + right) % SIZE == 0) {
+                continue;
+            }
             if (inWorld(index + right)) {
                 new_coords.push_back(right);
                 if (getCell(index + right)) {
