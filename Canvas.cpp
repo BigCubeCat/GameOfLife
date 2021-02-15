@@ -33,7 +33,6 @@ void Canvas::setLife(fileData file_data) {
 
 /*GL functions*/
 void Canvas::initializeGL() {
-    glClearColor(0.7, 0.7, 0.8, 0.9);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHTING);
@@ -44,6 +43,7 @@ void Canvas::initializeGL() {
 }
 
 void Canvas::paintGL() {
+    glClearColor(controlPanel->R, controlPanel->G, controlPanel->B, controlPanel->A);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();

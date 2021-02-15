@@ -59,6 +59,7 @@ public:
     QPushButton *colorButton;
     QCheckBox *shadeCheck;
     QCheckBox *borderCheck;
+    QPushButton *bgButton;
     QSpacerItem *verticalSpacer;
 
     void setupUi(QWidget *Panel)
@@ -221,6 +222,11 @@ public:
 
         colorLayout->addWidget(borderCheck, 2, 0, 1, 1);
 
+        bgButton = new QPushButton(gridGroupBox);
+        bgButton->setObjectName(QString::fromUtf8("bgButton"));
+
+        colorLayout->addWidget(bgButton, 3, 0, 1, 1);
+
 
         verticalLayout->addWidget(gridGroupBox);
 
@@ -253,9 +259,10 @@ public:
         step->setText(QCoreApplication::translate("Panel", "step", nullptr));
         run->setText(QCoreApplication::translate("Panel", "play", nullptr));
         gridGroupBox->setTitle(QCoreApplication::translate("Panel", "Color", nullptr));
-        colorButton->setText(QString());
+        colorButton->setText(QCoreApplication::translate("Panel", "Cell Color", nullptr));
         shadeCheck->setText(QCoreApplication::translate("Panel", "Shade Color", nullptr));
         borderCheck->setText(QCoreApplication::translate("Panel", "Draw Cell Borders", nullptr));
+        bgButton->setText(QCoreApplication::translate("Panel", "BG Color", nullptr));
     } // retranslateUi
 
 };

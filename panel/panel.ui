@@ -200,7 +200,7 @@
       <item row="0" column="0">
        <widget class="QPushButton" name="colorButton">
         <property name="text">
-         <string/>
+         <string>Cell Color</string>
         </property>
        </widget>
       </item>
@@ -221,6 +221,13 @@
         </property>
         <property name="checked">
          <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QPushButton" name="bgButton">
+        <property name="text">
+         <string>BG Color</string>
         </property>
        </widget>
       </item>
