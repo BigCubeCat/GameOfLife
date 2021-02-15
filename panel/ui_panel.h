@@ -58,7 +58,7 @@ public:
     QGridLayout *colorLayout;
     QPushButton *colorButton;
     QCheckBox *shadeCheck;
-    QCheckBox *borderCeck;
+    QCheckBox *borderCheck;
     QSpacerItem *verticalSpacer;
 
     void setupUi(QWidget *Panel)
@@ -211,13 +211,15 @@ public:
 
         shadeCheck = new QCheckBox(gridGroupBox);
         shadeCheck->setObjectName(QString::fromUtf8("shadeCheck"));
+        shadeCheck->setChecked(true);
 
         colorLayout->addWidget(shadeCheck, 1, 0, 1, 1);
 
-        borderCeck = new QCheckBox(gridGroupBox);
-        borderCeck->setObjectName(QString::fromUtf8("borderCeck"));
+        borderCheck = new QCheckBox(gridGroupBox);
+        borderCheck->setObjectName(QString::fromUtf8("borderCheck"));
+        borderCheck->setChecked(true);
 
-        colorLayout->addWidget(borderCeck, 2, 0, 1, 1);
+        colorLayout->addWidget(borderCheck, 2, 0, 1, 1);
 
 
         verticalLayout->addWidget(gridGroupBox);
@@ -253,7 +255,7 @@ public:
         gridGroupBox->setTitle(QCoreApplication::translate("Panel", "Color", nullptr));
         colorButton->setText(QString());
         shadeCheck->setText(QCoreApplication::translate("Panel", "Shade Color", nullptr));
-        borderCeck->setText(QCoreApplication::translate("Panel", "Draw Cell Borders", nullptr));
+        borderCheck->setText(QCoreApplication::translate("Panel", "Draw Cell Borders", nullptr));
     } // retranslateUi
 
 };

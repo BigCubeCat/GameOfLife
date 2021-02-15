@@ -12,6 +12,8 @@ QT_END_NAMESPACE
 #include "./ui_panel.h"
 #include "intpow.h"
 #include "io/io.h"
+#include <QColor>
+#include <QColorDialog>
 using namespace std;
 
 struct Settings {
@@ -29,6 +31,9 @@ class Panel : public QWidget {
         Settings settings;
         Settings default_settings;
         explicit Panel(QWidget* parent = nullptr);
+        float r, g, b;
+        bool shadeColor = true;
+        bool showEdges = true;
 
         ~Panel();
 
@@ -47,6 +52,9 @@ private slots:
         void clearSettings();
         void applySettings();
         void recomendedSettings();
+        void changeColor();
+        void checkShade();
+        void checkEdge();
 
     private:
         Ui::Panel* ui;

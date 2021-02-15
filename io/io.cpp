@@ -25,7 +25,6 @@ fileData readFile(QString fileName) {
 
     qDebug() << data;
     auto vector_cells = rleDecode(data);
-    qDebug() << "GGGG";
     if (vector_cells.size() == 0) {
         throw;
     }

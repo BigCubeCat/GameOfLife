@@ -209,12 +209,18 @@
         <property name="text">
          <string>Shade Color</string>
         </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QCheckBox" name="borderCeck">
+       <widget class="QCheckBox" name="borderCheck">
         <property name="text">
          <string>Draw Cell Borders</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>

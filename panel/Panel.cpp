@@ -12,6 +12,11 @@ Panel::Panel(QWidget *parent) : QWidget(parent),
         connect(ui->run, &QPushButton::clicked, this, &Panel::playSignal);
         connect(ui->step, &QPushButton::clicked, this, &Panel::stepSignal);
 
+        connect(ui->colorButton, &QPushButton::clicked, this, &Panel::changeColor);
+
+        connect(ui->shadeCheck, &QCheckBox::toggled, this, &Panel::checkShade);
+        connect(ui->borderCheck, &QCheckBox::toggled, this, &Panel::checkEdge);
+
         default_settings.size = ui->SizeSpin->value();  // Default set in qt designer
         default_settings.dimension = 2;
         default_settings.speed = 100;
@@ -71,4 +76,23 @@ QString Panel::getB() {
 
 QString Panel::getS() {
     return ui->SInput->text();
+}
+
+void Panel::changeColor() {
+    QColor color = QColorDialog::getColor();
+    if (!color.isValid()) return;
+    r = (float)color.red() / (float)256; g = (float)color.green() / (float)256; b = (float)color.blue() / (float)256;
+    QPalette pal = ui->colorButton->palette();
+    pal.setColor(QPalette::Button, color);
+    ui->colorButton->setAutoFillBackground(true);
+    ui->colorButton->setPalette(pal);
+    ui->colorButton->update();
+}
+
+void Panel::checkShade() {
+    shadeColor = ui->shadeCheck->isChecked();
+}
+
+void Panel::checkEdge() {
+    showEdges = ui->borderCheck->isChecked();
 }

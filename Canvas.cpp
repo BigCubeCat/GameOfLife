@@ -111,24 +111,30 @@ void Canvas::render() {
                     bottom = (i + 1) * cellSize;
                     _forward = k * cellSize;
                     backward = (k + 1) * cellSize;
-                    // Draw cube sides
-                    glColor3f(0.0, 0.0, 0.0);
-                    glBegin(GL_LINES);
-                    drawLine(right, _top, _forward, left, _top, _forward);
-                    drawLine(right, bottom, _forward, left, bottom, _forward);
-                    drawLine(right, bottom, backward, left, bottom, backward);
-                    drawLine(right, _top, backward, left, _top, backward);
-                    drawLine(right, _top, _forward, right, bottom, _forward);
-                    drawLine(right, _top, backward, right, bottom, backward);
-                    drawLine(left, _top, backward, left, bottom, backward);
-                    drawLine(left, _top, _forward, left, bottom, _forward);
-                    drawLine(left, _top, _forward, left, _top, backward);
-                    drawLine(left, bottom, _forward, left, bottom, backward);
-                    drawLine(right, _top, _forward, right, _top, backward);
-                    drawLine(right, bottom, _forward, right, bottom, backward);
-                    glEnd();
-                    glColor3f(((float) i / (float) worker->SIZE), ((float) j / (float) worker->SIZE),
-                            ((float) k / (float) worker->SIZE));
+                    if (controlPanel->showEdges) {
+                        // Draw cube sides
+                        glColor3f(0.0, 0.0, 0.0);
+                        glBegin(GL_LINES);
+                        drawLine(right, _top, _forward, left, _top, _forward);
+                        drawLine(right, bottom, _forward, left, bottom, _forward);
+                        drawLine(right, bottom, backward, left, bottom, backward);
+                        drawLine(right, _top, backward, left, _top, backward);
+                        drawLine(right, _top, _forward, right, bottom, _forward);
+                        drawLine(right, _top, backward, right, bottom, backward);
+                        drawLine(left, _top, backward, left, bottom, backward);
+                        drawLine(left, _top, _forward, left, bottom, _forward);
+                        drawLine(left, _top, _forward, left, _top, backward);
+                        drawLine(left, bottom, _forward, left, bottom, backward);
+                        drawLine(right, _top, _forward, right, _top, backward);
+                        drawLine(right, bottom, _forward, right, bottom, backward);
+                        glEnd();
+                    }
+                    if (controlPanel->shadeColor) {
+                        glColor3f(((float) i / (float) worker->SIZE), ((float) j / (float) worker->SIZE),
+                                ((float) k / (float) worker->SIZE));
+                    } else {
+                        glColor3f(controlPanel->r, controlPanel->g, controlPanel->b);
+                    }
                     glBegin(GL_QUADS);
                     drawCell(_top, bottom, left, right, _forward, backward);
                     glEnd();
