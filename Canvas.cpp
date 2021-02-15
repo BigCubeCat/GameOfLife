@@ -5,37 +5,39 @@
 #include <QRgb>
 #include <cmath>
 
+#define drawLine(x, y, z, x1, y1, z1) glVertex3f(x, y, z); glVertex3f(x1, y1, z1);
+#define drawCell(t, b, l, r, f, back) glVertex3f(l, t, f);glVertex3f(r, t, f);glVertex3f(r, b, f);glVertex3f(l, b, f);glVertex3f(l, t, back);glVertex3f(r, t, back);glVertex3f(r, b, back);glVertex3f(l, b, back);glVertex3f(l, t, f);glVertex3f(l, b, f);glVertex3f(l, b, back);glVertex3f(l, t, back);glVertex3f(r, t, f);glVertex3f(r, b, f);glVertex3f(r, b, back);glVertex3f(r, t, back);glVertex3f(r, t, f);glVertex3f(r, t, back);glVertex3f(l, t, f);glVertex3f(l, t, back);glVertex3f(r, b, f);glVertex3f(r, b, back);glVertex3f(l, b, f);glVertex3f(l, b, back);
+
 Camera *camera = new Camera(-5, 5, -5, 4 * M_PI / 7, M_PI / 4, 0.005, 0.1, 800, 600);
 
 Canvas::Canvas(QWidget *parent)
     : QOpenGLWidget(parent) {
-    this->setMouseTracking(true);
-    worker = new Worker();
-    // life update timeint signal qtr
-    mTimer = new QTimer(this);
-    mTimer->setSingleShot(false);
-    mTimer->setInterval(10000);
-    connect(mTimer, &QTimer::timeout, this, &Canvas::nextGen);
-    mTimer->start();
-    fpsTimer = new QTimer(this);
-    fpsTimer->setSingleShot(false);
-    fpsTimer->setInterval(fps);
-    connect(fpsTimer, &QTimer::timeout, this, &Canvas::fpsUpdate);
-    fpsTimer->start();
-    connect(worker, &Worker::updateRender, this, &Canvas::updateRender); // rerun thread
-}
+        this->setMouseTracking(true);
+        worker = new Worker();
+        // life update timeint signal qtr
+        mTimer = new QTimer(this);
+        mTimer->setSingleShot(false);
+        mTimer->setInterval(10000);
+        connect(mTimer, &QTimer::timeout, this, &Canvas::nextGen);
+        mTimer->start();
+        fpsTimer = new QTimer(this);
+        fpsTimer->setSingleShot(false);
+        fpsTimer->setInterval(fps);
+        connect(fpsTimer, &QTimer::timeout, this, &Canvas::fpsUpdate);
+        fpsTimer->start();
+        connect(worker, &Worker::updateRender, this, &Canvas::updateRender); // rerun thread
+    }
 
 void Canvas::setLife(fileData file_data) {
-    worker->setLife(file_data.model);
-    controlPanel->updateSettings(file_data.model.N, file_data.model.SIZE, file_data.B, file_data.S);
 }
 
 /*GL functions*/
 void Canvas::initializeGL() {
-    glClearColor(0.4, 0.4, 0.5, 1);
+    glClearColor(0.7, 0.7, 0.8, 0.9);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHTING);
+    glEnable(GL_BLEND);
 
     glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
     glEnable(GL_COLOR_MATERIAL);
@@ -45,36 +47,20 @@ void Canvas::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
-    glBegin(GL_LINES);
-    // draw line for x axis
-    glColor3f(1000.0, 0.0, 0.0);
-    glVertex3f(0.0, 0.0, 0.0);
-    glVertex3f(1000.0, 0.0, 0.0);
-    // draw line for y axis
-    glColor3f(0.0, 1000.0, 0.0);
-    glVertex3f(0.0, 0.0, 0.0);
-    glVertex3f(0.0, 1000.0, 0.0);
-    // draw line for Z axis
-    glColor3f(0.0, 0.0, 1000.0);
-    glVertex3f(0.0, 0.0, 0.0);
-    glVertex3f(0.0, 0.0, 1000.0);
-    glEnd();
-
     glEnable(GL_DEPTH_TEST);
 
     camera->translation(movement[0], movement[1], movement[2], movement[3]);
     gluLookAt(
             camera->getX(), camera->getY(), camera->getZ(), camera->getSightX(),
             camera->getSightY(), camera->getSightZ(), 0, 1, 0);
-    glBegin(GL_QUADS);
+
+
 
     if (worker->D < 3) {
         render2d();
     } else {
         render();
     }
-    glEnd();
 
     glPopMatrix();
 }
@@ -91,70 +77,61 @@ void Canvas::resizeGL(int w, int h) {
 
 /*render*/
 void Canvas::render2d() {
-    float _top, bottom, left, right;
+    glBegin(GL_QUADS);
+    float __top, bottom, left, right;
     if (!drawing) return;
     for (int i = 0; i < worker->SIZE; i++) {
         for (int j = 0; j < worker->SIZE; j++) {
             if (render_data[i * worker->SIZE + j]) {
                 right = (j + 1) * cellSize;
                 left = j * cellSize;
-                _top = i * cellSize;
+                __top = i * cellSize;
                 bottom = (i + 1) * cellSize;
                 glColor3f(((float) i / (float) worker->SIZE), ((float) j / (float) worker->SIZE), 1.0f);
-                glVertex3f(left, _top, 0.0f);
-                glVertex3f(right, _top, 0.0f);
+                glVertex3f(left, __top, 0.0f);
+                glVertex3f(right, __top, 0.0f);
                 glVertex3f(right, bottom, 0.0f);
                 glVertex3f(left, bottom, 0.0f);
             }
         }
     }
+    glEnd();
 }
 
 void Canvas::render() {
-    float t, b, l, r, f, back;
     if (!drawing) return;
+    float right, left, _top, bottom, _forward, backward;
     for (int i = 0; i < worker->SIZE; i++) {
         for (int j = 0; j < worker->SIZE; j++) {
             for (int k = 0; k < worker->SIZE; k++) {
                 if (worker->getCell(i * worker->SIZE * worker->SIZE + j * worker->SIZE + k)) {
-                    r = (j + 1) * cellSize;
-                    l = j * cellSize;
-                    t = i * cellSize;
-                    b = (i + 1) * cellSize;
-                    f = k * cellSize;
-                    back = (k + 1) * cellSize;
-                    //qDebug() << "coords = " << r << " " << l << " " << t << " " << b << " " << f << " " << back;
+                    right = (j + 1) * cellSize;
+                    left = j * cellSize;
+                    _top = i * cellSize;
+                    bottom = (i + 1) * cellSize;
+                    _forward = k * cellSize;
+                    backward = (k + 1) * cellSize;
+                    // Draw cube sides
+                    glColor3f(0.0, 0.0, 0.0);
+                    glBegin(GL_LINES);
+                    drawLine(right, _top, _forward, left, _top, _forward);
+                    drawLine(right, bottom, _forward, left, bottom, _forward);
+                    drawLine(right, bottom, backward, left, bottom, backward);
+                    drawLine(right, _top, backward, left, _top, backward);
+                    drawLine(right, _top, _forward, right, bottom, _forward);
+                    drawLine(right, _top, backward, right, bottom, backward);
+                    drawLine(left, _top, backward, left, bottom, backward);
+                    drawLine(left, _top, _forward, left, bottom, _forward);
+                    drawLine(left, _top, _forward, left, _top, backward);
+                    drawLine(left, bottom, _forward, left, bottom, backward);
+                    drawLine(right, _top, _forward, right, _top, backward);
+                    drawLine(right, bottom, _forward, right, bottom, backward);
+                    glEnd();
                     glColor3f(((float) i / (float) worker->SIZE), ((float) j / (float) worker->SIZE),
                             ((float) k / (float) worker->SIZE));
-                    glVertex3f(l, t, f);
-                    glVertex3f(r, t, f);
-                    glVertex3f(r, b, f);
-                    glVertex3f(l, b, f);
-
-                    glVertex3f(l, t, back);
-                    glVertex3f(r, t, back);
-                    glVertex3f(r, b, back);
-                    glVertex3f(l, b, back);
-
-                    glVertex3f(l, t, f);
-                    glVertex3f(l, b, f);
-                    glVertex3f(l, b, back);
-                    glVertex3f(l, t, back);
-
-                    glVertex3f(r, t, f);
-                    glVertex3f(r, b, f);
-                    glVertex3f(r, b, back);
-                    glVertex3f(r, t, back);
-
-                    glVertex3f(r, t, f);
-                    glVertex3f(r, t, back);
-                    glVertex3f(l, t, f);
-                    glVertex3f(l, t, back);
-
-                    glVertex3f(r, b, f);
-                    glVertex3f(r, b, back);
-                    glVertex3f(l, b, f);
-                    glVertex3f(l, b, back);
+                    glBegin(GL_QUADS);
+                    drawCell(_top, bottom, left, right, _forward, backward);
+                    glEnd();
                 }
             }
         }

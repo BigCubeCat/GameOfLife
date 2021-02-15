@@ -10,17 +10,17 @@
 struct fileData {
     int         D;
     int         SIZE;
-    vector<int> B;
-    vector<int> S;
+    std::vector<int> B;
+    std::vector<int> S;
     QString     stringB;
     QString     stringS;
 };
 
 fileData readFile(QString fileName);
 
-vector<int> getRules(QString rule);
+std::vector<int> getRules(QString rule);
 
-vector<bool> rleDecode(QString);
+std::vector<bool> rleDecode(QString);
 
 void saveToFile(QString filename, QString data);
 

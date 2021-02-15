@@ -11,6 +11,7 @@ QT_END_NAMESPACE
 
 #include "./ui_panel.h"
 #include "intpow.h"
+#include "io/io.h"
 using namespace std;
 
 struct Settings {
@@ -42,9 +43,10 @@ signals:
         void playSignal();
         void stopSignal();
         void stepSignal();
-        private slots:
-            void clearSettings();
+private slots:
+        void clearSettings();
         void applySettings();
+        void recomendedSettings();
 
     private:
         Ui::Panel* ui;

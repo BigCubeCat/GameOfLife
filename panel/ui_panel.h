@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
@@ -31,26 +32,33 @@ public:
     QVBoxLayout *verticalLayout;
     QGroupBox *groupBox;
     QVBoxLayout *verticalLayout_2;
+    QVBoxLayout *verticalLayout_3;
     QGridLayout *gridLayout;
-    QSpinBox *DSpin;
-    QLabel *label_8;
-    QLabel *label_7;
-    QLabel *label_4;
-    QLCDNumber *lcdNumber;
-    QPushButton *clearButton;
-    QLabel *label_10;
     QLineEdit *BInput;
+    QLabel *label_10;
     QLabel *label_6;
-    QPushButton *applyButton;
-    QSpinBox *SizeSpin;
-    QLabel *label_9;
+    QLabel *label_7;
     QLineEdit *SInput;
+    QLabel *label_8;
+    QLabel *label_4;
+    QLabel *label_9;
     QSpinBox *SpeedSpin;
+    QLCDNumber *lcdNumber;
+    QSpinBox *DSpin;
+    QSpinBox *SizeSpin;
+    QHBoxLayout *horizontalLayout_3;
+    QPushButton *clearButton;
+    QPushButton *recomendedButton;
+    QPushButton *applyButton;
     QHBoxLayout *horizontalLayout;
     QPushButton *stop;
     QPushButton *step;
     QPushButton *run;
-    QVBoxLayout *settingsLayout;
+    QGroupBox *gridGroupBox;
+    QGridLayout *colorLayout;
+    QPushButton *colorButton;
+    QCheckBox *shadeCheck;
+    QCheckBox *borderCeck;
     QSpacerItem *verticalSpacer;
 
     void setupUi(QWidget *Panel)
@@ -70,59 +78,69 @@ public:
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
         verticalLayout_2 = new QVBoxLayout(groupBox);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         gridLayout = new QGridLayout();
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        DSpin = new QSpinBox(groupBox);
-        DSpin->setObjectName(QString::fromUtf8("DSpin"));
-        DSpin->setMinimum(2);
-        DSpin->setMaximum(1984);
+        BInput = new QLineEdit(groupBox);
+        BInput->setObjectName(QString::fromUtf8("BInput"));
 
-        gridLayout->addWidget(DSpin, 2, 2, 1, 1);
-
-        label_8 = new QLabel(groupBox);
-        label_8->setObjectName(QString::fromUtf8("label_8"));
-
-        gridLayout->addWidget(label_8, 5, 0, 1, 1);
-
-        label_7 = new QLabel(groupBox);
-        label_7->setObjectName(QString::fromUtf8("label_7"));
-
-        gridLayout->addWidget(label_7, 3, 0, 1, 1);
-
-        label_4 = new QLabel(groupBox);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
-
-        gridLayout->addWidget(label_4, 10, 0, 1, 1);
-
-        lcdNumber = new QLCDNumber(groupBox);
-        lcdNumber->setObjectName(QString::fromUtf8("lcdNumber"));
-
-        gridLayout->addWidget(lcdNumber, 1, 2, 1, 1);
-
-        clearButton = new QPushButton(groupBox);
-        clearButton->setObjectName(QString::fromUtf8("clearButton"));
-
-        gridLayout->addWidget(clearButton, 13, 0, 1, 1);
+        gridLayout->addWidget(BInput, 3, 2, 1, 1);
 
         label_10 = new QLabel(groupBox);
         label_10->setObjectName(QString::fromUtf8("label_10"));
 
         gridLayout->addWidget(label_10, 6, 0, 1, 1);
 
-        BInput = new QLineEdit(groupBox);
-        BInput->setObjectName(QString::fromUtf8("BInput"));
-
-        gridLayout->addWidget(BInput, 3, 2, 1, 1);
-
         label_6 = new QLabel(groupBox);
         label_6->setObjectName(QString::fromUtf8("label_6"));
 
         gridLayout->addWidget(label_6, 1, 0, 1, 1);
 
-        applyButton = new QPushButton(groupBox);
-        applyButton->setObjectName(QString::fromUtf8("applyButton"));
+        label_7 = new QLabel(groupBox);
+        label_7->setObjectName(QString::fromUtf8("label_7"));
 
-        gridLayout->addWidget(applyButton, 13, 2, 1, 1);
+        gridLayout->addWidget(label_7, 3, 0, 1, 1);
+
+        SInput = new QLineEdit(groupBox);
+        SInput->setObjectName(QString::fromUtf8("SInput"));
+
+        gridLayout->addWidget(SInput, 5, 2, 1, 1);
+
+        label_8 = new QLabel(groupBox);
+        label_8->setObjectName(QString::fromUtf8("label_8"));
+
+        gridLayout->addWidget(label_8, 5, 0, 1, 1);
+
+        label_4 = new QLabel(groupBox);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+
+        gridLayout->addWidget(label_4, 10, 0, 1, 1);
+
+        label_9 = new QLabel(groupBox);
+        label_9->setObjectName(QString::fromUtf8("label_9"));
+
+        gridLayout->addWidget(label_9, 2, 0, 1, 1);
+
+        SpeedSpin = new QSpinBox(groupBox);
+        SpeedSpin->setObjectName(QString::fromUtf8("SpeedSpin"));
+        SpeedSpin->setMinimum(1);
+        SpeedSpin->setMaximum(1000000000);
+        SpeedSpin->setValue(100);
+
+        gridLayout->addWidget(SpeedSpin, 10, 2, 1, 1);
+
+        lcdNumber = new QLCDNumber(groupBox);
+        lcdNumber->setObjectName(QString::fromUtf8("lcdNumber"));
+
+        gridLayout->addWidget(lcdNumber, 1, 2, 1, 1);
+
+        DSpin = new QSpinBox(groupBox);
+        DSpin->setObjectName(QString::fromUtf8("DSpin"));
+        DSpin->setMinimum(2);
+        DSpin->setMaximum(1984);
+
+        gridLayout->addWidget(DSpin, 2, 2, 1, 1);
 
         SizeSpin = new QSpinBox(groupBox);
         SizeSpin->setObjectName(QString::fromUtf8("SizeSpin"));
@@ -132,23 +150,28 @@ public:
 
         gridLayout->addWidget(SizeSpin, 6, 2, 1, 1);
 
-        label_9 = new QLabel(groupBox);
-        label_9->setObjectName(QString::fromUtf8("label_9"));
 
-        gridLayout->addWidget(label_9, 2, 0, 1, 1);
+        verticalLayout_3->addLayout(gridLayout);
 
-        SInput = new QLineEdit(groupBox);
-        SInput->setObjectName(QString::fromUtf8("SInput"));
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        clearButton = new QPushButton(groupBox);
+        clearButton->setObjectName(QString::fromUtf8("clearButton"));
 
-        gridLayout->addWidget(SInput, 5, 2, 1, 1);
+        horizontalLayout_3->addWidget(clearButton);
 
-        SpeedSpin = new QSpinBox(groupBox);
-        SpeedSpin->setObjectName(QString::fromUtf8("SpeedSpin"));
-        SpeedSpin->setMinimum(1);
-        SpeedSpin->setMaximum(1000000000);
-        SpeedSpin->setValue(100);
+        recomendedButton = new QPushButton(groupBox);
+        recomendedButton->setObjectName(QString::fromUtf8("recomendedButton"));
 
-        gridLayout->addWidget(SpeedSpin, 10, 2, 1, 1);
+        horizontalLayout_3->addWidget(recomendedButton);
+
+        applyButton = new QPushButton(groupBox);
+        applyButton->setObjectName(QString::fromUtf8("applyButton"));
+
+        horizontalLayout_3->addWidget(applyButton);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_3);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -168,18 +191,36 @@ public:
         horizontalLayout->addWidget(run);
 
 
-        gridLayout->addLayout(horizontalLayout, 14, 0, 1, 3);
+        verticalLayout_3->addLayout(horizontalLayout);
 
 
-        verticalLayout_2->addLayout(gridLayout);
+        verticalLayout_2->addLayout(verticalLayout_3);
 
 
         verticalLayout->addWidget(groupBox);
 
-        settingsLayout = new QVBoxLayout();
-        settingsLayout->setObjectName(QString::fromUtf8("settingsLayout"));
+        gridGroupBox = new QGroupBox(Panel);
+        gridGroupBox->setObjectName(QString::fromUtf8("gridGroupBox"));
+        gridGroupBox->setCheckable(false);
+        colorLayout = new QGridLayout(gridGroupBox);
+        colorLayout->setObjectName(QString::fromUtf8("colorLayout"));
+        colorButton = new QPushButton(gridGroupBox);
+        colorButton->setObjectName(QString::fromUtf8("colorButton"));
 
-        verticalLayout->addLayout(settingsLayout);
+        colorLayout->addWidget(colorButton, 0, 0, 1, 1);
+
+        shadeCheck = new QCheckBox(gridGroupBox);
+        shadeCheck->setObjectName(QString::fromUtf8("shadeCheck"));
+
+        colorLayout->addWidget(shadeCheck, 1, 0, 1, 1);
+
+        borderCeck = new QCheckBox(gridGroupBox);
+        borderCeck->setObjectName(QString::fromUtf8("borderCeck"));
+
+        colorLayout->addWidget(borderCeck, 2, 0, 1, 1);
+
+
+        verticalLayout->addWidget(gridGroupBox);
 
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
@@ -195,19 +236,24 @@ public:
     {
         Panel->setWindowTitle(QCoreApplication::translate("Panel", "Form", nullptr));
         groupBox->setTitle(QCoreApplication::translate("Panel", "Info", nullptr));
-        label_8->setText(QCoreApplication::translate("Panel", "S", nullptr));
-        label_7->setText(QCoreApplication::translate("Panel", "B", nullptr));
-        label_4->setText(QCoreApplication::translate("Panel", "Speed:", nullptr));
-        clearButton->setText(QCoreApplication::translate("Panel", "Default", nullptr));
-        label_10->setText(QCoreApplication::translate("Panel", "Size", nullptr));
         BInput->setText(QCoreApplication::translate("Panel", "3", nullptr));
+        label_10->setText(QCoreApplication::translate("Panel", "Size", nullptr));
         label_6->setText(QCoreApplication::translate("Panel", "Generation", nullptr));
-        applyButton->setText(QCoreApplication::translate("Panel", "Apply", nullptr));
-        label_9->setText(QCoreApplication::translate("Panel", "Dimension", nullptr));
+        label_7->setText(QCoreApplication::translate("Panel", "B", nullptr));
         SInput->setText(QCoreApplication::translate("Panel", "2,3", nullptr));
+        label_8->setText(QCoreApplication::translate("Panel", "S", nullptr));
+        label_4->setText(QCoreApplication::translate("Panel", "Speed:", nullptr));
+        label_9->setText(QCoreApplication::translate("Panel", "Dimension", nullptr));
+        clearButton->setText(QCoreApplication::translate("Panel", "Default", nullptr));
+        recomendedButton->setText(QCoreApplication::translate("Panel", "Recomend", nullptr));
+        applyButton->setText(QCoreApplication::translate("Panel", "Apply", nullptr));
         stop->setText(QCoreApplication::translate("Panel", "stop", nullptr));
         step->setText(QCoreApplication::translate("Panel", "step", nullptr));
         run->setText(QCoreApplication::translate("Panel", "play", nullptr));
+        gridGroupBox->setTitle(QCoreApplication::translate("Panel", "Color", nullptr));
+        colorButton->setText(QString());
+        shadeCheck->setText(QCoreApplication::translate("Panel", "Shade Color", nullptr));
+        borderCeck->setText(QCoreApplication::translate("Panel", "Draw Cell Borders", nullptr));
     } // retranslateUi
 
 };

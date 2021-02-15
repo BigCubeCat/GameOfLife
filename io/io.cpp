@@ -1,5 +1,8 @@
 #include "io.h"
 
+#include <vector>
+
+using namespace std;
 
 fileData readFile(QString fileName) {
     qDebug() << fileName;
@@ -21,7 +24,7 @@ fileData readFile(QString fileName) {
     QString S = object.value(QString("S")).toString();
 
     qDebug() << data;
-    vector<bool> vector_cells = rleDecode(data);
+    auto vector_cells = rleDecode(data);
     qDebug() << "GGGG";
     if (vector_cells.size() == 0) {
         throw;
@@ -40,9 +43,21 @@ vector<int> getRules(QString rule) {
     for (const auto& v : values) {
         bool no_errors = true;
         int new_value = v.toInt(&no_errors);
-        if (!no_errors) return answer;
-        answer.push_back(new_value);
+        if (!no_errors) {
+            QStringList range = v.split(".");
+            int s, f;
+            s = range.at(0).toInt(&no_errors);
+            if (!no_errors) return answer;
+            f = range.at(1).toInt(&no_errors);
+            if (!no_errors) return answer;
+            for (int i = s; i <= f; i++) {
+                answer.push_back(i);
+            }
+        } else {
+            answer.push_back(new_value);
+        }
     }
+    qDebug() << "get rules OK";
     return answer;
 }
 
