@@ -20,21 +20,18 @@ Worker::Worker() : QThread() {
 }
 
 void Worker::run() {
-    // qDebug() << sender();
+    qDebug() << sender();
     if (isBusy) {
         return;
     }
     isBusy = true;
-    qDebug() << "!";
     life->nextGeneration();
-    qDebug() << "!!";
     renderData = life->renderData(coord);
     isBusy = false;
     emit updateRender(renderData);
 }
 
 void Worker::step() {
-    qDebug() << life->N;
     if (isBusy) return;
     isBusy = true;
     life->nextGeneration();
@@ -49,16 +46,12 @@ void Worker::changeCoord() {
 }
 
 bool Worker::getCell(int index) {
-    return life->getCell(index);
+    return life->getCell(coord + index);
 }
 
 void Worker::setLife(Life newModel) {
-    qDebug() << newModel.N;
     isBusy = true;
     life = &newModel;
-    qDebug() << newModel.getCell(0);
-    qDebug() << "set Life";
-    qDebug() << QString::fromStdString(life->renderData(0));
     isBusy = false;
 }
 

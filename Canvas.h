@@ -81,8 +81,6 @@ protected:
 
 private slots:
 
-    void updateLife();
-
 };
 
 

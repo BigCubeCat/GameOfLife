@@ -32,7 +32,7 @@ class Panel : public QWidget {
         Settings default_settings;
         explicit Panel(QWidget* parent = nullptr);
         float r, g, b;
-        float R, G, B, A; // BG color
+        float R = 0.4; float G = 0.4; float B = 0.4;
         bool shadeColor = true;
         bool showEdges = true;
 

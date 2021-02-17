@@ -100,8 +100,6 @@ bool Life::inWorld(int index) const {
 
 void Life::nextGeneration() {
     /*Apply current rules to life data*/
-    qDebug() << "dataSize = " << dataSize;
-    qDebug() << sizeof(new_data);
     for (int i = 0; i < dataSize; i++) {
         new_data[i] = applyRules(i);
     }

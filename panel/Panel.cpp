@@ -95,7 +95,6 @@ void Panel::changeBG() {
     QColor color = QColorDialog::getColor();
     if (!color.isValid()) return;
     R = (float)color.red() / (float)256; G = (float)color.green() / (float)256; B = (float)color.blue() / (float)256;
-    A = (float)color.alpha() / (float)256;
     QPalette pal = ui->bgButton->palette();
     pal.setColor(QPalette::Button, color);
     ui->bgButton->setAutoFillBackground(true);

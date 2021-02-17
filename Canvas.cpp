@@ -26,7 +26,7 @@ Canvas::Canvas(QWidget *parent)
         connect(fpsTimer, &QTimer::timeout, this, &Canvas::fpsUpdate);
         fpsTimer->start();
         connect(worker, &Worker::updateRender, this, &Canvas::updateRender); // rerun thread
-    }
+}
 
 void Canvas::setLife(fileData file_data) {
 }
@@ -43,7 +43,7 @@ void Canvas::initializeGL() {
 }
 
 void Canvas::paintGL() {
-    glClearColor(controlPanel->R, controlPanel->G, controlPanel->B, controlPanel->A);
+    glClearColor(controlPanel->R, controlPanel->G, controlPanel->B, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -53,8 +53,6 @@ void Canvas::paintGL() {
     gluLookAt(
             camera->getX(), camera->getY(), camera->getZ(), camera->getSightX(),
             camera->getSightY(), camera->getSightZ(), 0, 1, 0);
-
-
 
     if (worker->D < 3) {
         render2d();
@@ -173,7 +171,9 @@ void Canvas::fpsUpdate() {
 }
 
 void Canvas::getIndex(int new_index) {
+    qDebug() << worker->coord;
     worker->coord = new_index;
+    qDebug() << "coord = " <<  worker->coord;
     worker->changeCoord();
     update();
 }
@@ -184,9 +184,6 @@ void Canvas::updateRender(std::string new_render_data) {
     qDebug() << "updaterender";
     if (sizeof(render_data) != len) {
         render_data = new bool[len];
-        qDebug() << len;
-        qDebug() << sizeof(render_data);
-        qDebug() << "КОСТЫЛЬ!";
     }
     qDebug() << QString::fromStdString(new_render_data);
     for (int i = 0; i < new_render_data.length(); i++) {
@@ -204,9 +201,6 @@ void Canvas::nextGen() {
         controlPanel->updateGeneration(worker->life->generation);
         worker->start();
     }
-}
-
-void Canvas::updateLife() {
 }
 
 /* Custom functions */

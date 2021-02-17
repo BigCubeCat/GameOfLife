@@ -140,6 +140,7 @@ public:
         DSpin->setObjectName(QString::fromUtf8("DSpin"));
         DSpin->setMinimum(2);
         DSpin->setMaximum(1984);
+        DSpin->setValue(3);
 
         gridLayout->addWidget(DSpin, 2, 2, 1, 1);
 
@@ -147,7 +148,7 @@ public:
         SizeSpin->setObjectName(QString::fromUtf8("SizeSpin"));
         SizeSpin->setMinimum(1);
         SizeSpin->setMaximum(1280000000);
-        SizeSpin->setValue(9);
+        SizeSpin->setValue(16);
 
         gridLayout->addWidget(SizeSpin, 6, 2, 1, 1);
 
