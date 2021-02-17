@@ -1,5 +1,4 @@
 #include "Panel.h"
-#include <QDebug>
 
 Panel::Panel(QWidget *parent) : QWidget(parent),
     ui(new Ui::Panel) {

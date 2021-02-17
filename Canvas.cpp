@@ -171,9 +171,7 @@ void Canvas::fpsUpdate() {
 }
 
 void Canvas::getIndex(int new_index) {
-    qDebug() << worker->coord;
     worker->coord = new_index;
-    qDebug() << "coord = " <<  worker->coord;
     worker->changeCoord();
     update();
 }

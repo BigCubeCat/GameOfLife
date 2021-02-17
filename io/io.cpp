@@ -5,7 +5,6 @@
 using namespace std;
 
 fileData readFile(QString fileName) {
-    qDebug() << fileName;
     QString val;
     QFile file;
     file.setFileName(fileName);
@@ -14,16 +13,12 @@ fileData readFile(QString fileName) {
     file.close();
     QJsonDocument d = QJsonDocument::fromJson(val.toUtf8());
     QJsonObject object = d.object();
-    qDebug() << object;
     int dim = object.value(QString("D")).toInt();
-    qDebug() << dim;
     int size = object.value(QString("SIZE")).toInt();
-    qDebug() << size;
     auto data = object.value(QString("DATA")).toString();
     QString B = object.value(QString("B")).toString();
     QString S = object.value(QString("S")).toString();
 
-    qDebug() << data;
     auto vector_cells = rleDecode(data);
     if (vector_cells.size() == 0) {
         throw;
@@ -56,14 +51,12 @@ vector<int> getRules(QString rule) {
             answer.push_back(new_value);
         }
     }
-    qDebug() << "get rules OK";
     return answer;
 }
 
 vector<bool> rleDecode(QString compressed) {
     vector<bool> original;
     for (int i = 0; i < compressed.size(); i++) {
-        qDebug() << compressed.at(i);
         if (compressed.at(i) == 'A') {
             original.push_back(true);
         } else {

@@ -2,7 +2,6 @@
 // Created by bigcubecat on 21.11.2020.
 //
 #include "Life.h"
-#include <QDebug>
 using namespace std;
 
 

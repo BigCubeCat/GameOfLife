@@ -42,13 +42,15 @@ void CoordsPanel::reshape(int d, int s) {
 }
 
 void CoordsPanel::calculateIndex() {
-    qDebug() << dimension;
     int index = 0;
     int j = 0;
     for (int i = dimension - 1; i > 2; i--) {
+        qDebug() << "I + " << i;
+        qDebug() << "V = " << coords.size();
         index += intpow(size, i) * coords[j]->value();
+        j++;
     }
-    qDebug() << "END";
+    qDebug() << "index = " << index;
     emit signalIndex(index);
 }
 
