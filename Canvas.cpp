@@ -179,11 +179,9 @@ void Canvas::getIndex(int new_index) {
 void Canvas::updateRender(std::string new_render_data) {
     drawing = true;
     int len = new_render_data.length();
-    qDebug() << "updaterender";
     if (sizeof(render_data) != len) {
         render_data = new bool[len];
     }
-    qDebug() << QString::fromStdString(new_render_data);
     for (int i = 0; i < new_render_data.length(); i++) {
         if (new_render_data[i] == 'A') {
             render_data[i] = true;
@@ -195,7 +193,6 @@ void Canvas::updateRender(std::string new_render_data) {
 
 void Canvas::nextGen() {
     if (lifeIsRunning && !worker->isBusy) {
-        qDebug() << "Generation = " << worker->life->generation;
         controlPanel->updateGeneration(worker->life->generation);
         worker->start();
     }
@@ -218,10 +215,8 @@ void Canvas::mousePressEvent(QMouseEvent *event) {
     if (!onFocus) {
         setFocus();
         onFocus = true;
-        qDebug() << "Focused";
     } else {
         onFocus = false;
-        qDebug() << "UnFocudes";
     }
 }
 
