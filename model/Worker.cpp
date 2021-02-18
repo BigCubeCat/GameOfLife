@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QThread>
 #include <utility>
+#include "io/io.h"
 
 void Worker::updateParameters(int d, int size, vector<int> b, vector<int> s, int v) {
     life = new Life(d, size, std::move(b), std::move(s), v);
@@ -49,10 +50,11 @@ bool Worker::getCell(int index) {
     return life->getCell(coord + index);
 }
 
-void Worker::setLife(Life newModel) {
-    isBusy = true;
-    life = &newModel;
-    isBusy = false;
+void Worker::setLife(fileData new_life) {
+    life = new Life(new_life.D, new_life.SIZE, std::move(new_life.B), std::move(new_life.S), std::move(new_life.cells));
+    D = new_life.D;
+    SIZE = new_life.SIZE;
+    emit updateRender(life->renderData(coord));
 }
 
 QString Worker::getData(QString b, QString s) {

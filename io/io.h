@@ -14,6 +14,7 @@ struct fileData {
     std::vector<int> S;
     QString     stringB;
     QString     stringS;
+    std::vector<bool> cells;
 };
 
 fileData readFile(QString fileName);

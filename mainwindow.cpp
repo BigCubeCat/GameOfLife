@@ -56,8 +56,9 @@ void MainWindow::openFile() {
 
         try {
             auto file_data = readFile(fileName);
-            canvas->worker->updateParameters(file_data.D, file_data.SIZE, file_data.B, file_data.S, 2);
+            canvas->worker->setLife(file_data);
             canvas->controlPanel->updateSettings(file_data.D, file_data.SIZE, file_data.stringB, file_data.stringS);
+            canvas->coordsPanel->reshape(canvas->worker->life->N, canvas->worker->life->SIZE);
             emitMessage(QString("Success"));
         } catch (const std::exception&) {
             emitError(QString("read error"));

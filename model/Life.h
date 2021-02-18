@@ -21,7 +21,7 @@ public:
     int*                    steps;
 
     Life(int, int, vector<int>, vector<int>, int);          /*init with random arena*/
-    Life(int, int, vector<int>, vector<int>, bool*);        /*init with exists data*/
+    Life(int, int, vector<int>, vector<int>, vector<bool>);        /*init with exists data*/
     bool                    getCell(int index) const;
     bool                    inWorld(int index) const;
     bool                    applyRules(int);

@@ -7,6 +7,7 @@
 #include <QThread>
 #include <vector>
 #include "Life.h"
+#include "io/io.h"
 
 class Worker : public QThread {
 Q_OBJECT
@@ -24,7 +25,7 @@ public:
 
     bool    getCell(int index);
     void    updateParameters(int, int, vector<int>, vector<int>, int);
-    void    setLife(Life newModel);
+    void    setLife(fileData);
     QString getData(QString, QString);
 
 signals:

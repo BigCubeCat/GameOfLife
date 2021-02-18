@@ -33,12 +33,13 @@ Life::Life(int d, int size, vector<int> b, vector<int> s, int v) {
     }
 }
 
-Life::Life(int d, int size, vector<int> b, vector<int> s, bool *dat) {
+Life::Life(int d, int size, vector<int> b, vector<int> s, vector<bool> cells) {
     setup(d, size, b, s);
-    data = dat;
     new_data = new bool[dataSize];
+    data = new bool[dataSize];
     for (int i = 0; i < dataSize; i++) {
         new_data[i] = false;
+        data[i] = cells[i];
     }
 }
 

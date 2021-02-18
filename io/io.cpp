@@ -28,7 +28,7 @@ fileData readFile(QString fileName) {
         cells[i] = vector_cells[i];
     }
 
-    return fileData{dim, size, getRules(B), getRules(S), B, S};
+    return fileData{dim, size, getRules(B), getRules(S), B, S, vector_cells};
 }
 
 vector<int> getRules(QString rule) {
@@ -55,14 +55,24 @@ vector<int> getRules(QString rule) {
 }
 
 vector<bool> rleDecode(QString compressed) {
+    unsigned int num = 0;
     vector<bool> original;
-    for (int i = 0; i < compressed.size(); i++) {
-        if (compressed.at(i) == 'A') {
-            original.push_back(true);
+    auto data = compressed.toStdString();
+    int a;
+    for(QChar c : data) {
+        a = c.digitValue();
+        if (a == -1) {
+            bool value = (c == 'A');
+            while (num--) {
+                original.push_back(value);
+            }
+            num = 0;
         } else {
-            original.push_back(false);
+            num = num * 10 + a;
+            qDebug() << num;
         }
     }
+    qDebug() << original;
     return original;
 }
 
