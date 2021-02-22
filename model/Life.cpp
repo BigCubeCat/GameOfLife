@@ -57,25 +57,29 @@ int Life::countNeighbours(int index) {
     vector<int> coords;
     vector<int> new_coords;
     int left, right;
+    bool isLeft, isRight;
     coords.push_back(0);
     for (int i = 0; i < N; i++) {
+        isLeft = index % SIZE == 0;
+        isRight == (index + steps[i]) % SIZE == 0;
         for (auto a : coords) {
-            left = a - steps[i];
-            right = a + steps[i];
-
-            if (inWorld(index + left)) {
-                new_coords.push_back(left);
-                if (getCell(index + left)) {
-                    countN++;
+            if (!isLeft) {
+                left = a - steps[i];
+                if (inWorld(index + left)) {
+                    new_coords.push_back(left);
+                    if (getCell(index + left)) {
+                        countN++;
+                    }
                 }
             }
-            if ((index + right) % SIZE == 0) {
-                continue;
-            }
-            if (inWorld(index + right)) {
-                new_coords.push_back(right);
-                if (getCell(index + right)) {
-                    countN++;
+
+            if (!isRight) {
+                right = a + steps[i];
+                if (inWorld(index + right)) {
+                    new_coords.push_back(right);
+                    if (getCell(index + right)) {
+                        countN++;
+                    }
                 }
             }
         }

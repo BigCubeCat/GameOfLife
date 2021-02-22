@@ -7,26 +7,27 @@
 
 #define drawLine(x, y, z, x1, y1, z1) glVertex3f(x, y, z); glVertex3f(x1, y1, z1);
 #define drawCell(t, b, l, r, f, back) glVertex3f(l, t, f);glVertex3f(r, t, f);glVertex3f(r, b, f);glVertex3f(l, b, f);glVertex3f(l, t, back);glVertex3f(r, t, back);glVertex3f(r, b, back);glVertex3f(l, b, back);glVertex3f(l, t, f);glVertex3f(l, b, f);glVertex3f(l, b, back);glVertex3f(l, t, back);glVertex3f(r, t, f);glVertex3f(r, b, f);glVertex3f(r, b, back);glVertex3f(r, t, back);glVertex3f(r, t, f);glVertex3f(r, t, back);glVertex3f(l, t, f);glVertex3f(l, t, back);glVertex3f(r, b, f);glVertex3f(r, b, back);glVertex3f(l, b, f);glVertex3f(l, b, back);
+#define drawEdges(_top, bottom, left, right, _forward, backward) drawLine(right, _top, _forward, left, _top, _forward);drawLine(right, bottom, _forward, left, bottom, _forward);drawLine(right, bottom, backward, left, bottom, backward);drawLine(right, _top, backward, left, _top, backward);drawLine(right, _top, _forward, right, bottom, _forward);drawLine(right, _top, backward, right, bottom, backward);drawLine(left, _top, backward, left, bottom, backward);drawLine(left, _top, _forward, left, bottom, _forward);drawLine(left, _top, _forward, left, _top, backward);drawLine(left, bottom, _forward, left, bottom, backward);drawLine(right, _top, _forward, right, _top, backward);drawLine(right, bottom, _forward, right, bottom, backward);
 
 Camera *camera = new Camera(-5, 5, -5, 4 * M_PI / 7, M_PI / 4, 0.005, 0.1, 800, 600);
 
 Canvas::Canvas(QWidget *parent)
-        : QOpenGLWidget(parent) {
-    this->setMouseTracking(true);
-    worker = new Worker();
-    // life update timeint signal qtr
-    mTimer = new QTimer(this);
-    mTimer->setSingleShot(false);
-    mTimer->setInterval(10000);
-    connect(mTimer, &QTimer::timeout, this, &Canvas::nextGen);
-    mTimer->start();
-    fpsTimer = new QTimer(this);
-    fpsTimer->setSingleShot(false);
-    fpsTimer->setInterval(fps);
-    connect(fpsTimer, &QTimer::timeout, this, &Canvas::fpsUpdate);
-    fpsTimer->start();
-    connect(worker, &Worker::updateRender, this, &Canvas::updateRender); // rerun thread
-}
+    : QOpenGLWidget(parent) {
+        this->setMouseTracking(true);
+        worker = new Worker();
+        // life update timeint signal qtr
+        mTimer = new QTimer(this);
+        mTimer->setSingleShot(false);
+        mTimer->setInterval(10000);
+        connect(mTimer, &QTimer::timeout, this, &Canvas::nextGen);
+        mTimer->start();
+        fpsTimer = new QTimer(this);
+        fpsTimer->setSingleShot(false);
+        fpsTimer->setInterval(fps);
+        connect(fpsTimer, &QTimer::timeout, this, &Canvas::fpsUpdate);
+        fpsTimer->start();
+        connect(worker, &Worker::updateRender, this, &Canvas::updateRender); // rerun thread
+    }
 
 /*GL functions*/
 void Canvas::initializeGL() {
@@ -99,34 +100,24 @@ void Canvas::render() {
     for (int i = 0; i < worker->SIZE; i++) {
         for (int j = 0; j < worker->SIZE; j++) {
             for (int k = 0; k < worker->SIZE; k++) {
+                right = (j + 1) * cellSize;
+                left = j * cellSize;
+                _top = i * cellSize;
+                bottom = (i + 1) * cellSize;
+                _forward = k * cellSize;
+                backward = (k + 1) * cellSize;
+                if (controlPanel->showEdges) {
+                    // Draw cube sides
+                    glColor3f(0.0, 0.0, 0.0);
+                    glBegin(GL_LINES);
+                    drawEdges(_top, bottom, left, right, _forward, backward);
+                    glEnd();
+                }
+
                 if (worker->getCell(i * worker->SIZE * worker->SIZE + j * worker->SIZE + k)) {
-                    right = (j + 1) * cellSize;
-                    left = j * cellSize;
-                    _top = i * cellSize;
-                    bottom = (i + 1) * cellSize;
-                    _forward = k * cellSize;
-                    backward = (k + 1) * cellSize;
-                    if (controlPanel->showEdges) {
-                        // Draw cube sides
-                        glColor3f(0.0, 0.0, 0.0);
-                        glBegin(GL_LINES);
-                        drawLine(right, _top, _forward, left, _top, _forward);
-                        drawLine(right, bottom, _forward, left, bottom, _forward);
-                        drawLine(right, bottom, backward, left, bottom, backward);
-                        drawLine(right, _top, backward, left, _top, backward);
-                        drawLine(right, _top, _forward, right, bottom, _forward);
-                        drawLine(right, _top, backward, right, bottom, backward);
-                        drawLine(left, _top, backward, left, bottom, backward);
-                        drawLine(left, _top, _forward, left, bottom, _forward);
-                        drawLine(left, _top, _forward, left, _top, backward);
-                        drawLine(left, bottom, _forward, left, bottom, backward);
-                        drawLine(right, _top, _forward, right, _top, backward);
-                        drawLine(right, bottom, _forward, right, bottom, backward);
-                        glEnd();
-                    }
                     if (controlPanel->shadeColor) {
                         glColor3f(((float) i / (float) worker->SIZE), ((float) j / (float) worker->SIZE),
-                                  ((float) k / (float) worker->SIZE));
+                                ((float) k / (float) worker->SIZE));
                     } else {
                         glColor3f(controlPanel->r, controlPanel->g, controlPanel->b);
                     }
@@ -136,6 +127,19 @@ void Canvas::render() {
                 }
             }
         }
+    }
+    if (controlPanel->showEdges) {
+        glBegin(GL_LINES);
+        auto border = worker->SIZE * cellSize;
+        auto size = worker->SIZE * cellSize * 100;
+        drawEdges(border, 0, 0, border, border, 0);
+        glColor3f(1.0, 0, 0);
+        drawLine(-size, -size, -size, -size, size, -size);
+        glColor3f(0, 1, 0);
+        drawLine(-size, -size, -size, -size, -size, size);
+        glColor3f(0, 0, 1);
+        drawLine(-size, -size, -size, size, -size, -size);
+        glEnd();
     }
 }
 
@@ -157,7 +161,7 @@ void Canvas::play() {
 void Canvas::updateSettings() {
     mTimer->setInterval(controlPanel->settings.speed);
     worker->updateParameters(controlPanel->settings.dimension, controlPanel->settings.size, controlPanel->settings.B,
-                             controlPanel->settings.S, 2);
+            controlPanel->settings.S, 2);
     updateRender(worker->life->renderData(worker->coord));
 
     coordsPanel->reshape(worker->life->N, worker->life->SIZE);
