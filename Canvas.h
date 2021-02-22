@@ -1,5 +1,6 @@
 #ifndef GAMEOFLIFE_CANVAS_H
 #define GAMEOFLIFE_CANVAS_H
+
 #include <QOpenGLWidget>
 #include <QTimer>
 #include <QKeyEvent>
@@ -39,8 +40,6 @@ public:
     void render2d();
 
     void render();
-
-    void setLife(fileData);
 
 public slots:
 

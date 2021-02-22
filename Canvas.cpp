@@ -11,24 +11,21 @@
 Camera *camera = new Camera(-5, 5, -5, 4 * M_PI / 7, M_PI / 4, 0.005, 0.1, 800, 600);
 
 Canvas::Canvas(QWidget *parent)
-    : QOpenGLWidget(parent) {
-        this->setMouseTracking(true);
-        worker = new Worker();
-        // life update timeint signal qtr
-        mTimer = new QTimer(this);
-        mTimer->setSingleShot(false);
-        mTimer->setInterval(10000);
-        connect(mTimer, &QTimer::timeout, this, &Canvas::nextGen);
-        mTimer->start();
-        fpsTimer = new QTimer(this);
-        fpsTimer->setSingleShot(false);
-        fpsTimer->setInterval(fps);
-        connect(fpsTimer, &QTimer::timeout, this, &Canvas::fpsUpdate);
-        fpsTimer->start();
-        connect(worker, &Worker::updateRender, this, &Canvas::updateRender); // rerun thread
-}
-
-void Canvas::setLife(fileData file_data) {
+        : QOpenGLWidget(parent) {
+    this->setMouseTracking(true);
+    worker = new Worker();
+    // life update timeint signal qtr
+    mTimer = new QTimer(this);
+    mTimer->setSingleShot(false);
+    mTimer->setInterval(10000);
+    connect(mTimer, &QTimer::timeout, this, &Canvas::nextGen);
+    mTimer->start();
+    fpsTimer = new QTimer(this);
+    fpsTimer->setSingleShot(false);
+    fpsTimer->setInterval(fps);
+    connect(fpsTimer, &QTimer::timeout, this, &Canvas::fpsUpdate);
+    fpsTimer->start();
+    connect(worker, &Worker::updateRender, this, &Canvas::updateRender); // rerun thread
 }
 
 /*GL functions*/
@@ -129,7 +126,7 @@ void Canvas::render() {
                     }
                     if (controlPanel->shadeColor) {
                         glColor3f(((float) i / (float) worker->SIZE), ((float) j / (float) worker->SIZE),
-                                ((float) k / (float) worker->SIZE));
+                                  ((float) k / (float) worker->SIZE));
                     } else {
                         glColor3f(controlPanel->r, controlPanel->g, controlPanel->b);
                     }
@@ -160,7 +157,7 @@ void Canvas::play() {
 void Canvas::updateSettings() {
     mTimer->setInterval(controlPanel->settings.speed);
     worker->updateParameters(controlPanel->settings.dimension, controlPanel->settings.size, controlPanel->settings.B,
-            controlPanel->settings.S, 2);
+                             controlPanel->settings.S, 2);
     updateRender(worker->life->renderData(worker->coord));
 
     coordsPanel->reshape(worker->life->N, worker->life->SIZE);

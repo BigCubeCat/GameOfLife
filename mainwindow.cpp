@@ -8,9 +8,7 @@
 #include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-      , ui(new Ui::MainWindow)
-{
+        : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
     setWindowTitle("N-Dimension Game Of Life");
 
@@ -44,15 +42,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSave_As, &QAction::triggered, this, &MainWindow::saveAs);
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
 }
 
 void MainWindow::openFile() {
-    try{
+    try {
         fileName = QFileDialog::getOpenFileName(this,
-                tr("Open Image"), "", tr("Game Of Life(*.life *.json)"));
+                                                tr("Open Image"), "", tr("Game Of Life(*.life *.json)"));
 
         try {
             auto file_data = readFile(fileName);
@@ -60,10 +57,10 @@ void MainWindow::openFile() {
             canvas->controlPanel->updateSettings(file_data.D, file_data.SIZE, file_data.stringB, file_data.stringS);
             canvas->coordsPanel->reshape(canvas->worker->life->N, canvas->worker->life->SIZE);
             emitMessage(QString("Success"));
-        } catch (const std::exception&) {
+        } catch (const std::exception &) {
             emitError(QString("read error"));
         }
-    } catch (const std::exception&) {
+    } catch (const std::exception &) {
         emitError(QString(""));
     }
 }
@@ -80,7 +77,7 @@ void MainWindow::saveFile() {
 void MainWindow::saveAs() {
     fileName = QFileDialog::getSaveFileName(
             this, tr("Save File"), fileName, tr("Life Files (*.json *.life *.txt)")
-            );
+    );
     saveFile();
 }
 

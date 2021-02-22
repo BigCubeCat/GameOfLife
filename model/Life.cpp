@@ -2,6 +2,7 @@
 // Created by bigcubecat on 21.11.2020.
 //
 #include "Life.h"
+
 using namespace std;
 
 
@@ -47,7 +48,7 @@ bool Life::getCell(int index) const {
     // get cell data by global index
     if (inWorld(index)) {
         return data[index];
-    } 
+    }
     return false;
 }
 

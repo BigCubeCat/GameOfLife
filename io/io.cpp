@@ -20,7 +20,7 @@ fileData readFile(QString fileName) {
     QString S = object.value(QString("S")).toString();
 
     auto vector_cells = rleDecode(data);
-    if (vector_cells.size() == 0) {
+    if (vector_cells.empty()) {
         throw;
     }
     bool *cells = new bool[vector_cells.size()];
@@ -34,7 +34,7 @@ fileData readFile(QString fileName) {
 vector<int> getRules(QString rule) {
     vector<int> answer;
     QStringList values = rule.split(",");
-    for (const auto& v : values) {
+    for (const auto &v : values) {
         bool no_errors = true;
         int new_value = v.toInt(&no_errors);
         if (!no_errors) {
@@ -59,7 +59,7 @@ vector<bool> rleDecode(QString compressed) {
     vector<bool> original;
     auto data = compressed.toStdString();
     int a;
-    for(QChar c : data) {
+    for (QChar c : data) {
         a = c.digitValue();
         if (a == -1) {
             bool value = (c == 'A');

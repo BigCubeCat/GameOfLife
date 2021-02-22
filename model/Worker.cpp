@@ -2,7 +2,6 @@
 // Created by bigcubecat on 19.12.2020.
 //
 #include "Worker.h"
-#include <QDebug>
 #include <QThread>
 #include <utility>
 #include "io/io.h"
@@ -21,8 +20,8 @@ Worker::Worker() : QThread() {
 }
 
 void Worker::run() {
-    qDebug() << sender();
-    if (isBusy) {
+    time_t my_time = time(NULL);
+    if (isBusy || !sender()) {
         return;
     }
     isBusy = true;
