@@ -78,8 +78,8 @@ protected:
 
     void keyPressEvent(QKeyEvent *event) override;
 
-private slots:
-
+signals:
+    void emitMessage(QString, int);
 };
 
 

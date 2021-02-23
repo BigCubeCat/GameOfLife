@@ -40,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openFile);
     connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveFile);
     connect(ui->actionSave_As, &QAction::triggered, this, &MainWindow::saveAs);
+
+    connect(canvas, &Canvas::emitMessage, this, &MainWindow::sendMessage);
 }
 
 MainWindow::~MainWindow() {
@@ -99,3 +101,11 @@ void MainWindow::emitError(QString text) {
     bar->setStyleSheet("background-color:red;");
 }
 
+void MainWindow::sendMessage(QString text, int d) {
+    if (d == 0) {
+        emitMessage(text);
+    } else if (d == 1) {
+        emitWarning(text);
+    }
+
+}

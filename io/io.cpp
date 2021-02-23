@@ -69,10 +69,8 @@ vector<bool> rleDecode(QString compressed) {
             num = 0;
         } else {
             num = num * 10 + a;
-            qDebug() << num;
         }
     }
-    qDebug() << original;
     return original;
 }
 

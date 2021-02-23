@@ -34,6 +34,8 @@ private:
     void saveFile();
 
     void saveAs();
+public slots:
+    void sendMessage(QString, int);
 
 };
 

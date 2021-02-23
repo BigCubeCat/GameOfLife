@@ -216,8 +216,10 @@ void Canvas::mousePressEvent(QMouseEvent *event) {
     if (!onFocus) {
         setFocus();
         onFocus = true;
+        emit emitMessage(QString("focused"), 0);
     } else {
         onFocus = false;
+        emit emitMessage(QString("unfocused"), 0);
     }
 }
 
