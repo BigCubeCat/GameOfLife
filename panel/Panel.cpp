@@ -15,6 +15,8 @@ Panel::Panel(QWidget *parent) : QWidget(parent),
 
     connect(ui->shadeCheck, &QCheckBox::toggled, this, &Panel::checkShade);
     connect(ui->borderCheck, &QCheckBox::toggled, this, &Panel::checkEdge);
+    connect(ui->mapCheck, &QCheckBox::toggled, this, &Panel::checkMap);
+    connect(ui->axisCheck, &QCheckBox::toggled, this, &Panel::checkAxis);
 
     connect(ui->bgButton, &QPushButton::clicked, this, &Panel::changeBG);
 
@@ -112,4 +114,12 @@ void Panel::checkShade() {
 
 void Panel::checkEdge() {
     showEdges = ui->borderCheck->isChecked();
+}
+
+void Panel::checkMap() {
+    showMap = ui->mapCheck->isChecked();
+}
+
+void Panel::checkAxis() {
+    showAxis = ui->axisCheck->isChecked();
 }

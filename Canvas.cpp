@@ -125,19 +125,22 @@ void Canvas::render() {
             }
         }
     }
-    if (controlPanel->showEdges) {
-        glBegin(GL_LINES);
-        //auto border = worker->SIZE * cellSize;
+    glBegin(GL_LINES);
+    if (controlPanel->showMap) {
+        auto border = worker->SIZE * cellSize;
+        glColor3f(0, 0, 0);
+        drawEdges(border, 0, 0, border, border, 0);
+    }
+    if (controlPanel->showAxis) {
         auto size = worker->SIZE * cellSize * 100;
-        //drawEdges(border, 0, 0, border, border, 0);
         glColor3f(1.0, 0, 0);
         drawLine(0, 0, 0, 0, size, 0);
         glColor3f(0, 1, 0);
         drawLine(0, 0, 0, 0, 0, size);
         glColor3f(0, 0, 1);
         drawLine(0, 0, 0, size, 0, 0);
-        glEnd();
     }
+    glEnd();
 }
 
 /* Slots */

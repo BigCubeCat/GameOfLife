@@ -57,9 +57,11 @@ public:
     QGroupBox *gridGroupBox;
     QGridLayout *colorLayout;
     QPushButton *colorButton;
-    QCheckBox *shadeCheck;
     QCheckBox *borderCheck;
     QPushButton *bgButton;
+    QCheckBox *shadeCheck;
+    QCheckBox *mapCheck;
+    QCheckBox *axisCheck;
     QSpacerItem *verticalSpacer;
 
     void setupUi(QWidget *Panel)
@@ -211,22 +213,34 @@ public:
 
         colorLayout->addWidget(colorButton, 0, 0, 1, 1);
 
-        shadeCheck = new QCheckBox(gridGroupBox);
-        shadeCheck->setObjectName(QString::fromUtf8("shadeCheck"));
-        shadeCheck->setChecked(true);
-
-        colorLayout->addWidget(shadeCheck, 1, 0, 1, 1);
-
         borderCheck = new QCheckBox(gridGroupBox);
         borderCheck->setObjectName(QString::fromUtf8("borderCheck"));
         borderCheck->setChecked(true);
 
-        colorLayout->addWidget(borderCheck, 2, 0, 1, 1);
+        colorLayout->addWidget(borderCheck, 4, 0, 1, 1);
 
         bgButton = new QPushButton(gridGroupBox);
         bgButton->setObjectName(QString::fromUtf8("bgButton"));
 
-        colorLayout->addWidget(bgButton, 3, 0, 1, 1);
+        colorLayout->addWidget(bgButton, 1, 0, 1, 1);
+
+        shadeCheck = new QCheckBox(gridGroupBox);
+        shadeCheck->setObjectName(QString::fromUtf8("shadeCheck"));
+        shadeCheck->setChecked(true);
+
+        colorLayout->addWidget(shadeCheck, 2, 0, 1, 1);
+
+        mapCheck = new QCheckBox(gridGroupBox);
+        mapCheck->setObjectName(QString::fromUtf8("mapCheck"));
+
+        colorLayout->addWidget(mapCheck, 6, 0, 1, 1);
+
+        axisCheck = new QCheckBox(gridGroupBox);
+        axisCheck->setObjectName(QString::fromUtf8("axisCheck"));
+        axisCheck->setChecked(true);
+        axisCheck->setTristate(false);
+
+        colorLayout->addWidget(axisCheck, 3, 0, 1, 1);
 
 
         verticalLayout->addWidget(gridGroupBox);
@@ -261,9 +275,11 @@ public:
         run->setText(QCoreApplication::translate("Panel", "play", nullptr));
         gridGroupBox->setTitle(QCoreApplication::translate("Panel", "Color", nullptr));
         colorButton->setText(QCoreApplication::translate("Panel", "Cell Color", nullptr));
-        shadeCheck->setText(QCoreApplication::translate("Panel", "Shade Color", nullptr));
-        borderCheck->setText(QCoreApplication::translate("Panel", "Draw Cell Borders", nullptr));
+        borderCheck->setText(QCoreApplication::translate("Panel", "Cell Borders", nullptr));
         bgButton->setText(QCoreApplication::translate("Panel", "BG Color", nullptr));
+        shadeCheck->setText(QCoreApplication::translate("Panel", "Shade Color", nullptr));
+        mapCheck->setText(QCoreApplication::translate("Panel", "Map Borders", nullptr));
+        axisCheck->setText(QCoreApplication::translate("Panel", "Axis", nullptr));
     } // retranslateUi
 
 };

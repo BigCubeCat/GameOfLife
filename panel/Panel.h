@@ -41,6 +41,8 @@ public:
     float B = 0.4;
     bool shadeColor = true;
     bool showEdges = true;
+    bool showMap = false;
+    bool showAxis = true;
 
     ~Panel();
 
@@ -75,6 +77,10 @@ private slots:
     void checkShade();
 
     void checkEdge();
+
+    void checkMap();
+
+    void checkAxis();
 
     void changeBG();
 

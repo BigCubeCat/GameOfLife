@@ -207,7 +207,24 @@
         </property>
        </widget>
       </item>
+      <item row="4" column="0">
+       <widget class="QCheckBox" name="borderCheck">
+        <property name="text">
+         <string>Cell Borders</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="0">
+       <widget class="QPushButton" name="bgButton">
+        <property name="text">
+         <string>BG Color</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
        <widget class="QCheckBox" name="shadeCheck">
         <property name="text">
          <string>Shade Color</string>
@@ -217,20 +234,23 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QCheckBox" name="borderCheck">
+      <item row="6" column="0">
+       <widget class="QCheckBox" name="mapCheck">
         <property name="text">
-         <string>Draw Cell Borders</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
+         <string>Map Borders</string>
         </property>
        </widget>
       </item>
       <item row="3" column="0">
-       <widget class="QPushButton" name="bgButton">
+       <widget class="QCheckBox" name="axisCheck">
         <property name="text">
-         <string>BG Color</string>
+         <string>Axis</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <property name="tristate">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
