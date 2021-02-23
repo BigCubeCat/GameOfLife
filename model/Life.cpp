@@ -62,6 +62,8 @@ int Life::countNeighbours(int index) {
     for (int i = 0; i < N; i++) {
         isLeft = index % SIZE == 0;
         isRight == (index + steps[i]) % SIZE == 0;
+        if (isLeft || isRight) 
+            continue;
         for (auto a : coords) {
             if (!isLeft) {
                 left = a - steps[i];

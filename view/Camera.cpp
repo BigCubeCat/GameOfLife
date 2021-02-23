@@ -74,6 +74,9 @@ void Camera::translation(bool left, bool backward, bool forward, bool right) {
         X -= sin(theta + M_PI/2)*sin(psi) * translation_speed * t;
         Z -= cos(theta + M_PI/2)*sin(psi) * translation_speed * t;
     }
+    if (Z < -10000 || Z > 10000) Z = 0.0f;
+    if (X < -10000 || X > 10000) X = 0.0f;
+    if (Y < -10000 || Y > 10000) Y = 0.0f;
 }
 /*
 Set center

@@ -9,7 +9,7 @@
 #define drawCell(t, b, l, r, f, back) glVertex3f(l, t, f);glVertex3f(r, t, f);glVertex3f(r, b, f);glVertex3f(l, b, f);glVertex3f(l, t, back);glVertex3f(r, t, back);glVertex3f(r, b, back);glVertex3f(l, b, back);glVertex3f(l, t, f);glVertex3f(l, b, f);glVertex3f(l, b, back);glVertex3f(l, t, back);glVertex3f(r, t, f);glVertex3f(r, b, f);glVertex3f(r, b, back);glVertex3f(r, t, back);glVertex3f(r, t, f);glVertex3f(r, t, back);glVertex3f(l, t, f);glVertex3f(l, t, back);glVertex3f(r, b, f);glVertex3f(r, b, back);glVertex3f(l, b, f);glVertex3f(l, b, back);
 #define drawEdges(_top, bottom, left, right, _forward, backward) drawLine(right, _top, _forward, left, _top, _forward);drawLine(right, bottom, _forward, left, bottom, _forward);drawLine(right, bottom, backward, left, bottom, backward);drawLine(right, _top, backward, left, _top, backward);drawLine(right, _top, _forward, right, bottom, _forward);drawLine(right, _top, backward, right, bottom, backward);drawLine(left, _top, backward, left, bottom, backward);drawLine(left, _top, _forward, left, bottom, _forward);drawLine(left, _top, _forward, left, _top, backward);drawLine(left, bottom, _forward, left, bottom, backward);drawLine(right, _top, _forward, right, _top, backward);drawLine(right, bottom, _forward, right, bottom, backward);
 
-Camera *camera = new Camera(-5, 5, -5, 4 * M_PI / 7, M_PI / 4, 0.005, 0.1, 800, 600);
+Camera *camera = new Camera(-5, 5, -5, 4 * M_PI / 7, M_PI / 4, 0.01, 0.01, 1600, 900);
 
 Canvas::Canvas(QWidget *parent)
     : QOpenGLWidget(parent) {
@@ -46,8 +46,6 @@ void Canvas::paintGL() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glEnable(GL_DEPTH_TEST);
-
-    camera->translation(movement[0], movement[1], movement[2], movement[3]);
     gluLookAt(
             camera->getX(), camera->getY(), camera->getZ(), camera->getSightX(),
             camera->getSightY(), camera->getSightZ(), 0, 1, 0);
@@ -100,21 +98,20 @@ void Canvas::render() {
     for (int i = 0; i < worker->SIZE; i++) {
         for (int j = 0; j < worker->SIZE; j++) {
             for (int k = 0; k < worker->SIZE; k++) {
-                right = (j + 1) * cellSize;
-                left = j * cellSize;
-                _top = i * cellSize;
-                bottom = (i + 1) * cellSize;
-                _forward = k * cellSize;
-                backward = (k + 1) * cellSize;
-                if (controlPanel->showEdges) {
-                    // Draw cube sides
-                    glColor3f(0.0, 0.0, 0.0);
-                    glBegin(GL_LINES);
-                    drawEdges(_top, bottom, left, right, _forward, backward);
-                    glEnd();
-                }
-
                 if (worker->getCell(i * worker->SIZE * worker->SIZE + j * worker->SIZE + k)) {
+                    right = (j + 1) * cellSize;
+                    left = j * cellSize;
+                    _top = i * cellSize;
+                    bottom = (i + 1) * cellSize;
+                    _forward = k * cellSize;
+                    backward = (k + 1) * cellSize;
+                    if (controlPanel->showEdges) {
+                        // Draw cube sides
+                        glColor3f(0.0, 0.0, 0.0);
+                        glBegin(GL_LINES);
+                        drawEdges(_top, bottom, left, right, _forward, backward);
+                        glEnd();
+                    }
                     if (controlPanel->shadeColor) {
                         glColor3f(((float) i / (float) worker->SIZE), ((float) j / (float) worker->SIZE),
                                 ((float) k / (float) worker->SIZE));
@@ -130,15 +127,15 @@ void Canvas::render() {
     }
     if (controlPanel->showEdges) {
         glBegin(GL_LINES);
-        auto border = worker->SIZE * cellSize;
+        //auto border = worker->SIZE * cellSize;
         auto size = worker->SIZE * cellSize * 100;
-        drawEdges(border, 0, 0, border, border, 0);
+        //drawEdges(border, 0, 0, border, border, 0);
         glColor3f(1.0, 0, 0);
-        drawLine(-size, -size, -size, -size, size, -size);
+        drawLine(0, 0, 0, 0, size, 0);
         glColor3f(0, 1, 0);
-        drawLine(-size, -size, -size, -size, -size, size);
+        drawLine(0, 0, 0, 0, 0, size);
         glColor3f(0, 0, 1);
-        drawLine(-size, -size, -size, size, -size, -size);
+        drawLine(0, 0, 0, size, 0, 0);
         glEnd();
     }
 }
@@ -222,13 +219,13 @@ void Canvas::mousePressEvent(QMouseEvent *event) {
 }
 
 void Canvas::keyPressEvent(QKeyEvent *event) {
-    if (event->key() == Qt::Key_Up)
+    if (event->key() == Qt::Key_Up || event->key() == Qt::Key_W)
         movement[2] = true;
-    if (event->key() == Qt::Key_Left)
+    if (event->key() == Qt::Key_Left || event->key() == Qt::Key_A)
         movement[0] = true;
-    if (event->key() == Qt::Key_Down)
+    if (event->key() == Qt::Key_Down || event->key() == Qt::Key_S)
         movement[1] = true;
-    if (event->key() == Qt::Key_Right)
+    if (event->key() == Qt::Key_Right || event->key() == Qt::Key_D)
         movement[3] = true;
     camera->translation(movement[0], movement[1], movement[2], movement[3]);
     for (bool &i : movement) {
