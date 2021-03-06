@@ -1,7 +1,5 @@
-//
-// Created by bigcubecat on 21.11.2020.
-//
 #include "Life.h"
+#include <QDebug>
 
 using namespace std;
 
@@ -19,8 +17,19 @@ void Life::setup(int d, int size, vector<int> b, vector<int> s) {
     dataSize = intpow(SIZE, N);
     (d > 2) ? render_size = intpow(SIZE, 3) : render_size = intpow(SIZE, 2);
     steps = new int[N];
-    for (int i = 0; i < N; i++) {
+    for (int i = 0; i <= N; i++) {
         steps[i] = intpow(SIZE, i);
+    }
+    neighbours.push_back(0);
+    for (int i = 0; i < N; i++) {
+
+        vector<int> new_neigh;
+        for (int j = 0; j < neighbours.size(); j++) {
+            new_neigh.push_back(neighbours[j] - steps[i]);
+            new_neigh.push_back(neighbours[j] + steps[i]);
+        }
+        for (int j = 0; j < new_neigh.size(); j++)
+            neighbours.push_back(new_neigh[j]);
     }
 }
 
@@ -54,41 +63,27 @@ bool Life::getCell(int index) const {
 
 int Life::countNeighbours(int index) {
     int countN = 0;
-    vector<int> coords;
-    vector<int> new_coords;
-    int left, right;
-    bool isLeft, isRight;
-    coords.push_back(0);
-    for (int i = 0; i < N; i++) {
-        isLeft = index % SIZE == 0;
-        isRight == (index + steps[i]) % SIZE == 0;
-        if (isLeft || isRight) 
-            continue;
-        for (auto a : coords) {
-            if (!isLeft) {
-                left = a - steps[i];
-                if (inWorld(index + left)) {
-                    new_coords.push_back(left);
-                    if (getCell(index + left)) {
-                        countN++;
-                    }
-                }
-            }
-
-            if (!isRight) {
-                right = a + steps[i];
-                if (inWorld(index + right)) {
-                    new_coords.push_back(right);
-                    if (getCell(index + right)) {
-                        countN++;
-                    }
-                }
+    int k = 1;
+    for (int i = 1; i < neighbours.size(); i++) {
+        /*if (i % 2 == 0) {  // check right
+            qDebug() << k <<  k - 1;
+            qDebug() << steps[k] <<  steps[k - 1];
+            if (!(steps[k] - i % steps[k] < steps[k - 1])) {*/
+                if (getCell(index + neighbours[i]))
+                    countN++;
+            //}
+        /*} else {
+            if (!(i % steps[k] < steps[k - 1])) {
+                if (getCell(index + neighbours[i]) )
+                    countN++;
             }
         }
-        for (auto a : new_coords) {
-            coords.push_back(a);
-        }
+        if ((i - 1) % steps[k] == 0) {
+            k++;
+            qDebug() << "k = " << k;
+        }*/
     }
+    //    qDebug() << countN;
     return countN;
 }
 

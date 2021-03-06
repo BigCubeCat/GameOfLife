@@ -19,6 +19,7 @@ public:
     map<int, bool>          S;
     int                     render_size;
     int*                    steps;
+    vector<int>             neighbours;
 
     Life(int, int, vector<int>, vector<int>, int);          /*init with random arena*/
     Life(int, int, vector<int>, vector<int>, vector<bool>);        /*init with exists data*/
