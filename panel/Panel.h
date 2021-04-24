@@ -11,7 +11,7 @@ namespace Ui {
 QT_END_NAMESPACE
 
 #include "./ui_panel.h"
-#include "intpow.h"
+#include "utils/intpow.h"
 #include "io/io.h"
 #include <QColor>
 #include <QColorDialog>

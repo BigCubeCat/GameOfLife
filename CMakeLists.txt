@@ -36,7 +36,9 @@ add_executable(
         model/Life.h
         io/io.h
         io/io.cpp
-        intpow.h
-        intpow.cpp
+        utils/intpow.h
+        utils/intpow.cpp
+        utils/permutation.cpp
+        utils/permutation.h
 )
 target_link_libraries(GameOfLife PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} GLEW libGLEW.so)

@@ -2,6 +2,7 @@
 // Created by bigcubecat on 21.11.2020.
 //
 #include "Life.h"
+#include "../utils/permutation.h"
 
 using namespace std;
 
@@ -13,14 +14,64 @@ void Life::setup(int d, int size, vector<int> b, vector<int> s) {
     for (auto i : s) {
         S[i] = true;
     }
-    generation = 0;
     SIZE = size;
     N = d;
     dataSize = intpow(SIZE, N);
     (d > 2) ? render_size = intpow(SIZE, 3) : render_size = intpow(SIZE, 2);
     steps = new int[N];
-    for (int i = 0; i < N; i++) {
+    for (int i = 0; i <= N; i++) {
         steps[i] = intpow(SIZE, i);
+    }
+    int left, right;
+    map<int, string> points;
+    points[0] = "";
+    coords.push_back(0);
+    for (int i = 0; i < N; i++) {
+        auto s = steps[i];
+        vector<int> new_coords;
+        for (auto a : coords) {
+            left = a - s;
+            right = a + s;
+            new_coords.push_back(left);
+            new_coords.push_back(right);
+            points[left] = points[a] + "L";
+            points[right] = points[a] + "R";
+        }
+        for (auto a : coords) {
+            points[a] += "M";
+        }
+        coords.insert(coords.end(), new_coords.begin(), new_coords.end());
+        new_coords.clear();
+    }
+    vector<char> al;
+    al.push_back('L'); al.push_back('M'); al.push_back('R'); 
+    vector<string> *per;
+    permutation(al, "", N, per);
+    for (auto p : *per) {
+        map<string, int> coo;
+        for (auto k : points) {
+            coo[k.second] = k.first;
+        }
+        for (int index = 0; index < p.length(); index++) {
+            char c = p[index];
+            for (auto& key : coo) {
+                if (key.first[index] == c) {
+                    int diff = 0;
+                    switch (c) {
+                        case 'L':
+                            diff = 1;
+                        case 'R':
+                            diff = -1;
+                    }
+                    coo[key.first] += diff * steps[index+1];
+                }
+            }
+        }
+        vector<int> _list;
+        for (auto k : coo) {
+            _list.push_back(k.second);
+        }
+        neighbors[p] = _list;
     }
 }
 
