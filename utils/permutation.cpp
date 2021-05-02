@@ -7,9 +7,9 @@ void permutation(vector<char> al, string prefix, int k, vector<string>* a) {
         a->push_back(prefix);
         return;
     }
-    string new_prefix = "";
+    string new_prefix;
     for (char ch : al) {
-        new_prefix.append(&ch);
+        new_prefix = prefix + ch;
         permutation(al, new_prefix, k-1, a);
     }
 }
