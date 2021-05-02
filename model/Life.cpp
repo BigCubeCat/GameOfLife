@@ -48,9 +48,6 @@ void Life::setup(int d, int size, vector<int> b, vector<int> s) {
     al.push_back('L'); al.push_back('M'); al.push_back('R'); 
     vector<string> per;
     permutation(al, "", N, &per);
-    for (auto y : per) {
-        qDebug() << QString::fromStdString(y);
-    }
     for (auto p : per) {
         map<string, int> coo;
         for (auto k : po) {
@@ -79,6 +76,10 @@ void Life::setup(int d, int size, vector<int> b, vector<int> s) {
         }
         neighbors[p] = _list;
     } 
+    for (auto v : neighbors) {
+        for (auto a : v.second)
+            qDebug() << a;
+    }
     for (int i = 0; i < dataSize; i++) {
         points.push_back(checkBorders(i));
     }
@@ -129,7 +130,7 @@ bool Life::getCell(int index) const {
 int Life::countNeighbors(int index) {
     int countN = 0;
     for (auto c : neighbors[points[index]]) {
-        if (data[c]) {
+        if (data[index+c]) {
             countN++;
         }
     }
@@ -139,6 +140,7 @@ int Life::countNeighbors(int index) {
 bool Life::applyRules(int index) {
     // Apply rules to cell with "countN" neighbors
     bool cell = getCell(index);
+    qDebug() << countNeighbors(index);
     if (cell) {
         return S[countNeighbors(index)];
     }
