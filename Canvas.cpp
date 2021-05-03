@@ -9,7 +9,7 @@
 #define drawCell(t, b, l, r, f, back) glVertex3f(l, t, f);glVertex3f(r, t, f);glVertex3f(r, b, f);glVertex3f(l, b, f);glVertex3f(l, t, back);glVertex3f(r, t, back);glVertex3f(r, b, back);glVertex3f(l, b, back);glVertex3f(l, t, f);glVertex3f(l, b, f);glVertex3f(l, b, back);glVertex3f(l, t, back);glVertex3f(r, t, f);glVertex3f(r, b, f);glVertex3f(r, b, back);glVertex3f(r, t, back);glVertex3f(r, t, f);glVertex3f(r, t, back);glVertex3f(l, t, f);glVertex3f(l, t, back);glVertex3f(r, b, f);glVertex3f(r, b, back);glVertex3f(l, b, f);glVertex3f(l, b, back);
 #define drawEdges(_top, bottom, left, right, _forward, backward) drawLine(right, _top, _forward, left, _top, _forward);drawLine(right, bottom, _forward, left, bottom, _forward);drawLine(right, bottom, backward, left, bottom, backward);drawLine(right, _top, backward, left, _top, backward);drawLine(right, _top, _forward, right, bottom, _forward);drawLine(right, _top, backward, right, bottom, backward);drawLine(left, _top, backward, left, bottom, backward);drawLine(left, _top, _forward, left, bottom, _forward);drawLine(left, _top, _forward, left, _top, backward);drawLine(left, bottom, _forward, left, bottom, backward);drawLine(right, _top, _forward, right, _top, backward);drawLine(right, bottom, _forward, right, bottom, backward);
 
-Camera *camera = new Camera(-5, 5, -5, 4 * M_PI / 7, M_PI / 4, 0.01, 0.01, 1600, 900);
+Camera *camera = new Camera(-5, 5, -5, 4 * M_PI / 7, M_PI / 4, 0.01, 0.01, 200, 200);
 
 Canvas::Canvas(QWidget *parent)
     : QOpenGLWidget(parent) {
