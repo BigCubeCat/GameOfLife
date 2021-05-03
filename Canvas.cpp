@@ -18,7 +18,7 @@ Canvas::Canvas(QWidget *parent)
         // life update timeint signal qtr
         mTimer = new QTimer(this);
         mTimer->setSingleShot(false);
-        mTimer->setInterval(10000);
+        mTimer->setInterval(10);
         connect(mTimer, &QTimer::timeout, this, &Canvas::nextGen);
         mTimer->start();
         fpsTimer = new QTimer(this);
@@ -185,12 +185,17 @@ void Canvas::play() {
 }
 
 void Canvas::updateSettings() {
-    mTimer->setInterval(controlPanel->settings.speed);
     worker->updateParameters(controlPanel->settings.dimension, controlPanel->settings.size, controlPanel->settings.B,
-            controlPanel->settings.S, 2);
+            controlPanel->settings.S, controlPanel->settings.probability);
     updateRender(worker->life->renderData(worker->coord));
 
     coordsPanel->reshape(worker->life->N, worker->life->SIZE);
+}
+
+void Canvas::updateRules() {
+    if (worker->lifeExists) {
+        worker->life->setRules(controlPanel->settings.B, controlPanel->settings.S);
+    }
 }
 
 void Canvas::fpsUpdate() {
@@ -216,6 +221,10 @@ void Canvas::updateRender(std::string new_render_data) {
             render_data[i] = false;
         }
     }
+}
+
+void Canvas::updateSpeed() {
+    mTimer->setInterval(controlPanel->settings.speed);
 }
 
 void Canvas::nextGen() {

@@ -22,6 +22,7 @@ public:
     int     SIZE;
     int     generation = 0;
     bool    isBusy;
+    bool    lifeExists = false;
 
     bool    getCell(int index);
     void    updateParameters(int, int, vector<int>, vector<int>, int);

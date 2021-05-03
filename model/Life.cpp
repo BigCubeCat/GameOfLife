@@ -9,12 +9,7 @@ using namespace std;
 
 void Life::setup(int d, int size, vector<int> b, vector<int> s) {
     generation = 1;
-    for (auto i : b) {
-        B[i] = true;
-    }
-    for (auto i : s) {
-        S[i] = true;
-    }
+    setRules(b, s);
     SIZE = size;
     N = d;
     dataSize = intpow(SIZE, N);
@@ -78,13 +73,22 @@ void Life::setup(int d, int size, vector<int> b, vector<int> s) {
     }
 }
 
+void Life::setRules(vector<int> b, vector<int> s) {
+    for (auto i : b) {
+        B[i] = true;
+    }
+    for (auto i : s) {
+        S[i] = true;
+    }
+}
+
 
 Life::Life(int d, int size, vector<int> b, vector<int> s, int v) {
     setup(d, size, b, s);
     data = new bool[dataSize];
     new_data = new bool[dataSize];
     for (int i = 0; i < dataSize; i++) {
-        data[i] = rand() % v == 0;
+        data[i] = rand() % 100 + 1 <= v;
         new_data[i] = false;
     }
 }
