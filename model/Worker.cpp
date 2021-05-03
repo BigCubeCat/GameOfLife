@@ -8,6 +8,7 @@
 
 void Worker::updateParameters(int d, int size, vector<int> b, vector<int> s, int v) {
     life = new Life(d, size, std::move(b), std::move(s), v);
+    lifeExists = true;
     D = d;
     SIZE = size;
     emit updateRender(life->renderData(coord));

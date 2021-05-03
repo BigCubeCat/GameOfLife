@@ -24,6 +24,7 @@ struct Settings {
     int size;
     int dimension;
     int speed;
+    int probability;
 };
 
 class Panel : public QWidget {
@@ -58,19 +59,27 @@ signals:
 
     void updateData();
 
+    void updateRules();
+
     void playSignal();
 
     void stopSignal();
 
     void stepSignal();
 
+    void updateSpeed();
+
 private slots:
 
-    void clearSettings();
+    void generateWorld();
 
-    void applySettings();
+    void lobanovRules();
 
-    void recommendedSettings();
+    void applyRules();
+
+    void relativeRules();
+
+    void setSpeed();
 
     void changeColor();
 
@@ -83,6 +92,8 @@ private slots:
     void checkAxis();
 
     void changeBG();
+
+    void aliveSliderChanged();
 
 private:
     Ui::Panel *ui;

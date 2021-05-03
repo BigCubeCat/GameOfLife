@@ -19,6 +19,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSlider>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QVBoxLayout>
@@ -34,22 +35,28 @@ public:
     QVBoxLayout *verticalLayout_2;
     QVBoxLayout *verticalLayout_3;
     QGridLayout *gridLayout;
-    QLineEdit *BInput;
-    QLabel *label_10;
     QLabel *label_6;
-    QLabel *label_7;
+    QLabel *label_10;
+    QLCDNumber *lcdNumber;
+    QLabel *label_9;
+    QSlider *speedSlider;
+    QLineEdit *BInput;
+    QSpinBox *SizeSpin;
     QLineEdit *SInput;
     QLabel *label_8;
+    QLabel *label_7;
     QLabel *label_4;
-    QLabel *label_9;
-    QSpinBox *SpeedSpin;
-    QLCDNumber *lcdNumber;
     QSpinBox *DSpin;
-    QSpinBox *SizeSpin;
     QHBoxLayout *horizontalLayout_3;
-    QPushButton *clearButton;
+    QPushButton *lobanovButton;
     QPushButton *recommendedButton;
     QPushButton *applyButton;
+    QVBoxLayout *verticalLayout_4;
+    QHBoxLayout *horizontalLayout_2;
+    QLabel *label;
+    QSlider *aliveSlider;
+    QLabel *pLabel;
+    QPushButton *generateButton;
     QHBoxLayout *horizontalLayout;
     QPushButton *stop;
     QPushButton *step;
@@ -86,13 +93,14 @@ public:
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         gridLayout = new QGridLayout();
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        BInput = new QLineEdit(groupBox);
-        BInput->setObjectName(QString::fromUtf8("BInput"));
+        label_6 = new QLabel(groupBox);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
         QFont font;
         font.setPointSize(11);
-        BInput->setFont(font);
+        label_6->setFont(font);
+        label_6->setLineWidth(1);
 
-        gridLayout->addWidget(BInput, 3, 2, 1, 1);
+        gridLayout->addWidget(label_6, 1, 0, 1, 1);
 
         label_10 = new QLabel(groupBox);
         label_10->setObjectName(QString::fromUtf8("label_10"));
@@ -100,18 +108,46 @@ public:
 
         gridLayout->addWidget(label_10, 6, 0, 1, 1);
 
-        label_6 = new QLabel(groupBox);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
-        label_6->setFont(font);
-        label_6->setLineWidth(1);
+        lcdNumber = new QLCDNumber(groupBox);
+        lcdNumber->setObjectName(QString::fromUtf8("lcdNumber"));
+        QFont font1;
+        font1.setFamily(QString::fromUtf8("Hack"));
+        font1.setPointSize(16);
+        lcdNumber->setFont(font1);
+        lcdNumber->setStyleSheet(QString::fromUtf8(""));
+        lcdNumber->setSegmentStyle(QLCDNumber::Flat);
 
-        gridLayout->addWidget(label_6, 1, 0, 1, 1);
+        gridLayout->addWidget(lcdNumber, 1, 2, 1, 1);
 
-        label_7 = new QLabel(groupBox);
-        label_7->setObjectName(QString::fromUtf8("label_7"));
-        label_7->setFont(font);
+        label_9 = new QLabel(groupBox);
+        label_9->setObjectName(QString::fromUtf8("label_9"));
+        label_9->setFont(font);
 
-        gridLayout->addWidget(label_7, 3, 0, 1, 1);
+        gridLayout->addWidget(label_9, 2, 0, 1, 1);
+
+        speedSlider = new QSlider(groupBox);
+        speedSlider->setObjectName(QString::fromUtf8("speedSlider"));
+        speedSlider->setMinimum(1);
+        speedSlider->setMaximum(1000);
+        speedSlider->setValue(900);
+        speedSlider->setOrientation(Qt::Horizontal);
+
+        gridLayout->addWidget(speedSlider, 9, 2, 1, 1);
+
+        BInput = new QLineEdit(groupBox);
+        BInput->setObjectName(QString::fromUtf8("BInput"));
+        BInput->setFont(font);
+
+        gridLayout->addWidget(BInput, 3, 2, 1, 1);
+
+        SizeSpin = new QSpinBox(groupBox);
+        SizeSpin->setObjectName(QString::fromUtf8("SizeSpin"));
+        SizeSpin->setFont(font);
+        SizeSpin->setMinimum(1);
+        SizeSpin->setMaximum(1280000000);
+        SizeSpin->setValue(16);
+
+        gridLayout->addWidget(SizeSpin, 6, 2, 1, 1);
 
         SInput = new QLineEdit(groupBox);
         SInput->setObjectName(QString::fromUtf8("SInput"));
@@ -125,37 +161,17 @@ public:
 
         gridLayout->addWidget(label_8, 5, 0, 1, 1);
 
+        label_7 = new QLabel(groupBox);
+        label_7->setObjectName(QString::fromUtf8("label_7"));
+        label_7->setFont(font);
+
+        gridLayout->addWidget(label_7, 3, 0, 1, 1);
+
         label_4 = new QLabel(groupBox);
         label_4->setObjectName(QString::fromUtf8("label_4"));
         label_4->setFont(font);
 
-        gridLayout->addWidget(label_4, 10, 0, 1, 1);
-
-        label_9 = new QLabel(groupBox);
-        label_9->setObjectName(QString::fromUtf8("label_9"));
-        label_9->setFont(font);
-
-        gridLayout->addWidget(label_9, 2, 0, 1, 1);
-
-        SpeedSpin = new QSpinBox(groupBox);
-        SpeedSpin->setObjectName(QString::fromUtf8("SpeedSpin"));
-        SpeedSpin->setFont(font);
-        SpeedSpin->setMinimum(1);
-        SpeedSpin->setMaximum(1000000000);
-        SpeedSpin->setValue(100);
-
-        gridLayout->addWidget(SpeedSpin, 10, 2, 1, 1);
-
-        lcdNumber = new QLCDNumber(groupBox);
-        lcdNumber->setObjectName(QString::fromUtf8("lcdNumber"));
-        QFont font1;
-        font1.setFamily(QString::fromUtf8("Hack"));
-        font1.setPointSize(16);
-        lcdNumber->setFont(font1);
-        lcdNumber->setStyleSheet(QString::fromUtf8(""));
-        lcdNumber->setSegmentStyle(QLCDNumber::Flat);
-
-        gridLayout->addWidget(lcdNumber, 1, 2, 1, 1);
+        gridLayout->addWidget(label_4, 9, 0, 1, 1);
 
         DSpin = new QSpinBox(groupBox);
         DSpin->setObjectName(QString::fromUtf8("DSpin"));
@@ -166,26 +182,17 @@ public:
 
         gridLayout->addWidget(DSpin, 2, 2, 1, 1);
 
-        SizeSpin = new QSpinBox(groupBox);
-        SizeSpin->setObjectName(QString::fromUtf8("SizeSpin"));
-        SizeSpin->setFont(font);
-        SizeSpin->setMinimum(1);
-        SizeSpin->setMaximum(1280000000);
-        SizeSpin->setValue(16);
-
-        gridLayout->addWidget(SizeSpin, 6, 2, 1, 1);
-
 
         verticalLayout_3->addLayout(gridLayout);
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        clearButton = new QPushButton(groupBox);
-        clearButton->setObjectName(QString::fromUtf8("clearButton"));
-        clearButton->setFont(font);
-        clearButton->setStyleSheet(QString::fromUtf8(""));
+        lobanovButton = new QPushButton(groupBox);
+        lobanovButton->setObjectName(QString::fromUtf8("lobanovButton"));
+        lobanovButton->setFont(font);
+        lobanovButton->setStyleSheet(QString::fromUtf8(""));
 
-        horizontalLayout_3->addWidget(clearButton);
+        horizontalLayout_3->addWidget(lobanovButton);
 
         recommendedButton = new QPushButton(groupBox);
         recommendedButton->setObjectName(QString::fromUtf8("recommendedButton"));
@@ -203,6 +210,42 @@ public:
 
 
         verticalLayout_3->addLayout(horizontalLayout_3);
+
+        verticalLayout_4 = new QVBoxLayout();
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        label = new QLabel(groupBox);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setFont(font);
+
+        horizontalLayout_2->addWidget(label);
+
+        aliveSlider = new QSlider(groupBox);
+        aliveSlider->setObjectName(QString::fromUtf8("aliveSlider"));
+        aliveSlider->setMaximum(100);
+        aliveSlider->setValue(25);
+        aliveSlider->setOrientation(Qt::Horizontal);
+
+        horizontalLayout_2->addWidget(aliveSlider);
+
+        pLabel = new QLabel(groupBox);
+        pLabel->setObjectName(QString::fromUtf8("pLabel"));
+        pLabel->setFont(font);
+
+        horizontalLayout_2->addWidget(pLabel);
+
+
+        verticalLayout_4->addLayout(horizontalLayout_2);
+
+        generateButton = new QPushButton(groupBox);
+        generateButton->setObjectName(QString::fromUtf8("generateButton"));
+        generateButton->setFont(font);
+
+        verticalLayout_4->addWidget(generateButton);
+
+
+        verticalLayout_3->addLayout(verticalLayout_4);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -299,19 +342,37 @@ public:
     void retranslateUi(QWidget *Panel)
     {
         Panel->setWindowTitle(QCoreApplication::translate("Panel", "Form", nullptr));
-        groupBox->setTitle(QCoreApplication::translate("Panel", "Info", nullptr));
-        BInput->setText(QCoreApplication::translate("Panel", "3", nullptr));
-        label_10->setText(QCoreApplication::translate("Panel", "Size", nullptr));
+        groupBox->setTitle(QString());
         label_6->setText(QCoreApplication::translate("Panel", "Generation", nullptr));
-        label_7->setText(QCoreApplication::translate("Panel", "B", nullptr));
+        label_10->setText(QCoreApplication::translate("Panel", "Size", nullptr));
+        label_9->setText(QCoreApplication::translate("Panel", "Dimension", nullptr));
+        BInput->setText(QCoreApplication::translate("Panel", "3", nullptr));
         SInput->setText(QCoreApplication::translate("Panel", "2,3", nullptr));
         label_8->setText(QCoreApplication::translate("Panel", "S", nullptr));
+        label_7->setText(QCoreApplication::translate("Panel", "B", nullptr));
         label_4->setText(QCoreApplication::translate("Panel", "Speed:", nullptr));
-        label_9->setText(QCoreApplication::translate("Panel", "Dimension", nullptr));
-        clearButton->setText(QCoreApplication::translate("Panel", "Default", nullptr));
-        recommendedButton->setText(QCoreApplication::translate("Panel", "Recomend", nullptr));
+#if QT_CONFIG(tooltip)
+        lobanovButton->setToolTip(QCoreApplication::translate("Panel", "set Lobanov's rules", nullptr));
+#endif // QT_CONFIG(tooltip)
+        lobanovButton->setText(QCoreApplication::translate("Panel", "Lobanov's", nullptr));
+#if QT_CONFIG(tooltip)
+        recommendedButton->setToolTip(QCoreApplication::translate("Panel", "set \"relative\" rules", nullptr));
+#endif // QT_CONFIG(tooltip)
+        recommendedButton->setText(QCoreApplication::translate("Panel", "Relative", nullptr));
+#if QT_CONFIG(tooltip)
+        applyButton->setToolTip(QCoreApplication::translate("Panel", "Apply rules", nullptr));
+#endif // QT_CONFIG(tooltip)
         applyButton->setText(QCoreApplication::translate("Panel", "Apply", nullptr));
+        label->setText(QCoreApplication::translate("Panel", "alive: ", nullptr));
+        pLabel->setText(QCoreApplication::translate("Panel", "%", nullptr));
+        generateButton->setText(QCoreApplication::translate("Panel", "Generate random world", nullptr));
+#if QT_CONFIG(tooltip)
+        stop->setToolTip(QCoreApplication::translate("Panel", "stop", nullptr));
+#endif // QT_CONFIG(tooltip)
         stop->setText(QString());
+#if QT_CONFIG(tooltip)
+        step->setToolTip(QCoreApplication::translate("Panel", "step", nullptr));
+#endif // QT_CONFIG(tooltip)
         step->setText(QString());
 #if QT_CONFIG(tooltip)
         run->setToolTip(QCoreApplication::translate("Panel", "play", nullptr));

@@ -51,11 +51,15 @@ public slots:
 
     void updateSettings();
 
+    void updateRules();
+
     void getIndex(int);
 
     void nextGen();
 
     void fpsUpdate();
+
+    void updateSpeed();
 
     void updateRender(std::string);
 

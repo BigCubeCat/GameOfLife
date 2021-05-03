@@ -3,9 +3,10 @@
 Panel::Panel(QWidget *parent) : QWidget(parent),
                                 ui(new Ui::Panel) {
     ui->setupUi(this);
-    connect(ui->applyButton, &QPushButton::clicked, this, &Panel::applySettings);
-    connect(ui->clearButton, &QPushButton::clicked, this, &Panel::clearSettings);
-    connect(ui->recommendedButton, &QPushButton::clicked, this, &Panel::recommendedSettings);
+    connect(ui->applyButton, &QPushButton::clicked, this, &Panel::applyRules);
+    connect(ui->lobanovButton, &QPushButton::clicked, this, &Panel::lobanovRules);
+    connect(ui->recommendedButton, &QPushButton::clicked, this, &Panel::relativeRules);
+    connect(ui->generateButton, &QPushButton::clicked, this, &Panel::generateWorld);
 
     connect(ui->stop, &QPushButton::clicked, this, &Panel::stopSignal);
     connect(ui->run, &QPushButton::clicked, this, &Panel::playSignal);
@@ -17,6 +18,9 @@ Panel::Panel(QWidget *parent) : QWidget(parent),
     connect(ui->borderCheck, &QCheckBox::toggled, this, &Panel::checkEdge);
     connect(ui->mapCheck, &QCheckBox::toggled, this, &Panel::checkMap);
     connect(ui->axisCheck, &QCheckBox::toggled, this, &Panel::checkAxis);
+
+    connect(ui->speedSlider, &QSlider::valueChanged, this, &Panel::setSpeed);
+    connect(ui->aliveSlider, &QSlider::valueChanged, this, &Panel::aliveSliderChanged);
 
     connect(ui->bgButton, &QPushButton::clicked, this, &Panel::changeBG);
 
@@ -33,38 +37,43 @@ Panel::~Panel() {
     delete ui;
 }
 
-void Panel::applySettings() {
-    // Read settings
+void Panel::generateWorld() {
+    settings.probability = ui->aliveSlider->value();
     settings.dimension = ui->DSpin->value();
     settings.size = ui->SizeSpin->value();
-    settings.speed = ui->SpeedSpin->value();
+    emit updateData();
+}
+
+void Panel::applyRules() {
     // reading new rules
     vector<int> new_b = getRules(ui->BInput->text());
     vector<int> new_s = getRules(ui->SInput->text());
     settings.B = new_b;
     settings.S = new_s;
     // emit signal to canvas
-    emit updateData();
+    emit updateRules();
 }
 
-void Panel::recommendedSettings() {
+void Panel::setSpeed() {
+    settings.speed = 1000 - ui->speedSlider->value();
+    emit updateSpeed();
+}
+
+void Panel::relativeRules() {
     int c, d;
     d = ui->DSpin->value();
     c = intpow(3, d);
-    QString newB = QString::number(c / 3) + "." + QString::number(4 * c / 9 - 1);
-    QString newS = QString::number(2 * c / 9) + "." + QString::number(4 * c / 9 - 1);
-    ui->BInput->setText(newB);
-    ui->SInput->setText(newS);
-    applySettings();
+    ui->BInput->setText(QString::number(c / 3) + "." + QString::number(4 * c / 9 - 1));
+    ui->SInput->setText(QString::number(2 * c / 9) + "." + QString::number(4 * c / 9 - 1));
+    applyRules();
 }
 
-void Panel::clearSettings() {
+void Panel::lobanovRules() {
     settings = default_settings;
-    ui->BInput->setText(QString::fromStdString("3"));
-    ui->SInput->setText(QString::fromStdString("2,3"));
-    ui->SizeSpin->setValue(default_settings.size);
-    ui->SpeedSpin->setValue(default_settings.speed);
-    ui->DSpin->setValue(default_settings.dimension);
+    int d = ui->DSpin->value();
+    ui->BInput->setText(QString::number(intpow(2, d - 1) + intpow(2, d - 2)) + "." + QString::number(intpow(2, d) - 1));
+    ui->SInput->setText(QString::number(intpow(2, d - 1)) + "." + QString::number(intpow(2, d) - 1));
+    applyRules();
 }
 
 void Panel::updateGeneration(int value) {
@@ -126,4 +135,7 @@ void Panel::checkMap() {
 
 void Panel::checkAxis() {
     showAxis = ui->axisCheck->isChecked();
+}
+void Panel::aliveSliderChanged() {
+    ui->pLabel->setText(QString::number(ui->aliveSlider->value()) + QString("%"));
 }

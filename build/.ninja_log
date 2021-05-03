@@ -1,0 +1,15 @@
+# ninja log v5
+0	779	1620035746693313805	GameOfLife_autogen/timestamp	5efa75caef4b931
+792	1674	1620035747633313782	CMakeFiles/GameOfLife.dir/view/Camera.cpp.o	1d91e58ec5b87bd1
+1675	1751	1620035747709980447	CMakeFiles/GameOfLife.dir/utils/intpow.cpp.o	52c39c2175fc0992
+1751	2834	1620035748793313754	CMakeFiles/GameOfLife.dir/utils/permutation.cpp.o	560c5371ce366ae
+817	3368	1620035749323313741	CMakeFiles/GameOfLife.dir/io/io.cpp.o	c17c6b2f5c10dadf
+800	3121	1620035749079980413	CMakeFiles/GameOfLife.dir/model/Life.cpp.o	acd13a4129c1d1ac
+782	4257	1620035750216647052	CMakeFiles/GameOfLife.dir/panel/CoordsPanel.cpp.o	d4fe49a802939e27
+779	5185	1620035751146647030	CMakeFiles/GameOfLife.dir/main.cpp.o	e1d6657f4838b778
+5413	5854	1620035751813313681	GameOfLife	5db68e28b93e9914
+782	4465	1620035750423313714	CMakeFiles/GameOfLife.dir/model/Worker.cpp.o	3c80a2d6a1634550
+779	4792	1620035750753313706	CMakeFiles/GameOfLife.dir/panel/Panel.cpp.o	1b55708490867816
+779	5333	1620035751293313693	CMakeFiles/GameOfLife.dir/Canvas.cpp.o	c1b5abba7f0203f2
+779	5294	1620035751253313694	CMakeFiles/GameOfLife.dir/GameOfLife_autogen/mocs_compilation.cpp.o	1573d1419c1ffb44
+779	5413	1620035751373313691	CMakeFiles/GameOfLife.dir/mainwindow.cpp.o	36f5d7f0d89f4c78

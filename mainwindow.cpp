@@ -24,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent)
     canvas->coordsPanel = coordsPanel;
 
     connect(panel, &Panel::updateData, canvas, &Canvas::updateSettings);
+    connect(panel, &Panel::updateRules, canvas, &Canvas::updateRules);
+    connect(panel, &Panel::updateSpeed, canvas, &Canvas::updateSpeed);
     connect(coordsPanel, &CoordsPanel::signalIndex, canvas, &Canvas::getIndex);
     connect(panel, &Panel::playSignal, canvas, &Canvas::play);
     connect(panel, &Panel::stopSignal, canvas, &Canvas::stop);
