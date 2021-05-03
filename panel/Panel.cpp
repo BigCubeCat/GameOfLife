@@ -5,7 +5,7 @@ Panel::Panel(QWidget *parent) : QWidget(parent),
     ui->setupUi(this);
     connect(ui->applyButton, &QPushButton::clicked, this, &Panel::applySettings);
     connect(ui->clearButton, &QPushButton::clicked, this, &Panel::clearSettings);
-    connect(ui->recomendedButton, &QPushButton::clicked, this, &Panel::recomendedSettings);
+    connect(ui->recommendedButton, &QPushButton::clicked, this, &Panel::recommendedSettings);
 
     connect(ui->stop, &QPushButton::clicked, this, &Panel::stopSignal);
     connect(ui->run, &QPushButton::clicked, this, &Panel::playSignal);
@@ -19,6 +19,10 @@ Panel::Panel(QWidget *parent) : QWidget(parent),
     connect(ui->axisCheck, &QCheckBox::toggled, this, &Panel::checkAxis);
 
     connect(ui->bgButton, &QPushButton::clicked, this, &Panel::changeBG);
+
+    ui->run->setIcon(QIcon("icons/play.svg"));
+    ui->stop->setIcon(QIcon("icons/pause.svg"));
+    ui->step->setIcon(QIcon("icons/step.svg"));
 
     default_settings.size = ui->SizeSpin->value();  // Default set in qt designer
     default_settings.dimension = 2;
@@ -43,7 +47,7 @@ void Panel::applySettings() {
     emit updateData();
 }
 
-void Panel::recomendedSettings() {
+void Panel::recommendedSettings() {
     int c, d;
     d = ui->DSpin->value();
     c = intpow(3, d);

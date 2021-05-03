@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>245</width>
+    <width>300</width>
     <height>636</height>
    </rect>
   </property>
@@ -18,12 +18,15 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>245</width>
+    <width>300</width>
     <height>0</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -38,6 +41,11 @@
          <layout class="QGridLayout" name="gridLayout">
           <item row="3" column="2">
            <widget class="QLineEdit" name="BInput">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>3</string>
             </property>
@@ -45,6 +53,11 @@
           </item>
           <item row="6" column="0">
            <widget class="QLabel" name="label_10">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>Size</string>
             </property>
@@ -52,6 +65,14 @@
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_6">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="lineWidth">
+             <number>1</number>
+            </property>
             <property name="text">
              <string>Generation</string>
             </property>
@@ -59,6 +80,11 @@
           </item>
           <item row="3" column="0">
            <widget class="QLabel" name="label_7">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>B</string>
             </property>
@@ -66,6 +92,11 @@
           </item>
           <item row="5" column="2">
            <widget class="QLineEdit" name="SInput">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>2,3</string>
             </property>
@@ -73,6 +104,11 @@
           </item>
           <item row="5" column="0">
            <widget class="QLabel" name="label_8">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>S</string>
             </property>
@@ -80,6 +116,11 @@
           </item>
           <item row="10" column="0">
            <widget class="QLabel" name="label_4">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>Speed:</string>
             </property>
@@ -87,6 +128,11 @@
           </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_9">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>Dimension</string>
             </property>
@@ -94,6 +140,11 @@
           </item>
           <item row="10" column="2">
            <widget class="QSpinBox" name="SpeedSpin">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
             <property name="minimum">
              <number>1</number>
             </property>
@@ -106,10 +157,28 @@
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QLCDNumber" name="lcdNumber"/>
+           <widget class="QLCDNumber" name="lcdNumber">
+            <property name="font">
+             <font>
+              <family>Hack</family>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"> </string>
+            </property>
+            <property name="segmentStyle">
+             <enum>QLCDNumber::Flat</enum>
+            </property>
+           </widget>
           </item>
           <item row="2" column="2">
            <widget class="QSpinBox" name="DSpin">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
             <property name="minimum">
              <number>2</number>
             </property>
@@ -123,6 +192,11 @@
           </item>
           <item row="6" column="2">
            <widget class="QSpinBox" name="SizeSpin">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
             <property name="minimum">
              <number>1</number>
             </property>
@@ -140,13 +214,29 @@
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
            <widget class="QPushButton" name="clearButton">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string>Default</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="recomendedButton">
+           <widget class="QPushButton" name="recommendedButton">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string>Recomend</string>
             </property>
@@ -154,6 +244,14 @@
           </item>
           <item>
            <widget class="QPushButton" name="applyButton">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string>Apply</string>
             </property>
@@ -165,22 +263,52 @@
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QPushButton" name="stop">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="text">
-             <string>stop</string>
+             <string/>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="step">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="text">
-             <string>step</string>
+             <string/>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="run">
-            <property name="text">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="toolTip">
              <string>play</string>
+            </property>
+            <property name="statusTip">
+             <string>play</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>
@@ -202,6 +330,14 @@
      <layout class="QGridLayout" name="colorLayout">
       <item row="0" column="0">
        <widget class="QPushButton" name="colorButton">
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="text">
          <string>Cell Color</string>
         </property>
@@ -209,6 +345,11 @@
       </item>
       <item row="4" column="0">
        <widget class="QCheckBox" name="borderCheck">
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Cell Borders</string>
         </property>
@@ -219,6 +360,14 @@
       </item>
       <item row="1" column="0">
        <widget class="QPushButton" name="bgButton">
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="text">
          <string>BG Color</string>
         </property>
@@ -226,6 +375,11 @@
       </item>
       <item row="2" column="0">
        <widget class="QCheckBox" name="shadeCheck">
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Shade Color</string>
         </property>
@@ -236,6 +390,11 @@
       </item>
       <item row="6" column="0">
        <widget class="QCheckBox" name="mapCheck">
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Map Borders</string>
         </property>
@@ -243,6 +402,11 @@
       </item>
       <item row="3" column="0">
        <widget class="QCheckBox" name="axisCheck">
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Axis</string>
         </property>

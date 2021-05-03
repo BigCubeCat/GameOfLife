@@ -43,6 +43,9 @@ public:
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         scrollArea = new QScrollArea(CoordsPanel);
         scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
+        QFont font;
+        font.setPointSize(11);
+        scrollArea->setFont(font);
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
@@ -60,6 +63,7 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
         pushButton->setSizePolicy(sizePolicy1);
+        pushButton->setFont(font);
 
         verticalLayout->addWidget(pushButton);
 
@@ -67,6 +71,7 @@ public:
         clearButton->setObjectName(QString::fromUtf8("clearButton"));
         sizePolicy1.setHeightForWidth(clearButton->sizePolicy().hasHeightForWidth());
         clearButton->setSizePolicy(sizePolicy1);
+        clearButton->setFont(font);
 
         verticalLayout->addWidget(clearButton);
 

@@ -49,21 +49,16 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::openFile() {
+    fileName = QFileDialog::getOpenFileName(this,
+                                            tr("Open Image"), "", tr("Game Of Life(*.life *.json)"));
     try {
-        fileName = QFileDialog::getOpenFileName(this,
-                                                tr("Open Image"), "", tr("Game Of Life(*.life *.json)"));
-
-        try {
-            auto file_data = readFile(fileName);
-            canvas->worker->setLife(file_data);
-            canvas->controlPanel->updateSettings(file_data.D, file_data.SIZE, file_data.stringB, file_data.stringS);
-            canvas->coordsPanel->reshape(canvas->worker->life->N, canvas->worker->life->SIZE);
-            emitMessage(QString("Success"));
-        } catch (const std::exception &) {
-            emitError(QString("read error"));
-        }
-    } catch (const std::exception &) {
-        emitError(QString(""));
+        auto file_data = readFile(fileName);
+        canvas->worker->setLife(file_data);
+        canvas->controlPanel->updateSettings(file_data.D, file_data.SIZE, file_data.stringB, file_data.stringS);
+        canvas->coordsPanel->reshape(canvas->worker->life->N, canvas->worker->life->SIZE);
+        emitMessage(QString("Success"));
+    }  catch (int a) {
+        emitError(QString("Read Error"));
     }
 }
 
@@ -107,5 +102,4 @@ void MainWindow::sendMessage(QString text, int d) {
     } else if (d == 1) {
         emitWarning(text);
     }
-
 }

@@ -83,7 +83,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 1600, 30));
+        menubar->setGeometry(QRect(0, 0, 1600, 20));
         menuFile = new QMenu(menubar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         menuView = new QMenu(menubar);
@@ -91,6 +91,9 @@ public:
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
+        QFont font;
+        font.setPointSize(11);
+        statusbar->setFont(font);
         MainWindow->setStatusBar(statusbar);
         dockWidget = new QDockWidget(MainWindow);
         dockWidget->setObjectName(QString::fromUtf8("dockWidget"));

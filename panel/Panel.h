@@ -70,7 +70,7 @@ private slots:
 
     void applySettings();
 
-    void recomendedSettings();
+    void recommendedSettings();
 
     void changeColor();
 

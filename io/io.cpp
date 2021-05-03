@@ -21,7 +21,7 @@ fileData readFile(QString fileName) {
 
     auto vector_cells = rleDecode(data);
     if (vector_cells.empty()) {
-        throw;
+        throw 0;
     }
     bool *cells = new bool[vector_cells.size()];
     for (int i = 0; i < sizeof(cells); i++) {

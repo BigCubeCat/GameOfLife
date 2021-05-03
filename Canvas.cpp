@@ -72,23 +72,49 @@ void Canvas::resizeGL(int w, int h) {
 /*render*/
 void Canvas::render2d() {
     glBegin(GL_QUADS);
-    float __top, bottom, left, right;
+    float _top, bottom, left, right;
     if (!drawing) return;
     for (int i = 0; i < worker->SIZE; i++) {
         for (int j = 0; j < worker->SIZE; j++) {
             if (render_data[i * worker->SIZE + j]) {
                 right = (j + 1) * cellSize;
                 left = j * cellSize;
-                __top = i * cellSize;
+                _top = i * cellSize;
                 bottom = (i + 1) * cellSize;
-                glColor3f(((float) i / (float) worker->SIZE), ((float) j / (float) worker->SIZE), 1.0f);
-                glVertex3f(left, __top, 0.0f);
-                glVertex3f(right, __top, 0.0f);
-                glVertex3f(right, bottom, 0.0f);
-                glVertex3f(left, bottom, 0.0f);
+                if (controlPanel->showEdges) {
+                    // Draw cube sides
+                    glColor3f(0.0, 0.0, 0.0);
+                    glBegin(GL_LINES);
+                    drawEdges(_top, bottom, left, right, 0, cellSize);
+                    glEnd();
+                }
+                if (controlPanel->shadeColor) {
+                    glColor3f(((float) i / (float) worker->SIZE), ((float) j / (float) worker->SIZE), 0);
+                } else {
+                    glColor3f(controlPanel->r, controlPanel->g, controlPanel->b);
+                }
+                glBegin(GL_QUADS);
+                drawCell(_top, bottom, left, right, 0, cellSize);
+                glEnd();
             }
         }
     }
+    glBegin(GL_LINES);
+    if (controlPanel->showMap) {
+        auto border = worker->SIZE * cellSize;
+        glColor3f(0, 0, 0);
+        drawEdges(border, 0, 0, border, border, 0);
+    }
+    if (controlPanel->showAxis) {
+        auto size = worker->SIZE * cellSize * 100;
+        glColor3f(1.0, 0, 0);
+        drawLine(0, 0, 0, 0, size, 0);
+        glColor3f(0, 1, 0);
+        drawLine(0, 0, 0, 0, 0, size);
+        glColor3f(0, 0, 1);
+        drawLine(0, 0, 0, size, 0, 0);
+    }
+    glEnd();
     glEnd();
 }
 

@@ -9,6 +9,7 @@ using namespace std;
 
 
 void Life::setup(int d, int size, vector<int> b, vector<int> s) {
+    generation = 1;
     for (auto i : b) {
         B[i] = true;
     }
@@ -44,6 +45,10 @@ void Life::setup(int d, int size, vector<int> b, vector<int> s) {
         coords.insert(coords.end(), new_coords.begin(), new_coords.end());
         new_coords.clear();
     }
+    for (auto a : coords) {
+        qDebug() << "c = " << a;
+    }
+
     vector<char> al;
     al.push_back('L'); al.push_back('M'); al.push_back('R'); 
     vector<string> per;
@@ -58,13 +63,10 @@ void Life::setup(int d, int size, vector<int> b, vector<int> s) {
             for (auto& key : coo) {
                 if (key.first[index] == c) {
                     int diff = 0;
-                    switch (c) {
-                        case 'L':
-                            diff = 1;
-                            break;
-                        case 'R':
-                            diff = -1;
-                            break;
+                    if (c == 'L') {
+                        diff = 1;
+                    } else if (c == 'R') {
+                        diff = -1;
                     }
                     coo[key.first] += diff * steps[index+1];
                 }
@@ -76,12 +78,15 @@ void Life::setup(int d, int size, vector<int> b, vector<int> s) {
         }
         neighbors[p] = _list;
     } 
-    for (auto v : neighbors) {
-        for (auto a : v.second)
-            qDebug() << a;
+    for (auto n : neighbors) {
+        qDebug() << QString::fromStdString(n.first);
+        for (auto v : n.second) {
+            qDebug() << "\t" << v;
+        }
     }
     for (int i = 0; i < dataSize; i++) {
         points.push_back(checkBorders(i));
+        qDebug() << QString::fromStdString(checkBorders(i));
     }
 }
 
@@ -108,13 +113,18 @@ Life::Life(int d, int size, vector<int> b, vector<int> s, vector<bool> cells) {
 
 string Life::checkBorders(int index) {
     string answer = "";
+    int t;
     for (int i = 0; i < N; i++) {
-        if (0 <= index % steps[i+1] < steps[i]) { // it mean left border
+        t = index % steps[i+1];
+        if (0 <= t && t < steps[i]) {
             answer.push_back('L');
-        } else if (0 <= (index + steps[i]) % steps[i+1] < steps[i]) {
-            answer.push_back('R');
         } else {
-            answer.push_back('M');
+            t = (index + steps[i]) % steps[i+1];
+            if (0 <= t && t < steps[i]) {
+                answer.push_back('R');
+            } else {
+                answer.push_back('M');
+            }
         }
     }
     return answer;
@@ -128,19 +138,26 @@ bool Life::getCell(int index) const {
 }
 
 int Life::countNeighbors(int index) {
+    qDebug() << "\n";
     int countN = 0;
     for (auto c : neighbors[points[index]]) {
+        if (c == 0) {
+            continue;
+        }
+        qDebug() << index+c;
         if (data[index+c]) {
             countN++;
         }
     }
+    if (countN > 0)
+    qDebug() << "\n";
+    qDebug() << countN;
     return countN;
 }
 
 bool Life::applyRules(int index) {
     // Apply rules to cell with "countN" neighbors
     bool cell = getCell(index);
-    qDebug() << countNeighbors(index);
     if (cell) {
         return S[countNeighbors(index)];
     }
