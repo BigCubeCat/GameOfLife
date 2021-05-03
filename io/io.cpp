@@ -74,6 +74,27 @@ vector<bool> rleDecode(QString compressed) {
     return original;
 }
 
+QString rleEncode(string data) {
+    QString result;
+    char prev_char = data[0];
+    int count = 0;
+    for (char c : data) {
+        if  (c == prev_char) {
+            count++;
+        } else {
+            string v = "";
+            v.push_back(prev_char);
+            result += QString::number(count) + QString::fromStdString(v);
+            count = 1;
+            prev_char = c;
+        }
+    }
+    string v = "";
+    v.push_back(prev_char);
+    result += QString::number(count) + QString::fromStdString(v);
+    return result;
+}
+
 void saveToFile(QString fileName, QString data) {
     QFile file(fileName);
     if (file.open(QIODevice::WriteOnly)) {

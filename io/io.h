@@ -23,6 +23,8 @@ std::vector<int> getRules(QString rule);
 
 std::vector<bool> rleDecode(QString);
 
+QString rleEncode(std::string data);
+
 void saveToFile(QString filename, QString data);
 
 #endif

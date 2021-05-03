@@ -60,7 +60,7 @@ QString Worker::getData(QString b, QString s) {
     QString answer;
     answer = QString("{\n") + QString("\"D\": ") + QString::number(life->N) + QString(",\n");
     answer += QString("\"SIZE\": ") + QString::number(life->SIZE) + QString(",\n");
-    answer += QString("\"DATA\": \"") + QString::fromStdString(life->fileData()) + QString("\",\n");
+    answer += QString("\"DATA\": \"") + rleEncode(life->fileData()) + QString("\",\n");
     answer += QString("\"B\": \"") + b + QString("\",\n");
     answer += QString("\"S\": \"") + s + QString("\"\n}");
     return answer;
