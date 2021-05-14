@@ -21,10 +21,13 @@ using namespace std;
 struct Settings {
     vector<int> B;
     vector<int> S;
-    int size;
-    int dimension;
-    int speed;
-    int probability;
+    int size = 16;
+    int dimension = 3;
+    int speed = 75;
+    int probability = 0;
+    int x = 0;
+    int y = 0; 
+    int z = 0;
 };
 
 class Panel : public QWidget {
@@ -68,8 +71,14 @@ signals:
     void stepSignal();
 
     void updateSpeed();
+    
+    void setCellSignal();
 
 private slots:
+
+    void setCell();
+    
+    //void getCoordForCell();
 
     void generateWorld();
 

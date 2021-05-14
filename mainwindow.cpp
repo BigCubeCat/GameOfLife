@@ -31,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(panel, &Panel::stopSignal, canvas, &Canvas::stop);
     connect(panel, &Panel::stepSignal, canvas, &Canvas::step);
 
+    connect(panel, &Panel::setCellSignal, canvas, &Canvas::setCell);
+
     auto visionAction = ui->dockWidget->toggleViewAction();
     visionAction->setText("Control Panel");
     ui->menuView->addAction(visionAction);

@@ -390,6 +390,29 @@
     </widget>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QSpinBox" name="xSpin"/>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="ySpin"/>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="zSpin"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="setbutton">
+       <property name="text">
+        <string>ok</string>
+       </property>
+       <property name="autoDefault">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
     <widget class="QGroupBox" name="gridGroupBox">
      <property name="title">
       <string>Color</string>

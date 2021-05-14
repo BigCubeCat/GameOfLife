@@ -15,7 +15,7 @@ Canvas::Canvas(QWidget *parent)
     : QOpenGLWidget(parent) {
         this->setMouseTracking(true);
         worker = new Worker();
-        // life update timeint signal qtr
+        // life update timeint signal qt
         mTimer = new QTimer(this);
         mTimer->setSingleShot(false);
         mTimer->setInterval(10);
@@ -192,6 +192,17 @@ void Canvas::updateSettings() {
     coordsPanel->reshape(worker->life->N, worker->life->SIZE);
 }
 
+void Canvas::setCell() {
+    int index;
+    if (worker->life->N > 2) {
+        index = coordsPanel->getIndex() + controlPanel->settings.x * worker->life->steps[0] + controlPanel->settings.y * worker->life->steps[1] + controlPanel->settings.z * worker->life->steps[2];
+    } else {
+        index = controlPanel->settings.x * worker->life->steps[0] + controlPanel->settings.y * worker->life->steps[1];
+    }
+    worker->life->setCell(index);
+    worker->needUpdateRender();
+}
+
 void Canvas::updateRules() {
     if (worker->lifeExists) {
         worker->life->setRules(controlPanel->settings.B, controlPanel->settings.S);
@@ -265,6 +276,7 @@ void Canvas::keyPressEvent(QKeyEvent *event) {
         movement[0] = true;
     if (event->key() == Qt::Key_Down || event->key() == Qt::Key_S)
         movement[1] = true;
+    
     if (event->key() == Qt::Key_Right || event->key() == Qt::Key_D)
         movement[3] = true;
     camera->translation(movement[0], movement[1], movement[2], movement[3]);

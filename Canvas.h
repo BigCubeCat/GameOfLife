@@ -62,6 +62,8 @@ public slots:
     void updateSpeed();
 
     void updateRender(std::string);
+    
+    void setCell();
 
 private:
     QTimer *mTimer;

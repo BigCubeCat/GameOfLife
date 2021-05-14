@@ -164,6 +164,10 @@ void Life::nextGeneration() {
     generation++;
 }
 
+void Life::setCell(int index) {
+    data[index] = !data[index];
+}
+
 std::string Life::fileData() {
     std::string answer;
     for (int i = 0; i < dataSize; i++) {

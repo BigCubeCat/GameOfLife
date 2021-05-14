@@ -32,6 +32,13 @@ void Worker::run() {
     emit updateRender(renderData);
 }
 
+void Worker::needUpdateRender() {
+    isBusy = true;
+    renderData = life->renderData(coord);
+    isBusy = false;
+    emit updateRender(renderData);
+}
+
 void Worker::step() {
     if (isBusy) return;
     isBusy = true;

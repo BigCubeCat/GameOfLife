@@ -27,6 +27,7 @@ public:
     Life(int, int, vector<int>, vector<int>, vector<bool>);        /*init with exists data*/
     void                        setRules(vector<int>, vector<int>);
     bool                        getCell(int index) const;
+    void                        setCell(int index);
     bool                        inWorld(int index) const;
     bool                        applyRules(int);
     int                         countNeighbors(int index);

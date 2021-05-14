@@ -23,6 +23,8 @@ Panel::Panel(QWidget *parent) : QWidget(parent),
     connect(ui->aliveSlider, &QSlider::valueChanged, this, &Panel::aliveSliderChanged);
 
     connect(ui->bgButton, &QPushButton::clicked, this, &Panel::changeBG);
+    
+    connect(ui->setbutton, &QPushButton::clicked, this, &Panel::setCell);
 
     ui->run->setIcon(QIcon("icons/play.svg"));
     ui->stop->setIcon(QIcon("icons/pause.svg"));
@@ -50,8 +52,18 @@ void Panel::applyRules() {
     vector<int> new_s = getRules(ui->SInput->text());
     settings.B = new_b;
     settings.S = new_s;
+    ui->xSpin->setMaximum(settings.size - 1);
+    ui->ySpin->setMaximum(settings.size - 1);
+    ui->zSpin->setMaximum(settings.size - 1);
     // emit signal to canvas
     emit updateRules();
+}
+
+void Panel::setCell() {
+    settings.x = ui->xSpin->value();
+    settings.y = ui->ySpin->value();
+    settings.z = ui->zSpin->value();
+    emit setCellSignal();
 }
 
 void Panel::setSpeed() {

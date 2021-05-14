@@ -61,6 +61,11 @@ public:
     QPushButton *stop;
     QPushButton *step;
     QPushButton *run;
+    QHBoxLayout *horizontalLayout_4;
+    QSpinBox *xSpin;
+    QSpinBox *ySpin;
+    QSpinBox *zSpin;
+    QPushButton *setbutton;
     QGroupBox *gridGroupBox;
     QGridLayout *colorLayout;
     QPushButton *colorButton;
@@ -279,6 +284,32 @@ public:
 
         verticalLayout->addWidget(groupBox);
 
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        xSpin = new QSpinBox(Panel);
+        xSpin->setObjectName(QString::fromUtf8("xSpin"));
+
+        horizontalLayout_4->addWidget(xSpin);
+
+        ySpin = new QSpinBox(Panel);
+        ySpin->setObjectName(QString::fromUtf8("ySpin"));
+
+        horizontalLayout_4->addWidget(ySpin);
+
+        zSpin = new QSpinBox(Panel);
+        zSpin->setObjectName(QString::fromUtf8("zSpin"));
+
+        horizontalLayout_4->addWidget(zSpin);
+
+        setbutton = new QPushButton(Panel);
+        setbutton->setObjectName(QString::fromUtf8("setbutton"));
+        setbutton->setAutoDefault(true);
+
+        horizontalLayout_4->addWidget(setbutton);
+
+
+        verticalLayout->addLayout(horizontalLayout_4);
+
         gridGroupBox = new QGroupBox(Panel);
         gridGroupBox->setObjectName(QString::fromUtf8("gridGroupBox"));
         gridGroupBox->setCheckable(false);
@@ -381,6 +412,7 @@ public:
         run->setStatusTip(QCoreApplication::translate("Panel", "play", nullptr));
 #endif // QT_CONFIG(statustip)
         run->setText(QString());
+        setbutton->setText(QCoreApplication::translate("Panel", "ok", nullptr));
         gridGroupBox->setTitle(QCoreApplication::translate("Panel", "Color", nullptr));
         colorButton->setText(QCoreApplication::translate("Panel", "Cell Color", nullptr));
         borderCheck->setText(QCoreApplication::translate("Panel", "Cell Borders", nullptr));

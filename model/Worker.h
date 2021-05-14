@@ -27,6 +27,7 @@ public:
     bool    getCell(int index);
     void    updateParameters(int, int, vector<int>, vector<int>, int);
     void    setLife(fileData);
+    void    needUpdateRender();
     QString getData(QString, QString);
 
 signals:

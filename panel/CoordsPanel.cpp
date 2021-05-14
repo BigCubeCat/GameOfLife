@@ -41,6 +41,16 @@ void CoordsPanel::reshape(int d, int s) {
     this->update();
 }
 
+int CoordsPanel::getIndex() {
+    int index = 0;
+    int j = 0;
+    for (int i = dimension - 1; i > 2; i--) {
+        index += intpow(size, i) * coords[j]->value();
+        j++;
+    }
+    return index;
+}
+
 void CoordsPanel::calculateIndex() {
     int index = 0;
     int j = 0;
